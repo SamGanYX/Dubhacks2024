@@ -186,10 +186,10 @@ function verifyToken(req, res, next) {
 }
 
 app.post('/api/calculate-diet', async (req, res) => {
-    const { targetWeight, targetTime, userID } = req.body; // Ensure userID is included in the request body
+    let { userID } = req.body; // Ensure userID is included in the request body
 
     // Query to fetch user stats based on userID
-    const sql = "SELECT height, gender, weight, age, activity FROM UserStats WHERE userID = ?";
+    const sql = "SELECT height, gender, weight, age, activity, goal FROM UserStats WHERE userID = ?";
     
     db.query(sql, [userID], (err, results) => {
         if (err) return res.status(500).json({ error: err.message }); // Handle SQL errors
@@ -197,9 +197,70 @@ app.post('/api/calculate-diet', async (req, res) => {
             return res.status(404).json({ message: 'User not found' }); // Handle case when user not found
         }
 
-        const { height, gender, weight, age, activity } = results[0]; // Extract data from the first row
+        const { height, gender, weight, age, activity , goal} = results[0]; // Extract data from the first row
         try {
-            const dietResult = calculateDiet(height, gender, weight, age, targetWeight, targetTime, activity); // Call the diet calculation function
+            let weightChangeRate = 0;
+            switch (goal) {
+                case "gain muscle easy":
+                    weightChangeRate = 0.1;
+                case "gain muscle hard":
+                    weightChangeRate = 0.2;
+                case "lose fat easy":
+                    weightChangeRate = -0.5;
+                case "lose fat hard":
+                    weightChangeRate = -1.0;
+                case "gain weight easy":
+                    weightChangeRate = 0.5;
+                case "gain weight hard":
+                    weightChangeRate = 1;
+                case "maintain weight":
+                    weightChangeRate = 0;
+                    targetWeight = weight;
+
+            }
+            const dietResult = calculateDiet(height, gender, weight, age, weightChangeRate, activity); // Call the diet calculation function
+            return res.status(200).json(dietResult); // Respond with the diet result
+        } catch (error) {
+            return res.status(500).json({ error: error.message }); // Handle calculation errors
+        }
+    });
+});
+
+
+app.post('/api/adjust-diet', async (req, res) => {
+    let { actualWeightChangeRate, userID } = req.body; // Ensure userID is included in the request body
+
+    // Query to fetch user stats based on userID
+    const sql = "SELECT height, gender, weight, age, activity, goal FROM UserStats WHERE userID = ?";
+
+    db.query(sql, [userID], (err, results) => {
+        if (err) return res.status(500).json({ error: err.message }); // Handle SQL errors
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'User not found' }); // Handle case when user not found
+        }
+
+        const { height, gender, weight, age, activity , goal} = results[0]; // Extract data from the first row
+        try {
+            let weightChangeRate = 0;
+            switch (goal) {
+                case "gain muscle easy":
+                    weightChangeRate = 0.1;
+                case "gain muscle hard":
+                    weightChangeRate = 0.2;
+                case "lose fat easy":
+                    weightChangeRate = -0.5;
+                case "lose fat hard":
+                    weightChangeRate = -1.0;
+                case "gain weight easy":
+                    weightChangeRate = 0.5;
+                case "gain weight hard":
+                    weightChangeRate = 1;
+                case "maintain weight":
+                    weightChangeRate = 0;
+                    targetWeight = weight;
+
+            }
+            const dietResult = adjustDiet(height, gender, weight, age, weightChangeRate, activity, actualWeightChangeRate); // Call the diet calculation function
             return res.status(200).json(dietResult); // Respond with the diet result
         } catch (error) {
             return res.status(500).json({ error: error.message }); // Handle calculation errors
