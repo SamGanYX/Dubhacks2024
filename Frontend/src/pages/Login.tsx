@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
+import './CreateAccount.css';
 
 const Login = () => {
   interface DataItem {
@@ -44,8 +45,13 @@ const Login = () => {
     window.location.href = "/home";
   }
   return (
-    <div>
-      <div className="card">
+    <div className="container">
+      <div className="left-section">
+        <h1>
+          Eat<span>volution</span>
+        </h1>
+      </div>
+      <div className="form-div">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <input
@@ -64,7 +70,7 @@ const Login = () => {
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Submit</button>
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>

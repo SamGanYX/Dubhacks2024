@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Table from "../components/Table";
+import './CreateAccount.css';
+
 const CreateAccount = () => {
   interface DataItem {
     Username: string;
@@ -68,7 +70,13 @@ const CreateAccount = () => {
   };
   return (
     <div className="container">
+      <div className="left-section">
+        <h1>
+          Eat<span>volution</span>
+        </h1>
+      </div>
       <div className="form-div">
+        <h2>Create an Account</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -86,9 +94,12 @@ const CreateAccount = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit" className="btn btn-primary">
-            Add
+            Create account
           </button>
         </form>
+        <div className="already-have-account">
+          <p>Already Have An Account? <a href="/login">Log In</a></p>
+        </div>
       </div>
     </div>
   );

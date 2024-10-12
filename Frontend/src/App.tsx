@@ -36,7 +36,6 @@ const App = () => {
           <Route path="/create_account" element={<CreateAccount />}></Route>
           <Route path="*" element={<NoPage />}></Route>
         </Routes>
-        <Footer></Footer>
       </BrowserRouter>
     </div>
   );
