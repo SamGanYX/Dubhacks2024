@@ -6,7 +6,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NoPage from "./pages/NoPage";
 import Users from "./pages/Users";
-import Projects from "./pages/Projects";
+import Plan from "./pages/Plan";
 import Login from "./pages/Login";
 import CategoryPage from "./pages/CategoryPage";
 import CalorieForm from "./components/CalorieForm/CalorieForm";
@@ -26,6 +26,7 @@ const App = () => {
           <Route path="/users" element={<Users />}></Route>
           <Route path="/calculator" element={<CalorieForm />}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/plan" element={<Plan />}></Route>
           <Route
             path="/category/:categoryName"
             element={<CategoryPage />}

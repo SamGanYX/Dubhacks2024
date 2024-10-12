@@ -8,6 +8,8 @@ app.use(express.json());
 const multer = require('multer');
 const path = require('path');
 
+const { calculateDiet, adjustDiet } = require('./src/dietCalculator');
+
 const db = mysql.createConnection({
     host:"127.0.0.1",
     user: 'root',
@@ -35,32 +37,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post('/projects_with_image', upload.array('images', 10), (req, res) => {
-    // console.log(req);
-    const { userID, categoryID, projectName, projectDescription, fundGoal, endDate } = req.body;
-    // const imageURL = req.file ? `/uploads/${req.file.filename}` : null;
-    const sql = `
-      INSERT INTO projects (userID, categoryID, projectName, projectDescription, fundGoal, endDate)
-      VALUES (?, ?, ?, ?, ?, ?)
-    `;
-    const values = [userID, categoryID, projectName, projectDescription, fundGoal, endDate];
-  
-    db.query(sql, values, (err, result) => {
-        console.log(result);
-        const projectID = result.insertId;
-      if (err) return res.status(500).json(err);
-      if (req.files && req.files.length > 0) {
-        const imageSQL = "INSERT INTO project_images (projectID, imageURL) VALUES ?";
-        const imageValues = req.files.map(file => [projectID, file.filename]);
-  
-        db.query(imageSQL, [imageValues], (imageErr) => {
-          if (imageErr) return res.status(500).json(imageErr);
-        });
-      }
-      res.status(200).json({ message: "Project created successfully", projectID: result.insertId });
-    });
-  });
-
 // Static route to serve uploaded images
 app.use('/uploads', express.static('uploads'));
 
@@ -85,6 +61,16 @@ app.get('/users', (req, res) => {
         return res.json(data);
     })
 });
+
+app.get('/userstats', (req, res) => {
+    const sql = "SELECT * FROM userstats;"
+    db.query(sql, (err, data) => {
+        if(err) return res.json(err);
+        return res.json(data);
+    })
+});
+
+// =============== Adding to Table ================ \\
 
 
 app.post('/users', (req, res) => {
@@ -151,6 +137,8 @@ app.post('/userstats', (req, res) => {
     });
 });
 
+// ========================= Auth ====================== \\
+
 const jwt = require('jsonwebtoken');
 const secretKey = "your_jwt_secret_key"; // You should keep this in an environment variable
 
@@ -196,6 +184,28 @@ function verifyToken(req, res, next) {
         next();
     });
 }
+
+app.post('/api/calculate-diet', async (req, res) => {
+    const { targetWeight, targetTime, userID } = req.body; // Ensure userID is included in the request body
+
+    // Query to fetch user stats based on userID
+    const sql = "SELECT height, gender, weight, age, activity FROM UserStats WHERE userID = ?";
+    
+    db.query(sql, [userID], (err, results) => {
+        if (err) return res.status(500).json({ error: err.message }); // Handle SQL errors
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'User not found' }); // Handle case when user not found
+        }
+
+        const { height, gender, weight, age, activity } = results[0]; // Extract data from the first row
+        try {
+            const dietResult = calculateDiet(height, gender, weight, age, targetWeight, targetTime, activity); // Call the diet calculation function
+            return res.status(200).json(dietResult); // Respond with the diet result
+        } catch (error) {
+            return res.status(500).json({ error: error.message }); // Handle calculation errors
+        }
+    });
+});
 
 // Protect a route by applying the middleware
 app.get('/protected', verifyToken, (req, res) => {
