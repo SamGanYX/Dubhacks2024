@@ -6,7 +6,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     background-color: #07294D;
-    position: sticky;
+    /* position: sticky; */
     top: 0px;
     z-index: 10; /* Ensures navbar stays on top */
 }

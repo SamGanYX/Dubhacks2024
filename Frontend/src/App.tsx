@@ -6,10 +6,11 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NoPage from "./pages/NoPage";
 import Users from "./pages/Users";
-import Projects from "./pages/Projects";
+import Plan from "./pages/Plan";
 import Login from "./pages/Login";
 import Logger from "./pages/Logger"
 import CategoryPage from "./pages/CategoryPage";
+import CalorieForm from "./components/CalorieForm/CalorieForm";
 import CreateAccount from "./pages/CreateAccount";
 import Navbar from "./components/NavBar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -25,12 +26,13 @@ const App = () => {
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/logger" element={<Logger />}></Route>
           <Route path="/users" element={<Users />}></Route>
-          {/* <Route path="/projects" element={<Projects />}></Route> */}
+          <Route path="/calculator" element={<CalorieForm />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          {/* <Route
+          <Route path="/plan" element={<Plan />}></Route>
+          <Route
             path="/category/:categoryName"
             element={<CategoryPage />}
-          ></Route> */}
+          ></Route>
           <Route path="/create_account" element={<CreateAccount />}></Route>
           <Route path="*" element={<NoPage />}></Route>
         </Routes>
