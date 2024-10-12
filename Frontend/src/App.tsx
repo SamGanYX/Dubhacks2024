@@ -8,6 +8,7 @@ import NoPage from "./pages/NoPage";
 import Users from "./pages/Users";
 import Projects from "./pages/Projects";
 import Login from "./pages/Login";
+import Logger from "./pages/Logger"
 import CategoryPage from "./pages/CategoryPage";
 import CreateAccount from "./pages/CreateAccount";
 import Navbar from "./components/NavBar/Navbar";
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/home" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/logger" element={<Logger />}></Route>
           <Route path="/users" element={<Users />}></Route>
           {/* <Route path="/projects" element={<Projects />}></Route> */}
           <Route path="/login" element={<Login />}></Route>
