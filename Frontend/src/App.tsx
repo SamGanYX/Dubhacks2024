@@ -9,6 +9,7 @@ import Users from "./pages/Users";
 import Projects from "./pages/Projects";
 import Login from "./pages/Login";
 import CategoryPage from "./pages/CategoryPage";
+import CalorieForm from "./components/CalorieForm/CalorieForm";
 import CreateAccount from "./pages/CreateAccount";
 import Navbar from "./components/NavBar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -23,12 +24,12 @@ const App = () => {
           <Route path="/about" element={<About />}></Route>
           <Route path="/contact" element={<Contact />}></Route>
           <Route path="/users" element={<Users />}></Route>
-          {/* <Route path="/projects" element={<Projects />}></Route> */}
+          <Route path="/calculator" element={<CalorieForm />}></Route>
           <Route path="/login" element={<Login />}></Route>
-          {/* <Route
+          <Route
             path="/category/:categoryName"
             element={<CategoryPage />}
-          ></Route> */}
+          ></Route>
           <Route path="/create_account" element={<CreateAccount />}></Route>
           <Route path="*" element={<NoPage />}></Route>
         </Routes>

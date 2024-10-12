@@ -54,8 +54,9 @@ const CreateAccount = () => {
           .then((data) => {
             console.log(data);
             localStorage.setItem("token", data.token);
+            localStorage.setItem("userID", data.userID);
             // location.reload();
-            window.location.href = "/home";
+            window.location.href = "/calculator";
           })
           .catch((error) => {
             console.error("Error logging in:", error);

@@ -165,6 +165,28 @@ app.post('/delete_users', (req, res) => {
     });
 });
 
+app.post('/userstats', (req, res) => {
+    const { userID, age, height, weight, gender, goal, activity } = req.body;
+    // Ensure required fields are provided
+    if (!userID || !height || !weight || !goal || !activity) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+  
+    // Insert the data into UserStats table
+    const query = `
+        INSERT INTO UserStats (UserID, age, Gender, Weight, Height, Goal, Activity)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+  
+    db.query(query, [userID, age, gender, weight, height, goal, parseFloat(activity)], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+    
+        res.status(201).json({ message: 'User stats added successfully', results });
+    });
+});
 // app.post('/projects', (req, res) => {
 //     const { userID, categoryID, projectName, projectDescription, fundGoal, endDate } = req.body;
 

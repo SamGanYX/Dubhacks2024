@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   background-color: #07294D;
-  position: sticky;
+  /* position: sticky; */
   bottom: 0px;
 }
 .footer p {
