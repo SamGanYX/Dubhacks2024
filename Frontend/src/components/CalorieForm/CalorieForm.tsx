@@ -62,6 +62,7 @@ const CalorieForm = () => {
         setAge("");
         setWeight("");
         setHeight("");
+        window.location.href = "/plan";
       } else {
         const errorData = await response.json();
         setError(`Error: ${errorData.error}`);
