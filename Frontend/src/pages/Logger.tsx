@@ -77,7 +77,7 @@ const Logger: React.FC = () => {
       const totalCalories = getTotalCalories(dateKey);
       return (
         <div className="calendar-day-content">
-          <span>{totalCalories} calories logged </span>
+          <span>{totalCalories} calories</span>
         </div>
       );
     }

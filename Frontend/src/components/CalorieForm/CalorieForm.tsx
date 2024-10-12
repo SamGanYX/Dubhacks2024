@@ -136,16 +136,20 @@ const CalorieForm = () => {
         <div className="form-group">
           <label htmlFor="goal">Goal:</label>
           <select
-            id="goal"
-            value={goal}
-            onChange={(e) => setGoal(e.target.value)}
-            className="form-control"
-            required
+              id="goal"
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+              className="form-control"
+              required
           >
-            <option value="gain muscle">Gain Muscle</option>
-            <option value="lose fat">Lose Fat</option>
-            <option value="maintain weight but lean down">Maintain Weight but Lean Down</option>
-            <option value="improve cardio">Improve Cardio</option>
+            <option value="gain muscle easy">Gain Muscle (0.1 kg/week)</option>
+            <option value="gain muscle hard">Gain Muscle (0.2 kg/week)</option>
+            <option value="lose fat easy">Lose Fat (0.5 kg /week)</option>
+            <option value="lose fat hard">Lose Fat (1.0 kg /week)</option>
+            <option value="gain weight easy">Gain Weight (0.5 kg/week)</option>
+            <option value="gain weight hard">Gain Weight (1.0 kg/week)</option>
+
+            <option value="maintain weight">Maintain Weight (0.0 kg/week)</option>
           </select>
         </div>
 
