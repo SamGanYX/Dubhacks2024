@@ -86,43 +86,6 @@ app.get('/users', (req, res) => {
     })
 });
 
-// app.get('/categories', (req, res) => {
-//     const sql = "SELECT * FROM categories;"
-//     db.query(sql, (err, data) => {
-//         if(err) return res.json(err);
-//         return res.json(data);
-//     })
-// });
-
-// app.get('/projects', (req, res) => {
-//     const sql = "SELECT * FROM projects;"
-//     db.query(sql, (err, data) => {
-//         if(err) return res.json(err);
-//         return res.json(data);
-//     })
-// });
-
-// app.get('/projects/category/:categoryName', (req, res) => {
-//     const { categoryName } = req.params;
-  
-//     const sql = `
-//       SELECT p.*
-//       FROM projects p
-//       JOIN categories c ON p.categoryID = c.categoryID
-//       WHERE c.categoryName = ?;
-//     `;
-  
-//     db.query(sql, [categoryName], (err, results) => {
-//       if (err) {
-//         return res.status(500).json({ message: 'Error retrieving projects', err });
-//       }
-  
-//       return res.status(200).json(results);
-//     });
-// });
-
-// Post
-
 
 app.post('/users', (req, res) => {
     const { username, email, password } = req.body;
@@ -187,78 +150,6 @@ app.post('/userstats', (req, res) => {
         res.status(201).json({ message: 'User stats added successfully', results });
     });
 });
-// app.post('/projects', (req, res) => {
-//     const { userID, categoryID, projectName, projectDescription, fundGoal, endDate } = req.body;
-
-//     const startDate = new Date().toISOString().split('T')[0]; // Format as YYYY-MM-DD
-    
-//     const sql = `
-//         INSERT INTO projects (userID, categoryID, projectName, projectDescription, startDate, endDate, fundGoal, fundAmount)
-//         VALUES (?, ?, ?, ?, ?, ?, ?, 0);
-//     `;
-//     db.query(sql, [userID, categoryID, projectName, projectDescription, startDate, endDate, fundGoal], (err, data) => {
-//         if (err) return res.status(500).json({ error: err.message });
-//         if (req.files && req.files.length > 0) {
-//             const imageSQL = "INSERT INTO project_images (projectID, imageURL) VALUES ?";
-//             const imageValues = req.files.map(file => [projectID, file.filename]);
-      
-//             db.query(imageSQL, [imageValues], (imageErr) => {
-//               if (imageErr) return res.status(500).json(imageErr);
-//             });
-//           }
-//         return res.status(201).json({ message: "Project added successfully" });
-//     });
-// });
-
-// app.post('/update_project', (req, res) => {
-//     const { projectID, categoryID, projectName, projectDescription, startDate, endDate, fundGoal, fundAmount } = req.body;
-    
-//     const sql = `
-//         UPDATE projects
-//         SET categoryID = ?, projectName = ?, projectDescription = ?, startDate = ?, endDate = ?, fundGoal = ?, fundAmount = ?
-//         WHERE projectID = ?;
-//     `;
-//     db.query(sql, [categoryID, projectName, projectDescription, startDate, endDate, fundGoal, fundAmount, projectID], (err, data) => {
-//         console.log(err);
-//         if (err) return res.status(500).json({ error: err.message });
-//         if (data.affectedRows === 0) {
-//             return res.status(404).json({ message: "Project not found" });
-//         }
-//         return res.status(200).json({ message: "Project updated successfully" });
-//     });
-// });
-
-// app.post('/delete_projects', (req, res) => {
-//     const { projectID } = req.body; // Extract projectID from request body
-    
-//     // SQL query to delete the project
-//     const sql = "DELETE FROM projects WHERE projectID = ?;";
-    
-//     // Execute the query
-//     db.query(sql, [projectID], (err, data) => {
-//         if (err) {
-//             console.error("Error deleting project:", err);
-//             return res.status(500).json(err);
-//         }
-        
-//         if (data.affectedRows === 0) {
-//             return res.status(404).json({ message: "Project not found" });
-//         }
-        
-//         return res.status(200).json({ message: "Project deleted successfully" });
-//     });
-// });
-
-// app.post('/login', (req, res) => {
-//     const { username, password } = req.body;
-    
-//     const sql = "SELECT * FROM users WHERE Username = ? AND Password = ?;";
-//     db.query(sql, [username, password], (err, data) => {
-//         if (err) return res.status(500).json(err);
-        
-//         return res.status(200).json(data);
-//     });
-// });
 
 const jwt = require('jsonwebtoken');
 const secretKey = "your_jwt_secret_key"; // You should keep this in an environment variable
