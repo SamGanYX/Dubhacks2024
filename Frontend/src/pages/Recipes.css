@@ -41,20 +41,20 @@ p {
     margin: 5px 0; /* Margin above and below paragraphs */
 }
 
-/* Navigation button styling */
+/* Navigation .navigation button styling */
 .navigation {
     margin-top: 20px; /* Space above navigation */
     display: flex; /* Use flexbox for layout */
-    gap: 10px; /* Space between buttons */
+    gap: 10px; /* Space between .navigation buttons */
 }
 
-/* Button styling */
-button {
-    background-color: #2980b9; /* Button background color */
-    color: white; /* Button text color */
+/* .navigation button styling */
+.navigationbutton {
+    background-color: #2980b9; /* .navigation button background color */
+    color: white; /* .navigation button text color */
     border: none; /* No border */
     border-radius: 8px; /* Rounded corners */
-    padding: 12px 20px; /* Padding for the button */
+    padding: 12px 20px; /* Padding for the .navigation button */
     font-size: 1.1rem; /* Font size */
     font-weight: 600; /* Bold text */
     cursor: pointer; /* Pointer cursor on hover */
@@ -62,17 +62,17 @@ button {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-/* Button hover effect */
-button:hover {
+/* .navigation button hover effect */
+.navigationbutton:hover {
     background-color: #1c6696; /* Darker shade on hover */
     transform: translateY(-2px); /* Lift effect on hover */
 }
 
-/* Navigate button styling */
-.navigate-button {
-    margin-top: 40px; /* Space above the navigate button */
-    width: 100%; /* Full width for the navigate button */
-    max-width: 600px; /* Maximum width for the navigate button */
+/* Navigate .navigation button styling */
+.navigate-.navigation button {
+    margin-top: 40px; /* Space above the navigate .navigation button */
+    width: 100%; /* Full width for the navigate .navigation button */
+    max-width: 600px; /* Maximum width for the navigate .navigation button */
 }
 
 /* Responsive adjustments */
@@ -80,12 +80,12 @@ button:hover {
     h1 {
         font-size: 2rem; /* Adjust heading size for smaller screens */
     }
-    button {
-        background-color: #2980b9; /* Button background color */
-        color: white; /* Button text color */
+    .navigation button {
+        background-color: #2980b9; /* .navigation button background color */
+        color: white; /* .navigation button text color */
         border: none; /* No border */
         border-radius: 8px; /* Rounded corners */
-        padding: 12px 20px; /* Padding for the button */
+        padding: 12px 20px; /* Padding for the .navigation button */
         font-size: 1.1rem; /* Font size */
         font-weight: 600; /* Bold text */
         cursor: pointer; /* Pointer cursor on hover */

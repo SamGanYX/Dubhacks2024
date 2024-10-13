@@ -48,13 +48,13 @@ textarea::placeholder {
     color: #b0b0b0; /* Placeholder text color */
 }
 
-/* Button styling */
-button {
-    background-color: #2980b9; /* Button background color */
-    color: white; /* Button text color */
+/* .ingredients-page button styling */
+.ingredientbutton {
+    background-color: #2980b9; /* .ingredients-page button background color */
+    color: white; /* .ingredients-page button text color */
     border: none; /* No border */
     border-radius: 8px; /* Rounded corners */
-    padding: 12px 20px; /* Padding for the button */
+    padding: 12px 20px; /* Padding for the .ingredients-page button */
     font-size: 1.1rem; /* Font size */
     font-weight: 600; /* Bold text */
     cursor: pointer; /* Pointer cursor on hover */
@@ -62,8 +62,8 @@ button {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
-/* Button hover effect */
-button:hover {
+/* .ingredients-page button hover effect */
+.ingredientbutton:hover {
     background-color: #1c6696; /* Darker shade on hover */
     transform: translateY(-2px); /* Lift effect on hover */
 }
@@ -73,7 +73,7 @@ button:hover {
     h1 {
         font-size: 2rem; /* Adjust heading size for smaller screens */
     }
-    button {
-        width: 100%; /* Full width for buttons on smaller screens */
+    .ingredients-page button {
+        width: 100%; /* Full width for .ingredients-page buttons on smaller screens */
     }
 }
