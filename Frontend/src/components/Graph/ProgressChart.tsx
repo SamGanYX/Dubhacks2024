@@ -46,7 +46,7 @@ const ProgressChart = () => {
     const [duration, setDuration] = useState<number>(0);
     const [adjustedCals, setAdjCals] = useState<number>(0)
     const { token } = useAuth();
-    const [adjMessage, setAdjMessage] = useState<string>("Your New Suggested Calorie Intake: ");
+    const [adjMessage] = useState<string>("Your New Suggested Calorie Intake: ");
 
 
     const groupByDate = (records: DailyRecord[]) => {
@@ -71,19 +71,20 @@ const ProgressChart = () => {
     };
 
     const handleEditClick = () => {
+        console.log(-(averageWeightLoss/(duration/7)))
         fetchAdjPlan();
     };
 
     const fetchAdjPlan = async () => {
         try {
+            console.log("average " + -(averageWeightLoss/(duration/7)))
             const response = await fetch('http://localhost:8081/api/adjust-diet', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
-
                 },
-                body: JSON.stringify({averageWeightLoss: (averageWeightLoss/(duration/7)), userID: userID}),
+                body: JSON.stringify({actualWeightChangeRate: -(averageWeightLoss/(duration/7)), userID: userID}),
             });
 
             if (!response.ok) {
@@ -97,26 +98,33 @@ const ProgressChart = () => {
         } finally {
         }
     };
-
-
     useEffect(() => {
         fetch(`http://localhost:8081/api/dailyrecords/${userID}`)
             .then((res) => res.json())
-            .then((data) => {
+            .then(async (data) => {
                 setData(data);
                 setAverageWeightLoss(calculateWeightLossBetweenExtremes(data)); // Calculate average weight loss
                 setDuration(calculateTimeRange(data));
-                if(averageWeightLoss < 1) {
+                console.log(averageWeightLoss)
+                if (averageWeightLoss < 0) {
+                    console.log("hi")
                     setWeightMessage("Your Overall Weight Gain:");
-
+                    console.log(weightMessage)
                 } else {
                     setWeightMessage("Your Overall Weight Loss:");
-
+                    console.log("bye")
                 }
-
             })
             .catch((err) => console.log(err));
     }, [userID]);
+
+    useEffect(() => {
+        if (averageWeightLoss < 0) {
+            setWeightMessage("Your Overall Weight Gain:");
+        } else {
+            setWeightMessage("Your Overall Weight Loss:");
+        }
+    }, [averageWeightLoss]);
 
     useEffect(() => {
         const fetchData = async () => {
