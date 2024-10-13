@@ -8,6 +8,7 @@ interface DailyRecord {
     date: string;
     caloriesEaten: number;
     weight: number;
+    calorieGoal : number;
 }
 
 interface ProgressChartProps {
@@ -16,6 +17,8 @@ interface ProgressChartProps {
 
 const ProgressChart: React.FC<ProgressChartProps> = ({ userID }) => {
     const [chartData, setChartData] = useState<ChartData<'line'> | null>(null);
+    const [calorieGoal, setCalorieGoal] = useState<number>(0); // State for calorie goal
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,6 +29,9 @@ const ProgressChart: React.FC<ProgressChartProps> = ({ userID }) => {
                 const labels = records.map(record => record.date);
                 const weightData = records.map(record => record.weight);
                 const calorieData = records.map(record => record.caloriesEaten);
+
+                setCalorieGoal(records[records.length - 1]?.calorieGoal || 0);
+
 
                 setChartData({
                     labels,
@@ -42,6 +48,14 @@ const ProgressChart: React.FC<ProgressChartProps> = ({ userID }) => {
                             data: calorieData,
                             borderColor: 'rgba(255, 99, 132, 1)',
                             backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            yAxisID: 'y-axis-calories',
+                        },
+                        {
+                            label: 'Calorie Goal', // New dataset for the calorie goal
+                            data: Array(records.length).fill(calorieGoal), // Flat line at the calorie goal
+                            borderColor: 'rgba(255, 215, 0, 1)', // Color for the calorie goal line
+                            backgroundColor: 'rgba(255, 215, 0, 0.2)',
+                            borderDash: [5, 5], // Dashed line style
                             yAxisID: 'y-axis-calories',
                         },
                     ],
