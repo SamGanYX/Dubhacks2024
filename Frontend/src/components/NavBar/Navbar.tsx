@@ -27,9 +27,9 @@ const Navbar = () => {
     <>
       <nav>
       {!isAuthenticated ?<Link to="/" className="title">
-          Home
+        Eat<span className="green-text">volution</span>
         </Link> : <Link to="/plan" className="title">
-          Home
+        Eat<span className="green-text">volution</span>
         </Link>}
         <div
           className="menu"

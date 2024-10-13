@@ -14,12 +14,13 @@ interface Recipe {
 
 const IngredientsPage = () => {
     const [ingredients, setIngredients] = useState('');
+    const goal = localStorage.getItem("goal");
     const userID = localStorage.getItem("userID");
     const navigate = useNavigate();
 
     // Function to fetch recipes based on ingredients
     const getRecipes = async () => {
-        const formattedString = `UserID: ${userID}, Ingredients: ${ingredients}`;
+        const formattedString = `UserID: ${userID}, Ingredients: ${ingredients}, goal: ${goal}`;
         console.log(formattedString);
         try {
             const response = await fetch(`http://localhost:8081/api/getRecipes`, {

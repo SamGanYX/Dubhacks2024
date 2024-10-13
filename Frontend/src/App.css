@@ -6,4 +6,5 @@ html {
 body {
     height: 100%;
     overflow: auto;
+    --bs-body-bg: #f0f4f8;
 }

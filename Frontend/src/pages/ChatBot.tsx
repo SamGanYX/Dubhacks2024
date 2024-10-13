@@ -42,7 +42,12 @@ const ChatBot: React.FC = () => {
     <div className="chatbot-container">
       <div className="sidebar">
         <h2>Fitness Trainer</h2>
-        <FaUserCircle size={50} />
+        {/* <FaUserCircle size={50} /> */}
+        <img
+                src="../src/assets/trainerpfp.jpg"
+                alt="Bot Profile"
+                className="profile-pic-lg"
+              />
       </div>
       <div className="chat-area">
         <div className="messages">
@@ -56,7 +61,7 @@ const ChatBot: React.FC = () => {
                 <div className="user-text">{msg.user}</div>
               )}
               <img
-                src={msg.bot ? "path_to_your_bot_profile_pic.jpg" : "path_to_your_user_profile_pic.jpg"}
+                src={msg.bot ? "../src/assets/trainerpfp.jpg" : "path_to_your_user_profile_pic.jpg"}
                 alt={msg.bot ? "Bot Profile" : "User Profile"}
                 className="profile-pic"
               />
