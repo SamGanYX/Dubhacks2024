@@ -52,7 +52,7 @@ const ChatBot: React.FC = () => {
         <h2>Fitness Trainer</h2>
         {/* <FaUserCircle size={50} /> */}
         <img
-                src="../src/assets/trainerpfp.jpg"
+                src="../src/assets/img_1.png"
                 alt="Bot Profile"
                 className="profile-pic-lg"
               />
