@@ -46,6 +46,12 @@ const Navbar = () => {
           <li>
             <NavLink to="/logger">Food Logger</NavLink> {/* New Tab */}
           </li>
+          <li>
+            <NavLink to="/chat">Chat Bot</NavLink> {/* New Tab */}
+          </li>
+          <li>
+            <NavLink to="/recipes">Recipes</NavLink> {/* New Tab */}
+          </li>
           {!isAuthenticated ? (
             <>
               <li>

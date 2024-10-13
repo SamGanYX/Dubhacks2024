@@ -1,129 +1,87 @@
-/* Main Navbar */
+/* Navbar.css */
+
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #07294D;
-    position: fixed; /* Changed from default to fixed */
-    top: 0; /* Stick to the top */
-    left: 0; /* Ensure it starts from the left */
-    right: 0; /* Ensure it stretches to the right */
-    z-index: 10; /* Ensures navbar stays on top */
-    padding: 0.5rem 1rem; /* Add padding for better spacing */
-}
-
-nav .title {
+    background-color: #333;
+    padding: 1rem 2rem;
+  }
+  
+  .title {
+    color: white;
     font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0; /* Removed margin to prevent extra spacing */
     text-decoration: none;
-    color: #fff;
-}
-
-nav ul {
+  }
+  
+  .menu {
     display: flex;
-}
-
-nav ul li {
-    list-style: none;
-}
-
-nav ul li a {
-    display: block;
-    text-decoration: none;
-    color: #fff;
-    padding: 0.5rem;
-    margin: 0 0.5rem;
-    border-radius: 0.5rem;
-}
-
-nav ul li .category-toggle {
-    text-decoration: none;
-    color: #fff;
-    padding: 0.5rem;
-    margin: 0 0.5rem;
-    border-radius: 0.5rem;
-}
-
-nav ul li a:not(.active):hover {
-    background-color: #0a3868;
-    color: #FFC600;
-}
-
-nav ul li .category-toggle:not(.active):hover {
-    background-color: #0a3868;
-    color: #FFC600;
-}
-
-nav .menu {
-    position: relative; /* Changed from absolute to relative */
     flex-direction: column;
     justify-content: space-between;
-    width: 2.25rem;
-    height: 2rem;
-}
-
-nav .menu span {
-    height: 0.3rem;
-    width: 100%;
-    background-color: #fff;
-    border-radius: 0.15rem;
-}
-
-/* Active state */
-.active {
-    background-color: #07294d;
-    color: #ffc600;
-}
-
-.categories li a:hover {
-    color: #ffc600;
-}
-
-/* Mobile Styles */
-@media (max-width: 500px) {
-    nav .menu {
-        display: flex;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+  }
+  
+  .menu span {
+    display: block;
+    height: 4px;
+    background-color: white;
+    border-radius: 2px;
+  }
+  
+  ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+  }
+  
+  ul.open {
+    display: block;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #333;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+  }
+  
+  a, .log_out {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  a:hover, .log_out:hover {
+    background-color: #555;
+    border-radius: 5px;
+  }
+  
+  @media (max-width: 768px) {
+    ul {
+      display: none;
+      flex-direction: column;
+      gap: 0;
+      position: absolute;
+      top: 50px;
+      right: 10px;
+      background-color: #333;
+      border-radius: 5px;
+      padding: 1rem;
     }
-
-    nav {
-        flex-direction: column;
-        align-items: start;
+  
+    ul.open {
+      display: flex;
     }
-
-    nav ul {
-        display: none;
-        flex-direction: column;
-        width: 100%;
-        padding-left: 0;
-        margin-bottom: 0.25rem;
+  
+    li {
+      margin: 10px 0;
     }
-
-    nav ul.open {
-        display: flex;
-    }
-
-    nav ul li {
-        width: 100%;
-        text-align: center;
-    }
-
-    nav ul li a {
-        margin: 0.2rem 0.5rem;
-    }
-
-    /* Mobile categories toggle */
-    .category-toggle {
-        display: block; /* Show toggle button on mobile */
-    }
-
-    .categories {
-        display: none;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .categories.categories-open {
-        display: flex; /* Show categories when open on mobile */
-    }
-}
+  }
+  
