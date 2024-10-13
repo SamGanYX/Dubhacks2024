@@ -4,51 +4,64 @@ import './About.css'; // Make sure to create a CSS file for styling
 const About = () => {
     return (
         <div className="about-container">
-            <h1>About Our Fitness Nutrition App</h1>
-            <p>
-                Our Fitness Nutrition App is designed to empower individuals to take control of their health and nutrition. 
-                We believe that nutrition is a vital component of fitness, and our app aims to simplify the process of tracking meals, 
-                setting nutrition goals, and accessing valuable resources to support a healthy lifestyle.
-            </p>
-            
-            <h2>Our Mission</h2>
-            <p>
-                Our mission is to make healthy eating accessible and enjoyable for everyone. 
-                We strive to provide a user-friendly platform that promotes informed dietary choices 
-                and helps users stay motivated on their fitness journeys.
-            </p>
-            
             <h2>Meet the Team</h2>
             <div className="team-members">
                 <div className="team-member">
-                    <h3>Jane Doe</h3>
-                    <p>Co-Founder & Lead Developer</p>
+                    <h3>Brandon Leong</h3>
                 </div>
                 <div className="team-member">
-                    <h3>John Smith</h3>
-                    <p>Co-Founder & Nutrition Expert</p>
+                    <h3>Yunxin Gan</h3>
                 </div>
                 <div className="team-member">
-                    <h3>Alice Johnson</h3>
-                    <p>UI/UX Designer</p>
+                    <h3>Emily Feng</h3>
                 </div>
                 <div className="team-member">
-                    <h3>Bob Lee</h3>
-                    <p>Backend Developer</p>
+                    <h3>Bijou Kim</h3>
                 </div>
             </div>
+            <h1>About Our Fitness Nutrition App</h1>
+            <p>
+                Our Fitness Nutrition App was inspired by the growing awareness of the crucial role nutrition plays in achieving fitness goals. 
+                Many people struggle to navigate the overwhelming options for dietary information, so we set out to create an intuitive platform 
+                that makes nutrition tracking simple while providing tools to help users reach their fitness objectives.
+            </p>
             
-            <h2>Contact Us</h2>
-            <p>If you have any questions, suggestions, or feedback, feel free to reach out to us!</p>
-            <p>Email: <a href="mailto:support@fitnessnutritionapp.com">support@fitnessnutritionapp.com</a></p>
-
-            <h2>Follow Us</h2>
-            <p>Stay updated with our latest features and health tips on our social media:</p>
-            <ul>
-                <li><a href="https://www.facebook.com/fitnessnutritionapp" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-                <li><a href="https://twitter.com/fitnessnutritionapp" target="_blank" rel="noopener noreferrer">Twitter</a></li>
-                <li><a href="https://www.instagram.com/fitnessnutritionapp" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-            </ul>
+            <h2>What It Does</h2>
+            <p>
+                Our app allows users to log their daily meals, track calorie intake, and set personalized nutrition goals. 
+                It offers a database of healthy recipes tailored to various dietary preferences and visualizes progress through graphs and statistics. 
+                Users can also connect with a community for support and motivation.
+            </p>
+            
+            <h2>How We Built It</h2>
+            <p>
+                Our team used React, TypeScript, JavaScript, and Python to develop a functional, user-friendly platform. 
+                We combined our skills to integrate backend and frontend features, ensuring smooth and efficient user experiences.
+            </p>
+            
+            <h2>Challenges We Faced</h2>
+            <p>
+                We encountered challenges while learning new skills on the fly, adapting to hidden roadblocks, and meeting tight deadlines. 
+                Despite this, our collaboration and perseverance helped us overcome these hurdles.
+            </p>
+            
+            <h2>Accomplishments</h2>
+            <p>
+                We're proud of creating a viable product with a clean interface that simplifies meal logging and goal tracking. 
+                The seamless integration of features allows users to engage meaningfully with the app and track their nutrition journey.
+            </p>
+            
+            <h2>What We Learned</h2>
+            <p>
+                We learned the value of team collaboration and how diverse skills can foster creativity and problem-solving. 
+                Clear documentation and code organization were crucial for a smooth development process, and pre-planning helped streamline our workflow.
+            </p>
+            
+            <h2>What's Next</h2>
+            <p>
+                Looking ahead, we plan to expand the app's features to enhance the user experience, including integration with fitness devices like Apple Health. 
+                We also aim to increase community engagement by introducing live interactions between users.
+            </p>
         </div>
     );
 };

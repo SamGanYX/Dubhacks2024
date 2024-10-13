@@ -30,6 +30,7 @@ p {
     flex-wrap: wrap; /* Allow wrapping to next line */
     gap: 30px; /* Increased space between members for a cleaner layout */
     justify-content: center; /* Center team members */
+    margin: 40px;
 }
 
 /* Individual team member styling */
