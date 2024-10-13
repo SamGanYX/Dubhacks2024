@@ -19,7 +19,7 @@ function calculateDiet(height, gender, weight, age, weightChangeRate, activity) 
     const calorieGoal = (bmr * activity) + calorieAdjustment;
 
     // Return the daily calorie goal and recommended protein intake
-    return Math.round(calorieGoal);
+    return Math.round(calorieGoal/10)*10;
 }
 
 function calculateBMR(height, gender, weight, age, weightChangeRate, activity) {
@@ -40,7 +40,7 @@ function calculateBMR(height, gender, weight, age, weightChangeRate, activity) {
     const calorieGoal = (bmr * activity);
 
     // Return the daily calorie goal and recommended protein intake
-    return Math.round(calorieGoal);
+    return Math.round(calorieGoal/10)*10;
 }
 
 
