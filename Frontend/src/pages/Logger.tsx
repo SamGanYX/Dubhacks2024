@@ -104,7 +104,7 @@ const Logger: React.FC = () => {
             console.error('Error fetching daily records:', error);
         }
     }
-};
+  };
 
 
   useEffect(() => {
