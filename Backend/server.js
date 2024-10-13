@@ -305,7 +305,6 @@ app.post('/api/calculate-diet', async (req, res) => {
     });
 });
 
-
 app.post('/api/adjust-diet', async (req, res) => {
     let { actualWeightChangeRate, userID } = req.body; // Ensure userID is included in the request body
 
@@ -466,6 +465,38 @@ app.post('/api/dailyrecords', (req, res) => {
                     userStatsUpdateResults: updateResults
                 });
             });
+        });
+    });
+});
+
+app.get('/api/recipes/:userID', (req, res) => {
+    const userID = req.params.userID;
+    const page = parseInt(req.query.page) || 1; // Default to page 1 if not specified
+    const limit = 3; // Number of recipes per page
+    const offset = (page - 1) * limit;
+
+    const sql = `
+        SELECT * FROM Recipes 
+        WHERE userID = ? 
+        ORDER BY dateGenerated DESC 
+        LIMIT ? OFFSET ?`;
+
+    db.query(sql, [userID, limit, offset], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        // Get the total count of recipes for pagination
+        db.query('SELECT COUNT(*) AS total FROM Recipes WHERE userID = ?', [userID], (err, countResults) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Database error' });
+            }
+            const totalCount = countResults[0].total;
+            const totalPages = Math.ceil(totalCount / limit);
+
+            res.status(200).json({ recipes: results, totalPages });
         });
     });
 });
