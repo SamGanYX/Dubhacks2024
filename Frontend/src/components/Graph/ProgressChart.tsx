@@ -1,37 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
-import { ChartData, ChartOptions } from 'chart.js';
+import { ChartData, ChartOptions, Chart, registerables } from 'chart.js'; // Import and register required components
 import './ProgressChart.css'; // Import the CSS file
+
+// Register the required components
+Chart.register(...registerables);
 
 interface DailyRecord {
     date: string;
     caloriesEaten: number;
     weight: number;
-    calorieGoal : number;
+    calorieGoal: number;
 }
 
-interface ProgressChartProps {
-    userID: string;
-}
-
-const ProgressChart: React.FC<ProgressChartProps> = ({ userID }) => {
+const ProgressChart = () => {
     const [chartData, setChartData] = useState<ChartData<'line'> | null>(null);
     const [calorieGoal, setCalorieGoal] = useState<number>(0); // State for calorie goal
+    const [data, setData] = useState<DailyRecord[]>([]);
+    const userID = localStorage.getItem("userID");
 
+    useEffect(() => {
+        fetch(`http://localhost:8081/api/dailyrecords/${userID}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data);
+            })
+            .catch((err) => console.log(err));
+    }, [userID]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get<DailyRecord[]>(`/api/dailyrecords/${userID}`);
-                const records = response.data;
+                const records = data;
 
                 const labels = records.map(record => record.date);
                 const weightData = records.map(record => record.weight);
                 const calorieData = records.map(record => record.caloriesEaten);
 
                 setCalorieGoal(records[records.length - 1]?.calorieGoal || 0);
-
 
                 setChartData({
                     labels,
@@ -66,7 +73,7 @@ const ProgressChart: React.FC<ProgressChartProps> = ({ userID }) => {
         };
 
         fetchData();
-    }, [userID]);
+    }, [data, calorieGoal]);
 
     const options: ChartOptions<'line'> = {
         scales: {
