@@ -84,7 +84,7 @@
   }
   
   /* Form group to hold label and input fields next to each other */
-  .form-group {
+  .form-group-logger {
     display: flex; /* Use flexbox to align label and input fields */
     align-items: center; /* Center items vertically */
     width: 100%; /* Full width */
@@ -92,7 +92,7 @@
   }
   
   /* Individual label styles */
-  .form-group label {
+  .form-group-logger label {
     width: 100px; /* Fixed width for labels */
     margin-right: 10px; /* Space between label and input field */
   }

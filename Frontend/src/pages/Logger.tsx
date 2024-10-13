@@ -261,7 +261,7 @@ const Logger: React.FC = () => {
 
             {/* Meal Input Form */}
             <form onSubmit={handleSubmit} className="meal-form">
-              <div className="form-group">
+              <div className="form-group-logger">
                 <label>Meal Name: </label>
                 <input
                   type="text"
@@ -270,7 +270,7 @@ const Logger: React.FC = () => {
                   placeholder="Enter meal"
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group-logger">
                 <label>Calories: </label>
                 <input
                   type="number"
@@ -279,7 +279,7 @@ const Logger: React.FC = () => {
                   placeholder="Enter calories"
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group-logger">
                 <label>Weight: </label>
                 <input
                   type="number"
