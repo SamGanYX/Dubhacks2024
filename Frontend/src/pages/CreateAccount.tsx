@@ -40,6 +40,11 @@ const CreateAccount = () => {
     })
       .then((response) => {
         response.json();
+        if(response.status === 201) {
+        } else {
+          setError('Failed to create account, username taken');
+          throw new Error('Error creating account:' + response.statusText);
+        }
         console.log("Full response:", response);
       })
       .then((data) => {
@@ -52,12 +57,6 @@ const CreateAccount = () => {
           body: JSON.stringify(userData),
         })
           .then((response) => {
-            if(response.status === 201) {
-              return response.json();
-            } else {
-              setError('Failed to create account, username taken');
-              throw new Error('Error creating account:' + response.statusText);
-            }
             return response.json();
           })
           .then((data) => {

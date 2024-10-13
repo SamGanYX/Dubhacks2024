@@ -120,6 +120,7 @@ app.post('/users', (req, res) => {
     const sql1 = "SELECT * FROM users WHERE Username = ?";
     db.query(sql1, [username], (err, result) => {
         if(result.length !== 0) {
+            console.log(result);
             return res.status(500).json("User already exists");
         } else {
             const sql = "INSERT INTO users (Username, Email, Password) VALUES (?, ?, ?);";
