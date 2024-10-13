@@ -114,3 +114,29 @@
   accent-color: rgb(6, 20, 64);
 }
 
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 10px;
+}
+
+.grid-image {
+  margin: 5px;
+  cursor: pointer;
+  transition: transform 0.3s, border 0.3s;
+  border: 2px solid transparent; /* Default border */
+  max-width: 120px; /* Limit maximum width */
+}
+
+.grid-image.selected {
+  transform: scale(1.05); /* Slightly enlarge selected image */
+  border: 2px solid rgb(6, 20, 64); /* Highlight selected image */
+}
+
+.image-container {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+
