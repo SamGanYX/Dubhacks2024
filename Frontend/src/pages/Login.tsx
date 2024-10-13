@@ -11,6 +11,7 @@ const Login = () => {
   const [LoggedIn, setLoggedIn] = useState(false);
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
+  const [Error, setError] = useState("");
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,14 +28,20 @@ const Login = () => {
       body: JSON.stringify(userData),
     })
       .then((response) => {
-        return response.json();
+        // console.log(response);
+        if(response.status === 200) {
+          return response.json();
+        } else {
+          setError('Failed to log in, username not found');
+          throw new Error('Error logging in:' + response.statusText);
+        }
       })
       .then((data) => {
         console.log(data);
         localStorage.setItem("token", data.token);
         localStorage.setItem("userID", data.userID);
         // location.reload();
-        window.location.href = "/home";
+        // window.location.href = "/home";
       })
       .catch((error) => {
         console.error("Error logging in:", error);
@@ -54,6 +61,7 @@ const Login = () => {
       </div>
       <div className="form-div">
         <h2>Login</h2>
+        {Error && <p>{Error}</p>}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
