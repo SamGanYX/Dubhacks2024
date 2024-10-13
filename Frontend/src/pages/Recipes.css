@@ -4,7 +4,7 @@
     flex-direction: column; /* Stack elements vertically */
     align-items: center; /* Center elements horizontally */
     justify-content: flex-start; /* Align items at the start */
-    min-height: 100vh; /* Full viewport height */
+    min-height: 90vh; /* Full viewport height */
     background-color: #f0f4f8; /* Light background color */
     padding: 20px 40px; /* Increased padding for a spacious layout */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */

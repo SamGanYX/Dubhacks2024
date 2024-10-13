@@ -61,17 +61,21 @@
     width: 30vw; /* Set a specific width for the buttons */
     padding: 15px; /* Increase padding for better appearance */
     margin: 10px 0; /* Space between buttons */
-    background-color: #3a8dff;
+    background-color: #1bbd88; /* Primary button color */
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 1rem; /* Font size */
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
+
+
 .login-button:hover,
 .signup-button:hover {
-    background-color: #336dcc; /* Darker shade on hover */
+    background-color: #14805f; /* Darker shade on hover */
 }
+
+
   
