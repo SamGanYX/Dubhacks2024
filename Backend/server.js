@@ -9,6 +9,7 @@ const multer = require('multer');
 const path = require('path');
 
 const { calculateDiet, adjustDiet } = require('./src/dietCalculator');
+const { getResponse } = require('./src/Perplexity');
 
 const db = mysql.createConnection({
     host:"127.0.0.1",
@@ -79,6 +80,21 @@ app.get('/userstats/:userID', (req, res) => {
         if (data.length === 0) return res.status(404).json({ message: 'User not found' }); // Handle case when user not found
         return res.json(data[0]); // Return the first user stats object
     });
+});
+
+app.post('/api/query', async (req, res) => {
+    const { prompt } = req.body; // Assuming the input has a 'prompt' key
+    if (!prompt) {
+        return res.status(400).json({ error: 'Prompt is required' });
+    }
+
+    try {
+        const aiResponse = await getResponse(prompt); // Call the getResponse function
+        res.json({ answer: aiResponse }); // Send back the response
+    } catch (error) {
+        console.error("Error calling AI API:", error);
+        res.status(500).json({ error: 'Failed to get AI response' });
+    }
 });
 
 // =============== Adding to Table ================ \\
