@@ -54,7 +54,7 @@ p {
 
 /* .navigation button styling */
 .navigationbutton {
-    background-color: #2980b9; /* .navigation button background color */
+    background-color: #1bbd88; /* .navigation button background color */
     color: white; /* .navigation button text color */
     border: none; /* No border */
     border-radius: 8px; /* Rounded corners */
@@ -68,7 +68,7 @@ p {
 
 /* .navigation button hover effect */
 .navigationbutton:hover {
-    background-color: #1c6696; /* Darker shade on hover */
+    background-color: #14805f; /* Darker shade on hover */
     transform: translateY(-2px); /* Lift effect on hover */
 }
 
@@ -85,7 +85,7 @@ p {
         font-size: 2rem; /* Adjust heading size for smaller screens */
     }
     .navigation button {
-        background-color: #2980b9; /* .navigation button background color */
+        background-color: #1bbd88; /* .navigation button background color */
         color: white; /* .navigation button text color */
         border: none; /* No border */
         border-radius: 8px; /* Rounded corners */
@@ -96,4 +96,25 @@ p {
         transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     }
+}
+
+
+.rec-container {
+    padding: 20px; /* Add some padding around the container */
+    max-width: 80vw; /* Set a max width for the container */
+    margin: 0px auto; /* Center the container */
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.title-container {
+    padding: 20px; /* Add some padding around the container */
+    max-width: 80vw; /* Set a max width for the container */
+    margin: 0px auto; /* Center the container */
+    background-color: #1bbd88; /* Light background for contrast */
+    border-radius: 500px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    color: white;
+    width: auto;
 }

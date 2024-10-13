@@ -34,14 +34,14 @@
 /* workout title styling */
 h2 {
     font-size: 1.8rem; /* Slightly smaller font size */
-    color: #2980b9; /* Accent color for titles */
+    color: #2c3e50; /* Accent color for titles */
     margin-bottom: 10px; /* Margin below the title */
 }
 
 /* Paragraph styling for workout details */
 p {
     font-size: 1rem; /* Regular font size */
-    color: #34495e; /* Dark text color */
+    color: #081125; /* Dark text color */
     margin: 5px 0; /* Margin above and below paragraphs */
 }
 
@@ -54,10 +54,10 @@ p {
 
 /* .navigation button styling */
 .navigationbutton {
-    background-color: #2980b9; /* .navigation button background color */
+    background-color: #1bbd88; /* .navigation button background color */
     color: white; /* .navigation button text color */
     border: none; /* No border */
-    border-radius: 8px; /* Rounded corners */
+    border-radius: 500px; /* Rounded corners */
     padding: 12px 20px; /* Padding for the .navigation button */
     font-size: 1.1rem; /* Font size */
     font-weight: 600; /* Bold text */
@@ -68,7 +68,7 @@ p {
 
 /* .navigation button hover effect */
 .navigationbutton:hover {
-    background-color: #1c6696; /* Darker shade on hover */
+    background-color: #14805f; /* Darker shade on hover */
     transform: translateY(-2px); /* Lift effect on hover */
 }
 
@@ -85,10 +85,10 @@ p {
         font-size: 2rem; /* Adjust heading size for smaller screens */
     }
     .navigation button {
-        background-color: #2980b9; /* .navigation button background color */
+        background-color: #1bbd88; /* .navigation button background color */
         color: white; /* .navigation button text color */
         border: none; /* No border */
-        border-radius: 8px; /* Rounded corners */
+        border-radius: 500px; /* Rounded corners */
         padding: 12px 20px; /* Padding for the .navigation button */
         font-size: 1.1rem; /* Font size */
         font-weight: 600; /* Bold text */

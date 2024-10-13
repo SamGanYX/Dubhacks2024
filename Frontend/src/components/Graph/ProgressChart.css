@@ -26,12 +26,12 @@
 
 .btn-recalibrate {
     display: block; /* Block-level button */
-    width: 40%; /* Full width */
+    width: 27%; /* Full width */
     padding: 12px; /* Add padding for a larger click area */
     background-color: #1bbd88; /* Primary button color */
     color: white; /* Text color */
     border: none; /* Remove border */
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 500px; /* Rounded corners */
     cursor: pointer; /* Pointer cursor on hover */
     font-size: 1rem; /* Font size */
     transition: background-color 0.3s; /* Smooth background color transition */
