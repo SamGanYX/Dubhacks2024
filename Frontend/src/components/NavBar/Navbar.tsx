@@ -43,15 +43,6 @@ const Navbar = () => {
           <li className="navbar-li">
             <NavLink to="/about">About</NavLink>
           </li>
-          <li className="navbar-li">
-            <NavLink to="/logger">Food Logger</NavLink> {/* New Tab */}
-          </li>
-          <li className="navbar-li">
-            <NavLink to="/chat">Chat Bot</NavLink> {/* New Tab */}
-          </li>
-          <li className="navbar-li">
-            <NavLink to="/recipes">Recipes</NavLink> {/* New Tab */}
-          </li>
           {!isAuthenticated ? (
             <>
               <li className="navbar-li">
@@ -62,11 +53,22 @@ const Navbar = () => {
               </li>
             </>
           ) : (
-            <li className="navbar-li">
-              <a onClick={logout} className="log_out">
-                Log out
-              </a>
-            </li>
+            <>
+              <li className="navbar-li">
+                <NavLink to="/logger">Food Logger</NavLink> {/* New Tab */}
+              </li>
+              <li className="navbar-li">
+                <NavLink to="/chat">Chat Bot</NavLink> {/* New Tab */}
+              </li>
+              <li className="navbar-li">
+                <NavLink to="/recipes">Recipes</NavLink> {/* New Tab */}
+              </li>
+              <li className="navbar-li">
+                <a onClick={logout} className="log_out">
+                  Log out
+                </a>
+              </li>
+            </>
           )}
         </ul>
       </nav>
