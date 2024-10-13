@@ -24,7 +24,11 @@
     list-style-type: none; /* Remove default list styles */
     padding: 0; /* Remove default padding */
     width: 100%; /* Full width */
-    max-width: 600px; /* Maximum width of the list */
+    max-width: 900px; /* Maximum width of the list */
+}
+
+.recipes_ul li {
+    display: block;
 }
 
 /* Recipe title styling */
