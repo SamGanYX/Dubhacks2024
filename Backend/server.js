@@ -361,7 +361,7 @@ app.get('/api/dailyrecords/:userID', (req, res) => {
         SELECT date, caloriesEaten, mealName, weight, calorieGoal 
         FROM DailyRecords 
         WHERE userID = ? 
-        ORDER BY date DESC
+        ORDER BY date ASC
     `;
 
     db.query(query, [userID], (err, results) => {
