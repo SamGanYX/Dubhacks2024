@@ -46,6 +46,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     setIsAuthenticated(false);
     setToken(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("userID");
+    localStorage.removeItem("goal");
+    window.location.href = "/";
   };
 
   // Provide authentication state and functions to children

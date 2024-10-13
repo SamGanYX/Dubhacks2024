@@ -39,6 +39,12 @@ const CalorieForm = () => {
   const { isAuthenticated, token } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setLoading(false);
+    if (!loading && !isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate, loading]);
   const userID = localStorage.getItem("userID");
 
   
@@ -209,19 +215,18 @@ const CalorieForm = () => {
         {/* Toggleable images */}
         <label htmlFor="activity">Interests:</label>
         <div className="image-grid">
-  {images.map((image, index) => (
-    <div key={index} className="image-container">
-      <img
-        src={image.src}
-        alt={image.alt}
-        className={`grid-image ${selectedImages.includes(index) ? "selected" : ""}`}
-        onClick={() => toggleImageSelection(index)}
-      />
-      <div className="image-title">{image.title}</div> {/* Display title below the image */}
-    </div>
-  ))}
-</div>
-
+          {images.map((image, index) => (
+            <div key={index} className="image-container">
+              <img
+                src={image.src}
+                alt={image.alt}
+                className={`grid-image ${selectedImages.includes(index) ? "selected" : ""}`}
+                onClick={() => toggleImageSelection(index)}
+              />
+              <div className="image-title">{image.title}</div> {/* Display title below the image */}
+            </div>
+          ))}
+        </div>
         {/* Submit button */}
         <div className="form-group-calorie-form">
           <button type="submit" className="btn btn-primary button-calorie-form">

@@ -2,17 +2,25 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../AuthContext';
 import ProgressChart from '../components/Graph/ProgressChart';
 import './Plan.css';
+import { useNavigate } from 'react-router-dom';
 import './CalorieForm.css';
 
 
 const Plan = () => {
-    const { token } = useAuth();
     const [dietPlan, setDietPlan] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [quote, setQuote] = useState('');
     const [error, setError] = useState('');
     const [userData, setUserData] = useState<any>(null); // State to hold user data
     const userID = localStorage.getItem("userID");
+    const { isAuthenticated, token } = useAuth();
+    const navigate = useNavigate();
+    useEffect(() => {
+      setLoading(false);
+      if (!loading && !isAuthenticated) {
+        navigate("/login");
+      }
+    }, [isAuthenticated, navigate, loading]);
 
     const fetchQuote = async () => {
         setLoading(true);

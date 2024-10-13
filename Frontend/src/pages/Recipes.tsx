@@ -19,6 +19,14 @@ const Recipes = () => {
     const [totalPages, setTotalPages] = useState(0); // State to track total pages
     const userID = localStorage.getItem("userID");
     const navigate = useNavigate(); // Initialize useNavigate
+    const { isAuthenticated, token } = useAuth();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+      setLoading(false);
+      if (!loading && !isAuthenticated) {
+        navigate("/login");
+      }
+    }, [isAuthenticated, navigate, loading]);
 
     useEffect(() => {
         const fetchRecipes = async () => {
