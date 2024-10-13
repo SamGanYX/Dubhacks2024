@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../AuthContext'; // Assuming you have this context for authentication
 import { useNavigate } from 'react-router-dom';
 import "./IngredientsPage.css";
@@ -17,6 +17,14 @@ const IngredientsPage = () => {
     const goal = localStorage.getItem("goal");
     const userID = localStorage.getItem("userID");
     const navigate = useNavigate();
+    const { isAuthenticated, token } = useAuth();
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+      setLoading(false);
+      if (!loading && !isAuthenticated) {
+        navigate("/login");
+      }
+    }, [isAuthenticated, navigate, loading]);
 
     // Function to fetch recipes based on ingredients
     const getRecipes = async () => {
