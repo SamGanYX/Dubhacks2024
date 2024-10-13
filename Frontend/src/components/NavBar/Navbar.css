@@ -1,20 +1,21 @@
-
-
 /* Main Navbar */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #07294D;
-    /* position: sticky; */
-    top: 0px;
+    position: fixed; /* Changed from default to fixed */
+    top: 0; /* Stick to the top */
+    left: 0; /* Ensure it starts from the left */
+    right: 0; /* Ensure it stretches to the right */
     z-index: 10; /* Ensures navbar stays on top */
+    padding: 0.5rem 1rem; /* Add padding for better spacing */
 }
 
 nav .title {
     font-size: 1.5rem;
     font-weight: bold;
-    margin: 1rem;
+    margin: 0; /* Removed margin to prevent extra spacing */
     text-decoration: none;
     color: #fff;
 }
@@ -55,9 +56,7 @@ nav ul li .category-toggle:not(.active):hover {
 }
 
 nav .menu {
-    position: absolute;
-    top: 0.75rem;
-    right: 0.5rem;
+    position: relative; /* Changed from absolute to relative */
     flex-direction: column;
     justify-content: space-between;
     width: 2.25rem;
@@ -78,7 +77,6 @@ nav .menu span {
 }
 
 .categories li a:hover {
-    /* background-color: #0f5bac; */
     color: #ffc600;
 }
 
