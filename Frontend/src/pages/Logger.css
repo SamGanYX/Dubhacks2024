@@ -1,9 +1,8 @@
 .logger {
-    padding-top: 20px;
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    height: 100vh; /* Full height of the viewport */
+    height: 90vh; /* Full height of the viewport */
     position: relative; /* For positioning modal */
   }
   
@@ -329,6 +328,6 @@
 /* Optional: Add some padding to the tile to make the color more visible */
 .react-calendar__tile {
   padding: 10px;
-  border-radius: 5px; /* Add slight rounding */
+  border: black solid 1px !important;
 }
 
