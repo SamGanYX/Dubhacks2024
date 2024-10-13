@@ -5,7 +5,6 @@
     background-position: center; /* Center the background image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
     height: 100vh; /* Ensure it takes the full viewport height */
-    width: 100vw; /* Ensure it takes the full viewport width */
     display: flex;
     flex-direction: column; /* Arrange children vertically */
     justify-content: space-between; /* Space out children */
@@ -15,6 +14,7 @@
   }
   
   .title-section {
+    text-align: left;
     margin-top: 100px; /* Spacing between title and welcome section */
 }
 
@@ -35,6 +35,7 @@
   }
   
   .welcome-section h1 {
+    text-align: left;
     font-size: 36px; /* Adjust font size as needed */
     margin: 0; /* Remove default margin */
   }

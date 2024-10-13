@@ -4,7 +4,10 @@
     padding: 20px; /* Padding inside the form card */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     max-width: 500px; /* Max width for the form card */
-    margin: 120px auto; /* Center the form card with some margin */
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 100px;
+    margin-bottom: 0px;
   }
   
   h2 {
@@ -19,7 +22,7 @@
     margin-top: 15px;
     display: flex; /* Use flexbox for alignment */
     flex-direction: column;
-    align-items: flex-start;
+
   }
   
   label {
@@ -49,7 +52,7 @@
   }
   
   .button-calorie-form {
-    background-color: #07294D; /* Dark blue background */
+    background-color: #07294D !important; /* Dark blue background */
     color: white; /* White text color */
     border: none; /* No border */
     border-radius: 4px; /* Rounded corners */
@@ -61,7 +64,7 @@
   }
   
   .button-calorie-form:hover {
-    background-color: #0a3868; /* Lighter blue on hover */
+    background-color: #1559a2 !important; /* Lighter blue on hover */
   }
   
   .error-message {
@@ -73,4 +76,41 @@
     color: green; /* Green color for success messages */
     margin-top: 10px; /* Margin above success messages */
   }
-  
+
+  .icon-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.icon-left {
+    width: 10px;
+    margin-right: 10px;
+}
+.icon-left-light {
+  width: 12px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.icon-right {
+    width: 15px;
+    margin-left: 10px;
+}
+.icon-right-heavy {
+  width: 27px;
+  height: 40px;
+  margin-left: 10px;
+}
+
+
+.slider-value {
+  margin-left: 10px; /* Space between slider and value */
+  min-width: 30px; /* Minimum width for value display */
+  text-align: center; /* Center the text */
+}
+
+.slider {
+  accent-color: rgb(6, 20, 64);
+}
+

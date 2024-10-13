@@ -1,87 +1,86 @@
 /* Navbar.css */
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #333;
-    padding: 1rem 2rem;
-  }
-  
-  .title {
-    color: white;
-    font-size: 1.5rem;
-    text-decoration: none;
-  }
-  
-  .menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 30px;
-    height: 20px;
-    cursor: pointer;
-  }
-  
-  .menu span {
-    display: block;
-    height: 4px;
-    background-color: white;
-    border-radius: 2px;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 1rem 2rem;
+}
+
+.title {
+  color: white;
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.menu span {
+  display: block;
+  height: 4px;
+  background-color: white;
+  border-radius: 2px;
+}
+
+ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+
+ul.open {
+  display: block;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #333;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+li {
+  display: flex;
+  align-items: center;
+}
+
+a, .log_out {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+}
+
+a:hover, .log_out:hover {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
   ul {
-    display: flex;
-    list-style: none;
-    gap: 1.5rem;
-  }
-  
-  ul.open {
-    display: block;
+    display: none;
+    flex-direction: column;
+    gap: 0;
     position: absolute;
-    top: 60px;
-    right: 20px;
+    top: 50px;
+    right: 10px;
     background-color: #333;
-    padding: 1rem;
-    border-radius: 8px;
-  }
-  
-  li {
-    display: flex;
-    align-items: center;
-  }
-  
-  a, .log_out {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  a:hover, .log_out:hover {
-    background-color: #555;
     border-radius: 5px;
+    padding: 1rem;
   }
-  
-  @media (max-width: 768px) {
-    ul {
-      display: none;
-      flex-direction: column;
-      gap: 0;
-      position: absolute;
-      top: 50px;
-      right: 10px;
-      background-color: #333;
-      border-radius: 5px;
-      padding: 1rem;
-    }
-  
-    ul.open {
-      display: flex;
-    }
-  
-    li {
-      margin: 10px 0;
-    }
+
+  ul.open {
+    display: flex;
   }
-  
+
+  li {
+    margin: 10px 0;
+  }
+}

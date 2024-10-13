@@ -121,7 +121,7 @@
   .btn-add-meal {
     margin: 10px auto; /* Center the button horizontally */
     padding: 10px 20px; /* Add padding to the button */
-    background-color: #007bff; /* Primary button color */
+    background-color: #07294D !important; /* Primary button color */
     color: white; /* Text color */
     border: none; /* Remove default border */
     border-radius: 5px; /* Rounded corners */
@@ -130,12 +130,12 @@
   }
 
   .btn-add-meal:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #1559a2 !important; /* Darker shade on hover */
   }
   
   .btn-add-meal {
     padding: 10px;
-    background-color: #007bff;
+    background-color: #07294D !important;
     color: white;
     border: none;
     border-radius: 5px;
@@ -143,7 +143,7 @@
   }
   
   .btn-add-meal:hover {
-    background-color: #0056b3;
+    background-color: #1559a2 !important;
   }
   
   /* Meal list styles */
@@ -221,9 +221,13 @@
     background-color: #e0e0e0; /* Light gray on hover */
 }
 
+.react-calendar button:enabled:hover {
+  background-color: rgba(21, 89, 162, 0.7) !important; /* Slightly transparent */
+}
+
 /* Selected day styles */
 .react-calendar__month-view__days__day--selected {
-    background-color: #007bff; /* Selected day color */
+    background-color: #07294D !important; /* Selected day color */
     color: white; /* Text color for selected day */
 }
 
@@ -286,7 +290,7 @@
 
 .btn-add-meal {
   padding: 10px 20px;            /* Add padding for better click area */
-  background-color: #007bff;     /* Green background color */
+  background-color: #07294D !important;     /* Green background color */
   color: white;                   /* White text color */
   border: none;                   /* Remove border */
   border-radius: 5px;            /* Rounded corners */
@@ -295,7 +299,7 @@
 }
 
 .btn-add-meal:hover {
-  background-color: #0055b0;      /* Darker green on hover */
+  background-color: #1559a2 !important;      /* Darker green on hover */
 }
 
 .btn-back {

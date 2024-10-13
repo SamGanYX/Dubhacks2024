@@ -2,24 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./CalorieForm.css";
-import heavyman from '../assets/heavyman.png'; // Adjust path based on your structure
-import lightman from '../assets/lightman.png';
+import heavyman_upscaled from '../assets/heavyman_upscaled.png'; // Adjust path based on your structure
 
 const CalorieForm = () => {
   // Form state for user inputs
   const [age, setAge] = useState<number | "">("");
-  const [height, setHeight] = useState<number | "">("");
-  const [weight, setWeight] = useState<number | "">("");
+  const [height, setHeight] = useState<number | "">(170); // Default height
+  const [weight, setWeight] = useState<number | "">(70); // Default weight
   const [goal, setGoal] = useState<string>("gain muscle easy");
   const [activity, setActivity] = useState<string>("1.2");
   const [gender, setGender] = useState<number | "">(1);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  const { isAuthenticated, login, logout, token } = useAuth();
+  const { isAuthenticated, token } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const userID = localStorage.getItem("userID");
+
 
   useEffect(() => {
     setLoading(false);
@@ -33,6 +33,7 @@ const CalorieForm = () => {
 
     if (!userID) {
       setError("User is not logged in");
+      console.log(error)
       return;
     }
 
@@ -58,8 +59,8 @@ const CalorieForm = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
         setSuccessMessage("Stats added successfully!");
+        console.log(successMessage)
         setGoal("");
         setAge("");
         setWeight("");
@@ -77,7 +78,7 @@ const CalorieForm = () => {
 
   return (
     <div className="form-card col-md-12">
-      <h2>Create Your Diet</h2>
+      <h2>Tell Us About Yourself</h2>
       <form onSubmit={handleSubmit}>
         {/* Age input */}
         <div className="form-group-calorie-form">
@@ -106,63 +107,44 @@ const CalorieForm = () => {
             <option value="1">Female</option>
           </select>
         </div>
-
         {/* Height input and slider */}
         <div className="form-group-calorie-form">
-          <label htmlFor="height">Height (cm):</label>
-          <div className="slider-container">
-            <input
-              type="number"
-              id="height"
-              value={height}
-              onChange={(e) => setHeight(Number(e.target.value))}
-              className="form-control"
-              required
-            />
-          <p></p>
-            <input
-              type="range"
-              min="100"
-              max="250"
-              value={height}
-              onChange={(e) => setHeight(Number(e.target.value))}
-              className="slider"
-            />
-          </div>
+            <label htmlFor="height">Height (cm):</label>
+            <div className="icon-container">
+                <img src={heavyman_upscaled} alt="left" className="icon-left" />
+                <img src={heavyman_upscaled} alt="right" className="icon-right" width="20px" />
+            </div>
+            <div className="slider-container">
+                <input
+                    type="range"
+                    min="100"
+                    max="250"
+                    value={height}
+                    onChange={(e) => setHeight(Number(e.target.value))}
+                    className="slider"
+                />
+                <span className="slider-value">{height || 0}cm</span> {/* Display slider value */}
+            </div>
         </div>
-
         {/* Weight input and slider */}
         <div className="form-group-calorie-form">
-          <label htmlFor="weight">Weight (kg):</label>
-          <div className="slider-container">
-            <input
-                type="number"
-                id="weight"
-                value={weight}
-                onChange={(e) => setWeight(Number(e.target.value))}
-                className="form-control"
-                required
-            />
-          </div>
-          <div>
-            <img src={lightman} alt="left"
-                 style={{width: '10px', marginRight: '10px', display: 'inline-block', verticalAlign: 'middle'}}/>
-            <img src={heavyman} alt="right"
-                 style={{width: '15px', marginRight: '10px', display: 'inline-block', verticalAlign: 'middle'}}/>
-          </div>
-
-
-          <div className="slider-container"><input
-              type="range"
-              min="30"
-              max="250"
-              value={weight}
-              onChange={(e) => setWeight(Number(e.target.value))}
-              className="slider"
-          /></div>
-
+            <label htmlFor="weight">Weight (kg):</label>
+            <div className="icon-container">
+                <img src={heavyman_upscaled} alt="left" className="icon-left-light" />
+                <img src={heavyman_upscaled} alt="right" className="icon-right-heavy" />
+            </div>
+            <div className="slider-container">
+                <input
+                    type="range"
+                    min="30"
+                    max="250"
+                    value={weight}
+                    onChange={(e) => setWeight(Number(e.target.value))}
+                    className="slider"
+                />
+                <span className="slider-value">{weight || 0}kg</span> {/* Display slider value */}
+            </div>
         </div>
-
         {/* Goal dropdown */}
         <div className="form-group-calorie-form">
           <label htmlFor="goal">Goal:</label>
