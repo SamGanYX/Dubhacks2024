@@ -215,7 +215,7 @@ app.post('/userstats', (req, res) => {
             // If no record exists, insert a new one
             const insertQuery = `
                 INSERT INTO UserStats (UserID, age, Gender, Weight, Height, Goal, Activity, CaloriesGoal, endurance, muscle, bmi, eating, daily, unknown)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             `;
             db.query(insertQuery, [userID, age, gender, weight, height, goal, parseFloat(activity), calGoal, endurance, muscle, bmi, eating, daily, unknown], (err, insertResults) => {
                 if (err) {
