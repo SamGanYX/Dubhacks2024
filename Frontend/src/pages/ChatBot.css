@@ -84,12 +84,19 @@
     height: auto;
     margin: 10px;
     padding: 10px;
-    border-radius: 8px; /* Soft rounded corners */
-    background-color: #007bff; /* Primary blue color */
+    width: 10%;
+    border-radius: 500px; /* Soft rounded corners */
+    background-color: #1bbd88; /* Primary blue color */
     color: #fff; /* White text */
     border: none; /* No borders */
     cursor: pointer; /* Pointer on hover */
     font-size: 14px; /* Readable font size */
     font-weight: 600; /* Bold for emphasis */
-}
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
 
+  }
+
+  .inputChat:hover {
+    background-color: #14805f; /* Darker shade on hover */
+
+  }
