@@ -34,7 +34,7 @@ const ChatBot: React.FC = () => {
 
       // Update the messages state with the bot's response
       setMessages((prev) => [
-        ...prev.slice(0, -1), // Remove the last user message
+        ...prev, // Remove the last user message
         { user: input, bot: botResponse } // Add the updated message with bot response
       ]);
     } catch (error) {
