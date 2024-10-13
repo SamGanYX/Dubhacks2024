@@ -11,6 +11,7 @@ const path = require('path');
 const { calculateDiet, adjustDiet, calculateBMR } = require('./src/dietCalculator');
 const { getResponse } = require('./src/Perplexity');
 const { getRecipes } = require('./src/RecipeBot');
+const { getQuote } = require('./src/MotivationalBot');
 
 const db = mysql.createConnection({
     host:"127.0.0.1",
@@ -54,6 +55,18 @@ const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
 app.get('/', (req, res) => {
     return res.json("From Backend Side");
+});
+
+
+app.get('/getquote', async (req, res) => {
+    // const quote = await getQuote();
+    const quote = "disabled";
+    if (!quote) {
+        return res.status(500).json({ error: 'Failed to generate quote.' });
+    }
+
+    // Send the quote as the response
+    res.json({ message: 'Quote generated successfully.', quote });
 });
 
 app.get('/users', (req, res) => {

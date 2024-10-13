@@ -1,86 +1,170 @@
-/* Navbar.css */
 
+
+/* Main Navbar */
 nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #333;
-  padding: 1rem 2rem;
-}
-
-.title {
-  color: white;
-  font-size: 1.5rem;
-  text-decoration: none;
-}
-
-.menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 30px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.menu span {
-  display: block;
-  height: 4px;
-  background-color: white;
-  border-radius: 2px;
-}
-
-ul {
-  display: flex;
-  list-style: none;
-  gap: 1.5rem;
-}
-
-ul.open {
-  display: block;
-  position: absolute;
-  top: 60px;
-  right: 20px;
-  background-color: #333;
-  padding: 1rem;
-  border-radius: 8px;
-}
-
-li {
-  display: flex;
-  align-items: center;
-}
-
-a, .log_out {
-  color: white;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  transition: background-color 0.3s ease;
-}
-
-a:hover, .log_out:hover {
-  background-color: #555;
-  border-radius: 5px;
-}
-
-@media (max-width: 768px) {
-  ul {
-    display: none;
-    flex-direction: column;
-    gap: 0;
-    position: absolute;
-    top: 50px;
-    right: 10px;
-    background-color: #333;
-    border-radius: 5px;
-    padding: 1rem;
-  }
-
-  ul.open {
     display: flex;
-  }
+    justify-content: space-between;
+    align-items: center;
+    background-color: #eee;
+    position: sticky;
+    top: 0px;
+    z-index: 10; /* Ensures navbar stays on top */
+}
 
-  li {
-    margin: 10px 0;
-  }
+nav .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem;
+    text-decoration: none;
+    color: #353030;
+}
+
+nav ul {
+    display: flex;
+    margin-bottom: 0rem;
+}
+
+nav ul li {
+    list-style: none;
+}
+
+nav ul li a {
+    display: block;
+    text-decoration: none;
+    color: #353030;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    border-radius: 0.5rem;
+    transition: #0a3868 0.3s ease;
+}
+
+nav ul li .category-toggle {
+    text-decoration: none;
+    color: #353030;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    border-radius: 0.5rem;
+}
+
+nav ul li a:not(.active):hover {
+    background-color: #eee;
+    color: #353030;
+}
+
+nav ul li .category-toggle:not(.active):hover {
+    background-color: #eee;
+    color: #353030;
+}
+
+nav .menu {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 2.25rem;
+    height: 2rem;
+}
+
+nav .menu span {
+    height: 0.3rem;
+    width: 100%;
+    background-color: #eee;
+    border-radius: 0.15rem;
+}
+
+/* Categories Subnavbar */
+.category-navbar {
+    background-color: #eee;
+    padding: 0.5rem 1rem;
+    overflow-x: auto; /* Allows scrolling on small screens */
+    white-space: nowrap;
+}
+
+.category-toggle {
+    display: none; /* Hidden by default for desktop */
+    color: #07294D;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+}
+
+.categories {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.categories li {
+    list-style: none;
+}
+
+.categories li a {
+    color: #353030;
+    text-decoration: none;
+    padding: 0.5rem 0.2rem;
+    /* background-color: #eee; */
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Active state */
+.active {
+    background-color: #eee;
+    color: #353030;
+}
+
+.categories li a:hover {
+    /* background-color: #0f5bac; */
+    color: #353030;
+}
+
+/* Mobile Styles */
+@media (max-width: 500px) {
+    nav .menu {
+        display: flex;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: start;
+    }
+
+    nav ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        padding-left: 0;
+        margin-bottom: 0.25rem;
+    }
+
+    nav ul.open {
+        display: flex;
+    }
+
+    nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        margin: 0.2rem 0.5rem;
+    }
+
+    /* Mobile categories toggle */
+    .category-toggle {
+        display: block; /* Show toggle button on mobile */
+    }
+
+    .categories {
+        display: none;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .categories.categories-open {
+        display: flex; /* Show categories when open on mobile */
+    }
 }

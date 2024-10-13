@@ -20,7 +20,7 @@
 }
 
 /* Recipe list styling */
-ul {
+.recipes_ul {
     list-style-type: none; /* Remove default list styles */
     padding: 0; /* Remove default padding */
     width: 100%; /* Full width */
