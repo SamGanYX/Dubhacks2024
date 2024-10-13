@@ -12,6 +12,7 @@ import CalorieForm from "./pages/CalorieForm";
 import CreateAccount from "./pages/CreateAccount";
 import Navbar from "./components/NavBar/Navbar";
 import ChatBot from "./pages/ChatBot";
+import Recipes from "./pages/Recipes";
 const App = () => {
   return (
     <div>
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/calculator" element={<CalorieForm />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/plan" element={<Plan />}></Route>
+            <Route path="/recipes" element={<Recipes />}></Route>
             <Route path="/create_account" element={<CreateAccount />}></Route>
             <Route path="*" element={<NoPage />}></Route>
             <Route path="/chat" element={<ChatBot />}></Route>
