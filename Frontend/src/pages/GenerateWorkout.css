@@ -1,0 +1,79 @@
+/* Main container for the workouts page */
+.generate-workout {
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements horizontally */
+    justify-content: center; /* Center elements vertically */
+    min-height: 100vh; /* Full viewport height */
+    background-color: #f0f4f8; /* Light background color */
+    padding: 40px; /* Increased padding for a spacious layout */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+}
+
+/* Heading styling */
+.generate-workout h1 {
+    font-size: 2.5rem; /* Larger heading size */
+    color: #2c3e50; /* Darker text color for contrast */
+    margin-bottom: 30px; /* Margin below the heading */
+    text-align: center; /* Center the heading */
+    letter-spacing: 1px; /* Slightly increase letter spacing */
+}
+
+/* Form styling */
+form {
+    background-color: #ffffff; /* White background for the form */
+    padding: 30px; /* Padding inside the form */
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Deeper shadow for depth */
+    width: 100%; /* Full width for responsive design */
+    max-width: 600px; /* Maximum width of the form */
+    border: 1px solid #e1e1e1; /* Light border for a subtle outline */
+}
+
+/* Textarea styling */
+textarea {
+    width: 100%; /* Full width */
+    padding: 15px; /* Padding inside the textarea */
+    border: 1px solid #d1d1d1; /* Soft border color */
+    border-radius: 8px; /* Rounded corners */
+    resize: none; /* Prevent resizing */
+    font-size: 1.1rem; /* Slightly larger font size */
+    color: #34495e; /* Dark text color */
+    margin-bottom: 20px; /* Space below the textarea */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+}
+
+/* Placeholder styling */
+textarea::placeholder {
+    color: #b0b0b0; /* Placeholder text color */
+}
+
+/* .generate-workout button styling */
+.workoutbutton {
+    background-color: #2980b9; /* .generate-workout button background color */
+    color: white; /* .generate-workout button text color */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 12px 20px; /* Padding for the .generate-workout button */
+    font-size: 1.1rem; /* Font size */
+    font-weight: 600; /* Bold text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* .generate-workout button hover effect */
+.workoutbutton:hover {
+    background-color: #1c6696; /* Darker shade on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem; /* Adjust heading size for smaller screens */
+    }
+    .generate-workout button {
+        width: 100%; /* Full width for .generate-workout buttons on smaller screens */
+    }
+}

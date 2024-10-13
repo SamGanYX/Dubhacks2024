@@ -11,6 +11,7 @@ const path = require('path');
 const { calculateDiet, adjustDiet, calculateBMR } = require('./src/dietCalculator');
 const { getResponse } = require('./src/Perplexity');
 const { getRecipes } = require('./src/RecipeBot');
+const { getWorkouts } = require('./src/WorkoutBot');
 const { getQuote } = require('./src/MotivationalBot');
 
 const db = mysql.createConnection({
@@ -608,7 +609,7 @@ app.post('/api/getRecipes', async (req, res) => {
     const sqlStatement = await getRecipes(query);
 
     if (!sqlStatement) {
-        return res.status(500).json({ error: 'Failed to generate recipe from OpenAI.' });
+        return res.status(500).json({ error: 'Failed to generate recipe from Perplexity.' });
     }
 
     // Execute the SQL statement to insert the recipe into the database
@@ -619,6 +620,56 @@ app.post('/api/getRecipes', async (req, res) => {
         }
 
         res.json({ message: 'Recipe inserted successfully.', results });
+    });
+});
+
+app.get('/api/workouts/:userID', async (req, res) => {
+    const { userID } = req.params;
+    const { page = 1 } = req.query; // Pagination, default to page 1
+
+    const pageSize = 10; // Number of workouts per page
+    const offset = (page - 1) * pageSize;
+
+    // Query to fetch paginated workouts
+    const query = `SELECT * FROM Workouts WHERE userID = ? LIMIT ? OFFSET ?`;
+    db.query(query, [userID, pageSize, offset], (err, results) => {
+        if (err) {
+            console.error('Error fetching workouts:', err);
+            return res.status(500).json({ error: 'Database error while fetching workouts.' });
+        }
+
+        // Count total workouts for pagination
+        const countQuery = `SELECT COUNT(*) as total FROM Workouts WHERE userID = ?`;
+        db.query(countQuery, [userID], (err, countResult) => {
+            if (err) {
+                console.error('Error counting workouts:', err);
+                return res.status(500).json({ error: 'Database error while counting workouts.' });
+            }
+
+            const totalPages = Math.ceil(countResult[0].total / pageSize);
+            res.json({ workouts: results, totalPages });
+        });
+    });
+});
+
+app.post('/api/workouts', async (req, res) => {
+    const { query } = req.body;
+
+    // Call the getRecipes function to generate the SQL insert statement
+    const sqlStatement = await getWorkouts(query);
+
+    if (!sqlStatement) {
+        return res.status(500).json({ error: 'Failed to generate workout from Perplexity.' });
+    }
+
+    // Execute the SQL statement to insert the recipe into the database
+    db.query(sqlStatement, (err, results) => {
+        if (err) {
+            console.error('Database insert error:', err);
+            return res.status(500).json({ error: 'Database error while inserting workout.' });
+        }
+
+        res.json({ message: 'Workout inserted successfully.', results });
     });
 });
 

@@ -14,6 +14,8 @@ import Navbar from "./components/NavBar/Navbar";
 import ChatBot from "./pages/ChatBot";
 import Recipes from "./pages/Recipes";
 import IngredientsPage from "./pages/IngredientsPage";
+import Workouts from "./pages/Workout";
+import GenerateWorkout from "./pages/GenerateWorkout";
 const App = () => {
   return (
     <div>
@@ -31,6 +33,8 @@ const App = () => {
             <Route path="/plan" element={<Plan />}></Route>
             <Route path="/recipes" element={<Recipes />}></Route>
             <Route path="/ingredients" element={<IngredientsPage />}></Route>
+            <Route path="/workout" element={<Workouts />}></Route>
+            <Route path="/generateWorkout" element={<GenerateWorkout />}></Route>
             <Route path="/create_account" element={<CreateAccount />}></Route>
             <Route path="*" element={<NoPage />}></Route>
             <Route path="/chat" element={<ChatBot />}></Route>

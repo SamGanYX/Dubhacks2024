@@ -1,0 +1,99 @@
+/* Main container for the workouts page */
+.workouts-container {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center elements horizontally */
+    justify-content: flex-start; /* Align items at the start */
+    min-height: 100vh; /* Full viewport height */
+    background-color: #f0f4f8; /* Light background color */
+    padding: 20px 40px; /* Increased padding for a spacious layout */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+}
+
+/* Heading styling */
+.workouts-container h1 {
+    font-size: 2.5rem; /* Larger heading size */
+    color: #2c3e50; /* Darker text color for contrast */
+    margin-bottom: 30px; /* Margin below the heading */
+    text-align: center; /* Center the heading */
+    letter-spacing: 1px; /* Slightly increase letter spacing */
+}
+
+/* workout list styling */
+.workouts_ul {
+    list-style-type: none; /* Remove default list styles */
+    padding: 0; /* Remove default padding */
+    width: 100%; /* Full width */
+    max-width: 900px; /* Maximum width of the list */
+}
+
+.workouts_ul li {
+    display: block;
+}
+
+/* workout title styling */
+h2 {
+    font-size: 1.8rem; /* Slightly smaller font size */
+    color: #2980b9; /* Accent color for titles */
+    margin-bottom: 10px; /* Margin below the title */
+}
+
+/* Paragraph styling for workout details */
+p {
+    font-size: 1rem; /* Regular font size */
+    color: #34495e; /* Dark text color */
+    margin: 5px 0; /* Margin above and below paragraphs */
+}
+
+/* Navigation .navigation button styling */
+.navigation {
+    margin-top: 20px; /* Space above navigation */
+    display: flex; /* Use flexbox for layout */
+    gap: 10px; /* Space between .navigation buttons */
+}
+
+/* .navigation button styling */
+.navigationbutton {
+    background-color: #2980b9; /* .navigation button background color */
+    color: white; /* .navigation button text color */
+    border: none; /* No border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 12px 20px; /* Padding for the .navigation button */
+    font-size: 1.1rem; /* Font size */
+    font-weight: 600; /* Bold text */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* .navigation button hover effect */
+.navigationbutton:hover {
+    background-color: #1c6696; /* Darker shade on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+/* Navigate .navigation button styling */
+.navigate-.navigation button {
+    margin-top: 40px; /* Space above the navigate .navigation button */
+    width: 100%; /* Full width for the navigate .navigation button */
+    max-width: 600px; /* Maximum width for the navigate .navigation button */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem; /* Adjust heading size for smaller screens */
+    }
+    .navigation button {
+        background-color: #2980b9; /* .navigation button background color */
+        color: white; /* .navigation button text color */
+        border: none; /* No border */
+        border-radius: 8px; /* Rounded corners */
+        padding: 12px 20px; /* Padding for the .navigation button */
+        font-size: 1.1rem; /* Font size */
+        font-weight: 600; /* Bold text */
+        cursor: pointer; /* Pointer cursor on hover */
+        transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+}
