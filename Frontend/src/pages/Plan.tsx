@@ -7,7 +7,6 @@ const Plan = () => {
     const { token } = useAuth();
     const [dietPlan, setDietPlan] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [targetWeight, setTargetWeight] = useState<number>(70);
     const [userData, setUserData] = useState<any>(null); // State to hold user data
     const userID = localStorage.getItem("userID");
 
@@ -15,13 +14,13 @@ const Plan = () => {
     const fetchDietPlan = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:8081/api/calculate-diet', {
+            const response = await fetch('http://localhost:8081/api/calculate-diet-with-bmr', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
                 },
-                body: JSON.stringify({ targetWeight, userID }),
+                body: JSON.stringify({userID}),
             });
 
             if (!response.ok) {
@@ -29,6 +28,7 @@ const Plan = () => {
             }
 
             const data = await response.json();
+            console.log("hi");
             setDietPlan(data);
         } catch (err) {
             console.log(err);
@@ -57,7 +57,7 @@ const Plan = () => {
 
     useEffect(() => {
         fetchDietPlan();
-    }, [token, targetWeight]);
+    }, [token]);
 
     const handleEditClick = () => {
         window.location.href = '/calculator'; // Redirect to /calculator with a page refresh
@@ -78,9 +78,8 @@ const Plan = () => {
             {loading && <p>Loading...</p>}
             {dietPlan && (
                 <div className="diet-results">
-                    <h3>Basal Metabolic Rate (BMR): {dietPlan.bmr} kcal</h3>
-                    <h3>Total Daily Energy Expenditure (TDEE): {dietPlan.tdee} kcal</h3>
-                    <h3>Target Daily Caloric Intake: {dietPlan.targetCalories} kcal</h3>
+                    <h3>Expected Metabolic Rate: {dietPlan.bmr} kcal</h3>
+                    <h3>Target Daily Caloric Intake: {dietPlan.dietResult} kcal</h3>
                     {dietPlan.warning && <p className="warning">{dietPlan.warning}</p>}
                 </div>
             )}

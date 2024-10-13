@@ -13,6 +13,7 @@ import CreateAccount from "./pages/CreateAccount";
 import Navbar from "./components/NavBar/Navbar";
 import ChatBot from "./pages/ChatBot";
 import Recipes from "./pages/Recipes";
+import IngredientsPage from "./pages/IngredientsPage";
 const App = () => {
   return (
     <div>
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/plan" element={<Plan />}></Route>
             <Route path="/recipes" element={<Recipes />}></Route>
+            <Route path="/ingredients" element={<IngredientsPage />}></Route>
             <Route path="/create_account" element={<CreateAccount />}></Route>
             <Route path="*" element={<NoPage />}></Route>
             <Route path="/chat" element={<ChatBot />}></Route>

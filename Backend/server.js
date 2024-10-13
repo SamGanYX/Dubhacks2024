@@ -8,8 +8,9 @@ app.use(express.json());
 const multer = require('multer');
 const path = require('path');
 
-const { calculateDiet, adjustDiet } = require('./src/dietCalculator');
+const { calculateDiet, adjustDiet, calculateBMR } = require('./src/dietCalculator');
 const { getResponse } = require('./src/Perplexity');
+const { getRecipes } = require('./src/RecipeBot');
 
 const db = mysql.createConnection({
     host:"127.0.0.1",
@@ -282,23 +283,77 @@ app.post('/api/calculate-diet', async (req, res) => {
             switch (goal) {
                 case "gain muscle easy":
                     weightChangeRate = 0.1;
+                    break;
                 case "gain muscle hard":
                     weightChangeRate = 0.2;
+                    break;
                 case "lose fat easy":
                     weightChangeRate = -0.5;
+                    break;
                 case "lose fat hard":
                     weightChangeRate = -1.0;
+                    break;
                 case "gain weight easy":
                     weightChangeRate = 0.5;
+                    break;
                 case "gain weight hard":
                     weightChangeRate = 1;
+                    break;
                 case "maintain weight":
                     weightChangeRate = 0;
-                    targetWeight = weight;
-
+                    break;
             }
             const dietResult = calculateDiet(height, gender, weight, age, weightChangeRate, activity); // Call the diet calculation function
+
             return res.status(200).json(dietResult); // Respond with the diet result
+        } catch (error) {
+            return res.status(500).json({ error: error.message }); // Handle calculation errors
+        }
+    });
+});
+
+app.post('/api/calculate-diet-with-bmr', async (req, res) => {
+    let { userID } = req.body; // Ensure userID is included in the request body
+
+    // Query to fetch user stats based on userID
+    const sql = "SELECT height, gender, weight, age, activity, goal FROM UserStats WHERE userID = ?";
+
+    db.query(sql, [userID], (err, results) => {
+        if (err) return res.status(500).json({ error: err.message }); // Handle SQL errors
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'User not found' }); // Handle case when user not found
+        }
+
+        const { height, gender, weight, age, activity , goal} = results[0]; // Extract data from the first row
+        try {
+            let weightChangeRate = 0;
+            switch (goal) {
+                case "gain muscle easy":
+                    weightChangeRate = 0.1;
+                    break;
+                case "gain muscle hard":
+                    weightChangeRate = 0.2;
+                    break;
+                case "lose fat easy":
+                    weightChangeRate = -0.5;
+                    break;
+                case "lose fat hard":
+                    weightChangeRate = -1.0;
+                    break;
+                case "gain weight easy":
+                    weightChangeRate = 0.5;
+                    break;
+                case "gain weight hard":
+                    weightChangeRate = 1;
+                    break;
+                case "maintain weight":
+                    weightChangeRate = 0;
+                    break;
+            }
+            const dietResult = calculateDiet(height, gender, weight, age, weightChangeRate, activity); // Call the diet calculation function
+            const bmr = calculateBMR(height, gender, weight, age, weightChangeRate, activity); // Call the diet calculation function
+
+            return res.status(200).json({dietResult : dietResult, bmr:bmr}); // Respond with the diet result
         } catch (error) {
             return res.status(500).json({ error: error.message }); // Handle calculation errors
         }
@@ -513,6 +568,27 @@ app.get('/api/recipes/:userID', (req, res) => {
 
             res.status(200).json({ recipes: results, totalPages });
         });
+    });
+});
+
+app.post('/api/getRecipes', async (req, res) => {
+    const { query } = req.body;
+
+    // Call the getRecipes function to generate the SQL insert statement
+    const sqlStatement = await getRecipes(query);
+
+    if (!sqlStatement) {
+        return res.status(500).json({ error: 'Failed to generate recipe from OpenAI.' });
+    }
+
+    // Execute the SQL statement to insert the recipe into the database
+    db.query(sqlStatement, (err, results) => {
+        if (err) {
+            console.error('Database insert error:', err);
+            return res.status(500).json({ error: 'Database error while inserting recipe.' });
+        }
+
+        res.json({ message: 'Recipe inserted successfully.', results });
     });
 });
 

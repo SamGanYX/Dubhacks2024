@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 // Create a hook to use the AuthContext in components
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  console.log(context);
+  // console.log(context);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }

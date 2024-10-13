@@ -23,8 +23,9 @@
 }
 
 .diet-results h3 {
-    color: #4caf50; /* Green color for headings */
+    color: #2b4c84; /* Green color for headings */
     margin: 10px 0; /* Space above and below headings */
+    text-align: center;
 }
 
 .warning {
