@@ -70,7 +70,7 @@ const Recipes = () => {
             </div>
             {/* Button to navigate to Ingredients Page */}
             <button onClick={() => navigate('/ingredients/')} className="navigate-button">
-                Go to Ingredients
+                Generate a recipe
             </button>
         </div>
     );

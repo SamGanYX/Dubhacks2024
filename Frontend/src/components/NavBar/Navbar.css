@@ -2,26 +2,37 @@
 
 /* Main Navbar */
 nav {
+    padding: 6px 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #eee;
+    background-color: rgba(238, 238, 238, 0.0);;
     position: sticky;
     top: 0px;
     z-index: 10; /* Ensures navbar stays on top */
 }
 
 nav .title {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
-    margin: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
+    border-radius: 32px;
     text-decoration: none;
     color: #353030;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.green-text {
+    color: #1bbd88; /* Green color */
 }
 
 nav ul {
+    padding-left: 0px;
+    background-color: #fff;
+    border-radius: 32px;
     display: flex;
     margin-bottom: 0rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 nav ul li {
@@ -47,12 +58,12 @@ nav ul li .category-toggle {
 }
 
 nav ul li a:not(.active):hover {
-    background-color: #eee;
+    /* background-color: #eee; */
     color: #353030;
 }
 
 nav ul li .category-toggle:not(.active):hover {
-    background-color: #eee;
+    /* background-color: #eee; */
     color: #353030;
 }
 
@@ -112,8 +123,8 @@ nav .menu span {
 
 /* Active state */
 .active {
-    background-color: #eee;
-    color: #353030;
+    /* background-color: #eee; */
+    color: #443d3d;
 }
 
 .categories li a:hover {

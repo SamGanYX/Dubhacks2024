@@ -83,6 +83,7 @@ const CalorieForm = () => {
       if (response.ok) {
         setSuccessMessage("Stats added successfully!");
         console.log(successMessage)
+        localStorage.setItem("goal", goal);
         setGoal("");
         setAge("");
         setWeight("");

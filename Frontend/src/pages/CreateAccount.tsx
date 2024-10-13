@@ -57,6 +57,7 @@ const CreateAccount = () => {
             console.log(data);
             localStorage.setItem("token", data.token);
             localStorage.setItem("userID", data.userID);
+            localStorage.setItem("goal", data.userID);
             // location.reload();
             window.location.href = "/calculator";
           })
@@ -72,7 +73,7 @@ const CreateAccount = () => {
     <div className="container">
       <div className="left-section">
         <h1>
-          Eat<span>volution</span>
+          Eat<span className="green-text">volution</span>
         </h1>
       </div>
       <div className="form-div">

@@ -38,6 +38,13 @@
     border-radius: 50%; /* Make circular */
     margin-right: 10px; /* Spacing */
   }
+
+  .profile-pic-lg {
+    width: 100px; /* Adjust size */
+    height: 100px; /* Adjust size */
+    border-radius: 50%; /* Make circular */
+    margin-right: 10px; /* Spacing */
+  }
   
   .user-message {
     justify-content: flex-end; /* Align user messages to the right */

@@ -5,7 +5,6 @@
     align-items: center; /* Center vertically */
     height: 100vh; /* Full height of the viewport */
     position: relative; /* For positioning modal */
-    background-color: #f0f0f0; /* Light background for contrast */
   }
   
   /* Modal Overlay */
@@ -311,7 +310,8 @@
 }
 
 .tile-no-calories {
-  background-color: #ffffff; /* White for no calories logged */
+  background-color: #eee; /* White for no calories logged */
+  color:#000;
 }
 
 .tile-under-goal {

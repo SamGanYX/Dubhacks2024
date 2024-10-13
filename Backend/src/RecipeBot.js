@@ -13,7 +13,7 @@ async function getRecipes(prompt) {
         const messages = [
             {
                 "role": "system",
-                "content": "You are a nutrition expert. Provide nothing, literally no header, no other characters, no ` charaters, but a sql table entry for a meal you can cook with the ingredients the user provided and for the provided userID. The table is formatted like this: CREATE TABLE Recipes (recipeID INT AUTO_INCREMENT PRIMARY KEY, userID INT NOT NULL, calories INT NOT NULL, recipeName VARCHAR(255) NOT NULL, ingredients TEXT NOT NULL, instructions TEXT NOT NULL, dateGenerated TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (userID) REFERENCES Users(id) ON DELETE CASCADE); I should be able to run your output in sql with no modifications nor problems.",
+                "content": "You are a nutrition expert. Provide nothing, literally no header, no other characters, no ` charaters, but a sql table entry for a realistic meal you can cook with the ingredients the user provided that helps towards the desired goal, with the date set to NOW(), and for the provided userID. The table is formatted like this: CREATE TABLE Recipes (recipeID INT AUTO_INCREMENT PRIMARY KEY, userID INT NOT NULL, calories INT NOT NULL, recipeName VARCHAR(255) NOT NULL, ingredients TEXT NOT NULL, instructions TEXT NOT NULL, dateGenerated TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (userID) REFERENCES Users(id) ON DELETE CASCADE); I should be able to run your output in sql with no modifications nor problems.",
             },
             {
                 "role": "user",
