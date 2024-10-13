@@ -50,18 +50,6 @@ const Plan = () => {
                     {dietPlan.warning && <p className="warning">{dietPlan.warning}</p>}
                 </div>
             )}
-            <div className="input-container">
-                <h4>Adjust Your Target</h4>
-                <label>
-                    Target Weight (kg):
-                    <input
-                        type="number"
-                        value={targetWeight}
-                        onChange={(e) => setTargetWeight(Number(e.target.value))}
-                    />
-                </label>
-                <button onClick={() => fetchDietPlan()}>Update Plan</button>
-            </div>
             <ProgressChart></ProgressChart>
         </div>
     );

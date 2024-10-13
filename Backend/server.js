@@ -158,6 +158,26 @@ app.post('/userstats', (req, res) => {
             return res.status(500).json({ error: 'Database error' });
         }
 
+        let weightChangeRate = 0;
+        switch (goal) {
+            case "gain muscle easy":
+                weightChangeRate = 0.1;
+            case "gain muscle hard":
+                weightChangeRate = 0.2;
+            case "lose fat easy":
+                weightChangeRate = -0.5;
+            case "lose fat hard":
+                weightChangeRate = -1.0;
+            case "gain weight easy":
+                weightChangeRate = 0.5;
+            case "gain weight hard":
+                weightChangeRate = 1;
+            case "maintain weight":
+                weightChangeRate = 0;
+                targetWeight = weight;
+        }
+        const calGoal = calculateDiet(height, gender, weight, age, weightChangeRate, parseFloat(activity));
+        // console.log(calGoal);
         // If the user stats exist, update them
         if (results.length > 0) {
             const updateQuery = `
@@ -166,27 +186,11 @@ app.post('/userstats', (req, res) => {
                 WHERE UserID = ?
             `;
 
-            let weightChangeRate = 0;
-            switch (goal) {
-                case "gain muscle easy":
-                    weightChangeRate = 0.1;
-                case "gain muscle hard":
-                    weightChangeRate = 0.2;
-                case "lose fat easy":
-                    weightChangeRate = -0.5;
-                case "lose fat hard":
-                    weightChangeRate = -1.0;
-                case "gain weight easy":
-                    weightChangeRate = 0.5;
-                case "gain weight hard":
-                    weightChangeRate = 1;
-                case "maintain weight":
-                    weightChangeRate = 0;
-                    targetWeight = weight;
-            }
-            console.log(calculateDiet(height, gender, weight, age, weightChangeRate, parseFloat(activity)));
+            
+            // console.log((height, gender, weight, age, weightChangeRate, parseFloat(activity)));
+            // console.log();
 
-            db.query(updateQuery, [age, gender, weight, height, goal, parseFloat(activity), calculateDiet(height, gender, weight, age, weightChangeRate, parseFloat(activity)), userID], (err, updateResults) => {
+            db.query(updateQuery, [age, gender, weight, height, goal, parseFloat(activity), calGoal, userID], (err, updateResults) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).json({ error: 'Database error during update' });
@@ -196,10 +200,10 @@ app.post('/userstats', (req, res) => {
         } else {
             // If no record exists, insert a new one
             const insertQuery = `
-                INSERT INTO UserStats (UserID, age, Gender, Weight, Height, Goal, Activity)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO UserStats (UserID, age, Gender, Weight, Height, Goal, Activity, CaloriesGoal)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             `;
-            db.query(insertQuery, [userID, age, gender, weight, height, goal, parseFloat(activity)], (err, insertResults) => {
+            db.query(insertQuery, [userID, age, gender, weight, height, goal, parseFloat(activity), calGoal], (err, insertResults) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).json({ error: 'Database error during insert' });
