@@ -288,12 +288,6 @@ const Logger: React.FC = () => {
                 />
               </div>
               <button type="submit" className="btn-add-meal">Add Meal</button>
-              <div className="button-container">
-                <button type="submit" className="btn-add-meal">Add Meal</button>
-                <button type="button" className="btn-add-meal btn-back" onClick={closeModal}>
-                  Back
-                </button>
-              </div>
             </form>
 
 
