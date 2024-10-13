@@ -260,6 +260,14 @@ const Logger: React.FC = () => {
                   placeholder="Enter calories"
                 />
               </div>
+              <div className="form-group">
+                <label>Weight: </label>
+                <input
+                  type="number"
+                  value={weight}
+                  onChange={(e) => setWeight(parseFloat(e.target.value))}
+                />
+              </div>
               <button type="submit" className="btn-add-meal">Add Meal</button>
             </form>
 
