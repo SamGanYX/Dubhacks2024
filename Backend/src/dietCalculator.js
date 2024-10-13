@@ -71,7 +71,7 @@ function adjustDiet(height, gender, weight, age, weightChangeRate, activity, act
     // Calculate total calorie goal with activity multiplier and adjusted surplus
     const calorieGoal = (bmr * activity) + calorieAdjustment;
 
-    return Math.round(calorieGoal);
+    return Math.round(calorieGoal/10)*10;
 }
 module.exports = {
     calculateDiet,
