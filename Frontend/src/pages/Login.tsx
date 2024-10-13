@@ -64,15 +64,19 @@ const Login = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
-            type="text"
+            type="password" // Change type to "password"
             name="Password"
             id="Password"
             placeholder="Password"
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="off" // Prevent autofill
           />
           <button type="submit">Login</button>
         </form>
+        <div className="already-have-account">
+          <p>Don't have an account yet? <a href="/create_account">Create one</a></p>
+        </div>
       </div>
     </div>
   );
