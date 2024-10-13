@@ -117,12 +117,18 @@ app.post('/api/query', async (req, res) => {
 
 app.post('/users', (req, res) => {
     const { username, email, password } = req.body;
-    
-    const sql = "INSERT INTO users (Username, Email, Password) VALUES (?, ?, ?);";
-    db.query(sql, [username, email, password], (err, data) => {
-        console.log(err);
-        if (err) return res.status(500).json(err);
-        return res.status(201).json("User added successfully");
+    const sql1 = "SELECT * FROM users WHERE Username = ?";
+    db.query(sql1, [username], (err, result) => {
+        if(result.length !== 0) {
+            return res.status(500).json("User already exists");
+        } else {
+            const sql = "INSERT INTO users (Username, Email, Password) VALUES (?, ?, ?);";
+            db.query(sql, [username, email, password], (err, data) => {
+                console.log(err);
+                if (err) return res.status(500).json(err);
+                return res.status(201).json("User added successfully");
+            });
+        }
     });
 });
 
