@@ -38,7 +38,6 @@ const App = () => {
           <Route path="*" element={<NoPage />}></Route>
           <Route path="/chat" element={<ChatBot />}></Route>
         </Routes>
-        <Footer></Footer>
       </BrowserRouter>
     </div>
   );

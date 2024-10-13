@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../AuthContext';
 
 const Plan = () => {
@@ -6,7 +6,6 @@ const Plan = () => {
     const [dietPlan, setDietPlan] = useState<any>(null); // Change `any` to a specific type if available
     const [loading, setLoading] = useState<boolean>(true);
     const [targetWeight, setTargetWeight] = useState<number>(70); // Default target weight
-    const [targetTime, setTargetTime] = useState<number>(10); // Default target time in weeks
     const userID = localStorage.getItem("userID");
 
     // Fetch the diet plan from the backend
@@ -19,7 +18,7 @@ const Plan = () => {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`, // Include token for authentication
                 },
-                body: JSON.stringify({ targetWeight, targetTime, userID }),
+                body: JSON.stringify({ targetWeight, userID }),
             });
 
             if (!response.ok) {
@@ -36,7 +35,7 @@ const Plan = () => {
     };
     useEffect(() => {
         fetchDietPlan();
-    }, [token, targetWeight, targetTime]); // Re-fetch if the token, target weight, or target time changes
+    }, [token, targetWeight]); // Re-fetch if the token, target weight, or target time changes
 
     return (
         <div className="plan-container">
@@ -58,14 +57,6 @@ const Plan = () => {
                         type="number"
                         value={targetWeight}
                         onChange={(e) => setTargetWeight(Number(e.target.value))}
-                    />
-                </label>
-                <label>
-                    Target Time (weeks):
-                    <input
-                        type="number"
-                        value={targetTime}
-                        onChange={(e) => setTargetTime(Number(e.target.value))}
                     />
                 </label>
                 <button onClick={() => fetchDietPlan()}>Update Plan</button>

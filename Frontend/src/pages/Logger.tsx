@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import React, { useState } from 'react'; 
+=======
+// Logger.tsx
+import React, { useState, useEffect } from "react";
+>>>>>>> dc4c718b1fb9ab03d5a9c0f969724cd1c0189b4c
 import Calendar from 'react-calendar'; // Import the Calendar
 import 'react-calendar/dist/Calendar.css'; // Import default styles for the Calendar
 import './Logger.css'; // Update to your preferred CSS file
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 interface MealEntry {
   meal: string;
@@ -12,14 +19,106 @@ interface CalorieEntries {
   [date: string]: MealEntry[];
 }
 
+interface Record {
+  date: string;        // Date as a string, e.g., "2024-10-12T07:00:00.000Z"
+  caloriesEaten: number; // Total calories consumed
+  mealName: string
+  weight: number;      // User's weight at the time (can be string if fetched from the database as string)
+  calorieGoal: number; // Daily calorie goal
+}
+
 const Logger: React.FC = () => {
   const [meal, setMeal] = useState<string>('');
   const [calories, setCalories] = useState<string>('');
   const [calorieEntries, setCalorieEntries] = useState<CalorieEntries>({});
   const [calorieGoal, setCalorieGoal] = useState<number>(2000); // Default calorie goal
+  const [weight, setWeight] = useState<number>(165); // Default weight
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+<<<<<<< HEAD
   const [isMealLogged, setIsMealLogged] = useState<boolean>(false); // New state to track submission
+=======
+  const [loading, setLoading] = useState(true);
+  const userID = localStorage.getItem("userID");
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(false);
+    if (!loading && !isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate, loading]);
+
+  // Fetch user stats
+  const fetchUserStats = async () => {
+    if (userID) {
+      try {
+        const response = await fetch('http://localhost:8081/userstats/'+userID);
+        if (!response.ok) {
+          throw new Error('Failed to fetch user stats');
+        }
+        const stats = await response.json();
+        // console.log(stats);
+        setCalorieGoal(stats.CaloriesGoal);
+        // Assuming the first user stat is for the logged-in user
+
+        // setWeight(stats.Weight);
+        if (stats.Weight) {
+          setWeight(stats.Weight);
+          // console.log(weight);
+          // You can also get other stats if needed (height, age, etc.)
+        }
+      } catch (error) {
+        console.error('Error fetching user stats:', error);
+      }
+    }
+  };
+
+  // Fetch daily records
+  const fetchDailyRecords = async () => {
+    if (userID) {
+        try {
+            const response = await fetch(`http://localhost:8081/api/dailyrecords/${userID}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch daily records');
+            }
+            const records = await response.json();
+            // Assuming records is an array of entries
+            setCalorieEntries((prevEntries) => {
+                const newEntries = { ...prevEntries }; // Create a copy of the previous entries
+
+                records.forEach((record: Record) => {
+                    const dateKey = formatDate(new Date(record.date)); // Extract and format date
+                    // Initialize if dateKey doesn't exist
+                    if (!newEntries[dateKey]) {
+                        newEntries[dateKey] = [];
+                    }
+                    // Check if the record already exists to avoid duplicates
+                    const exists = newEntries[dateKey].some(
+                        (entry) => entry.meal === record.mealName && entry.calories === record.caloriesEaten
+                    );
+
+                    // Only add if it doesn't exist
+                    if (!exists) {
+                        newEntries[dateKey].push({ meal: record.mealName, calories: record.caloriesEaten });
+                    }
+                });
+
+                return newEntries; // Return updated entries
+            });
+        } catch (error) {
+            console.error('Error fetching daily records:', error);
+        }
+    }
+};
+
+
+  useEffect(() => {
+    fetchUserStats(); // Fetch user stats on component mount
+    fetchDailyRecords(); // Fetch daily records on component mount
+  }, [userID]);
+>>>>>>> dc4c718b1fb9ab03d5a9c0f969724cd1c0189b4c
 
   const formatDate = (date: Date): string => {
     return date.toISOString().split('T')[0]; // 'YYYY-MM-DD'
@@ -46,13 +145,47 @@ const Logger: React.FC = () => {
     setIsMealLogged(false); // Reset meal logged state
   };
 
+  const setDailyRecord = async () => {
+    if (userID) {
+      try {
+        const dateKey = formatDate(selectedDate);
+        const totalCalories = getTotalCalories(dateKey);
+
+        const response = await fetch('http://localhost:8081/api/dailyrecords', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userID,
+            date: dateKey,
+            caloriesEaten: parseInt(calories), // Add the new meal calories
+            mealName: meal,
+            weight: weight, // Use the fetched weight
+            calorieGoal, // You may want to adjust how you set the calorie goal
+          }),
+        });
+        if (!response.ok) {
+          throw new Error('Failed to log daily record');
+        }
+
+        const result = await response.json();
+        console.log(result); // Log success message
+      } catch (error) {
+        console.error('Error logging daily record:', error);
+      }
+    }
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!meal || !calories) return;
 
-    const dateKey = formatDate(selectedDate);
+    // Log the daily record to the database
+    setDailyRecord();
 
     // Add the meal and calories to the selected date
+    const dateKey = formatDate(selectedDate);
     setCalorieEntries((prevEntries) => ({
       ...prevEntries,
       [dateKey]: [
@@ -94,7 +227,7 @@ const Logger: React.FC = () => {
       const totalCalories = getTotalCalories(dateKey);
       return (
         <div className="calendar-day-content">
-          <span>{totalCalories} calories logged </span>
+          <span>{totalCalories} calories</span>
         </div>
       );
     }
@@ -153,12 +286,24 @@ const Logger: React.FC = () => {
                   placeholder="Enter calories"
                 />
               </div>
+<<<<<<< HEAD
               <div className="button-container">
                 <button type="submit" className="btn-add-meal">Add Meal</button>
                 <button type="button" className="btn-add-meal btn-back" onClick={closeModal}>
                   Back
                 </button>
               </div>
+=======
+              <div className="form-group">
+                <label>Weight: </label>
+                <input
+                  type="number"
+                  value={weight}
+                  onChange={(e) => setWeight(parseFloat(e.target.value))}
+                />
+              </div>
+              <button type="submit" className="btn-add-meal">Add Meal</button>
+>>>>>>> dc4c718b1fb9ab03d5a9c0f969724cd1c0189b4c
             </form>
 
 

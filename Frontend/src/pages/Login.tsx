@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
+import './CreateAccount.css';
 
 const Login = () => {
   interface DataItem {
@@ -10,6 +11,7 @@ const Login = () => {
   const [LoggedIn, setLoggedIn] = useState(false);
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -44,8 +46,13 @@ const Login = () => {
     window.location.href = "/home";
   }
   return (
-    <div>
-      <div className="card">
+    <div className="container">
+      <div className="left-section">
+        <h1>
+          Eat<span>volution</span>
+        </h1>
+      </div>
+      <div className="form-div">
         <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <input
@@ -57,15 +64,19 @@ const Login = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
-            type="text"
+            type="password" // Change type to "password"
             name="Password"
             id="Password"
             placeholder="Password"
             value={Password}
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="off" // Prevent autofill
           />
-          <button type="submit">Submit</button>
+          <button type="submit">Login</button>
         </form>
+        <div className="already-have-account">
+          <p>Don't have an account yet? <a href="/create_account">Create one</a></p>
+        </div>
       </div>
     </div>
   );
