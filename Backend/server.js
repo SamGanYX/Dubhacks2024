@@ -372,12 +372,19 @@ app.get('/api/dailyrecords/:userID', (req, res) => {
 
 app.post('/api/dailyrecords', (req, res) => {
     console.log(req.body);
-    const { userID, date, caloriesEaten, mealName, weight, calorieGoal } = req.body;
+    const { userID, date, caloriesEaten, mealName, weight } = req.body;
 
     // Validate required fields
-    if (!userID || !date || caloriesEaten === undefined || !mealName || !weight || !calorieGoal) {
+    if (!userID || !date || caloriesEaten === undefined || !mealName || !weight) {
         return res.status(400).json({ error: 'All fields are required' });
     }
+
+    // SQL query to fetch user stats for calorie goal calculation
+    const queryFetchUserStats = `
+        SELECT height, gender, age, activity, goal
+        FROM UserStats
+        WHERE userID = ?
+    `;
 
     // SQL query to insert or update daily records
     const queryDailyRecords = `
@@ -390,32 +397,70 @@ app.post('/api/dailyrecords', (req, res) => {
             calorieGoal = VALUES(calorieGoal)
     `;
 
-    // SQL query to update weight in UserStats
-    const queryUpdateWeight = `
+    // SQL query to update weight and calorie goal in UserStats
+    const queryUpdateUserStats = `
         UPDATE UserStats
-        SET weight = ?
+        SET weight = ?, CaloriesGoal = ?
         WHERE userID = ?
     `;
 
-    // First, insert/update the daily record
-    db.query(queryDailyRecords, [userID, date, caloriesEaten, mealName, weight, calorieGoal], (err, results) => {
+    // Step 1: Fetch user stats
+    db.query(queryFetchUserStats, [userID], (err, results) => {
         if (err) {
             console.error(err);
-            return res.status(500).json({ error: 'Database error while logging daily record' });
+            return res.status(500).json({ error: 'Database error while fetching user stats' });
         }
 
-        // After successfully logging the daily record, update the user's weight in UserStats
-        db.query(queryUpdateWeight, [weight, userID], (err, updateResults) => {
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'User stats not found' });
+        }
+
+        const { height, gender, age, activity, goal } = results[0]; // Extract user stats
+        let weightChangeRate = 0;
+        switch (goal) {
+            case "gain muscle easy":
+                weightChangeRate = 0.1;
+            case "gain muscle hard":
+                weightChangeRate = 0.2;
+            case "lose fat easy":
+                weightChangeRate = -0.5;
+            case "lose fat hard":
+                weightChangeRate = -1.0;
+            case "gain weight easy":
+                weightChangeRate = 0.5;
+            case "gain weight hard":
+                weightChangeRate = 1;
+            case "maintain weight":
+                weightChangeRate = 0;
+                targetWeight = weight;
+
+        }
+
+        // Step 2: Calculate the new calorie goal based on the updated weight
+        const calorieGoal = calculateDiet(height, gender, weight, age /* same weight as target */, weightChangeRate, activity);
+        console.log(height, gender, weight, age, weight /* same weight as target */, weightChangeRate, activity);
+        console.log(calorieGoal);
+
+        // Step 3: Insert/update the daily record with the new calorie goal
+        db.query(queryDailyRecords, [userID, date, caloriesEaten, mealName, weight, calorieGoal], (err, dailyResults) => {
             if (err) {
                 console.error(err);
-                return res.status(500).json({ error: 'Database error while updating weight' });
+                return res.status(500).json({ error: 'Database error while logging daily record' });
             }
 
-            // Send success response after both queries succeed
-            res.status(201).json({
-                message: 'Daily record and weight updated successfully',
-                dailyRecordResults: results,
-                weightUpdateResults: updateResults
+            // Step 4: Update the user's weight and calorie goal in UserStats
+            db.query(queryUpdateUserStats, [weight, calorieGoal, userID], (err, updateResults) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Database error while updating user stats' });
+                }
+
+                // Send success response after both queries succeed
+                res.status(201).json({
+                    message: 'Daily record, weight, and calorie goal updated successfully',
+                    dailyRecordResults: dailyResults,
+                    userStatsUpdateResults: updateResults
+                });
             });
         });
     });
