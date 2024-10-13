@@ -298,7 +298,7 @@ app.post('/api/adjust-diet', async (req, res) => {
             return res.status(404).json({ message: 'User not found' }); // Handle case when user not found
         }
 
-        const { height, gender, weight, age, activity , goal} = results[0]; // Extract data from the first row
+        const { height, gender, weight, age, activity, goal} = results[0]; // Extract data from the first row
         try {
             let weightChangeRate = 0;
             switch (goal) {
