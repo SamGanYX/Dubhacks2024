@@ -16,7 +16,7 @@ function App() {
         <h1>Welcome to Your Personal Fitness Assistant</h1>
       </div>
       </div>
-      {(userID==null) && <div className="button-section">
+      {<div className="button-section">
         <button className="login-button" onClick={() => navigate('/login')}>Login</button>
         <button className="signup-button" onClick={() => navigate('/create_account')}>Sign-up</button>
       </div>}
