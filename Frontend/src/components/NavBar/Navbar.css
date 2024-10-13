@@ -2,6 +2,7 @@
 
 /* Main Navbar */
 nav {
+    height: 8vh;
     padding: 6px 1rem;
     display: flex;
     justify-content: space-between;

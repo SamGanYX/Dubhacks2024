@@ -4,7 +4,7 @@
     background-size: cover; /* Cover the entire container */
     background-position: center; /* Center the background image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
-    height: 100vh; /* Ensure it takes the full viewport height */
+    height: 92vh; /* Ensure it takes the full viewport height */
     display: flex;
     flex-direction: column; /* Arrange children vertically */
     justify-content: space-between; /* Space out children */

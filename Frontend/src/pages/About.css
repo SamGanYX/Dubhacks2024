@@ -1,7 +1,7 @@
 /* Main container for the about section */
 .about-container {
     max-width: 1000px; /* Wider maximum width for a more spacious layout */
-    margin: 100px auto; /* Center the container */
+    margin: 30px auto; /* Center the container */
     padding: 40px; /* Increased padding for a spacious feel */
     background-color: #ffffff; /* Clean white background for a modern look */
     border-radius: 12px; /* More rounded corners for elegance */

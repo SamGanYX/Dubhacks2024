@@ -25,7 +25,7 @@ const Navbar = () => {
   // }, []);
   return (
     <>
-      <nav>
+      <nav className="navbar_nav">
       {!isAuthenticated ?<Link to="/" className="title">
         Eat<span className="green-text">volution</span>
         </Link> : <Link to="/plan" className="title">
