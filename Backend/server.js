@@ -364,7 +364,7 @@ app.post('/api/dailyrecords', (req, res) => {
     }
 
     // SQL query to insert or update daily records
-    const query = `
+    const queryDailyRecords = `
         INSERT INTO DailyRecords (userID, date, caloriesEaten, mealName, weight, calorieGoal)
         VALUES (?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE
@@ -374,13 +374,34 @@ app.post('/api/dailyrecords', (req, res) => {
             calorieGoal = VALUES(calorieGoal)
     `;
 
-    db.query(query, [userID, date, caloriesEaten, mealName, weight, calorieGoal], (err, results) => {
+    // SQL query to update weight in UserStats
+    const queryUpdateWeight = `
+        UPDATE UserStats
+        SET weight = ?
+        WHERE userID = ?
+    `;
+
+    // First, insert/update the daily record
+    db.query(queryDailyRecords, [userID, date, caloriesEaten, mealName, weight, calorieGoal], (err, results) => {
         if (err) {
             console.error(err);
-            return res.status(500).json({ error: 'Database error' });
+            return res.status(500).json({ error: 'Database error while logging daily record' });
         }
 
-        res.status(201).json({ message: 'Daily record logged successfully', results });
+        // After successfully logging the daily record, update the user's weight in UserStats
+        db.query(queryUpdateWeight, [weight, userID], (err, updateResults) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).json({ error: 'Database error while updating weight' });
+            }
+
+            // Send success response after both queries succeed
+            res.status(201).json({
+                message: 'Daily record and weight updated successfully',
+                dailyRecordResults: results,
+                weightUpdateResults: updateResults
+            });
+        });
     });
 });
 
