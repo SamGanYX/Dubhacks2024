@@ -70,6 +70,17 @@ app.get('/userstats', (req, res) => {
     })
 });
 
+app.get('/userstats/:userID', (req, res) => {
+    const userID = req.params.userID; // Get userID from URL params
+    const sql = "SELECT * FROM userstats WHERE userID = ?"; // Query for specific user
+
+    db.query(sql, [userID], (err, data) => {
+        if (err) return res.status(500).json(err); // Handle SQL errors
+        if (data.length === 0) return res.status(404).json({ message: 'User not found' }); // Handle case when user not found
+        return res.json(data[0]); // Return the first user stats object
+    });
+});
+
 // =============== Adding to Table ================ \\
 
 
@@ -116,26 +127,74 @@ app.post('/delete_users', (req, res) => {
 
 app.post('/userstats', (req, res) => {
     const { userID, age, height, weight, gender, goal, activity } = req.body;
+
     // Ensure required fields are provided
     if (!userID || !height || !weight || !goal || !activity) {
         return res.status(400).json({ error: 'All fields are required' });
     }
-  
-    // Insert the data into UserStats table
-    const query = `
-        INSERT INTO UserStats (UserID, age, Gender, Weight, Height, Goal, Activity)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-  
-    db.query(query, [userID, age, gender, weight, height, goal, parseFloat(activity)], (err, results) => {
+
+    // First, check if the user stats exist for the given userID
+    const checkQuery = "SELECT * FROM UserStats WHERE UserID = ?";
+
+    db.query(checkQuery, [userID], (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).json({ error: 'Database error' });
         }
-    
-        res.status(201).json({ message: 'User stats added successfully', results });
+
+        // If the user stats exist, update them
+        if (results.length > 0) {
+            const updateQuery = `
+                UPDATE UserStats 
+                SET age = ?, Gender = ?, Weight = ?, Height = ?, Goal = ?, Activity = ?, CaloriesGoal = ?
+                WHERE UserID = ?
+            `;
+
+            let weightChangeRate = 0;
+            switch (goal) {
+                case "gain muscle easy":
+                    weightChangeRate = 0.1;
+                case "gain muscle hard":
+                    weightChangeRate = 0.2;
+                case "lose fat easy":
+                    weightChangeRate = -0.5;
+                case "lose fat hard":
+                    weightChangeRate = -1.0;
+                case "gain weight easy":
+                    weightChangeRate = 0.5;
+                case "gain weight hard":
+                    weightChangeRate = 1;
+                case "maintain weight":
+                    weightChangeRate = 0;
+                    targetWeight = weight;
+            }
+            console.log(calculateDiet(height, gender, weight, age, weightChangeRate, parseFloat(activity)));
+
+            db.query(updateQuery, [age, gender, weight, height, goal, parseFloat(activity), calculateDiet(height, gender, weight, age, weightChangeRate, parseFloat(activity)), userID], (err, updateResults) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Database error during update' });
+                }
+                res.status(200).json({ message: 'User stats updated successfully', updateResults });
+            });
+        } else {
+            // If no record exists, insert a new one
+            const insertQuery = `
+                INSERT INTO UserStats (UserID, age, Gender, Weight, Height, Goal, Activity)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            `;
+            db.query(insertQuery, [userID, age, gender, weight, height, goal, parseFloat(activity)], (err, insertResults) => {
+                if (err) {
+                    console.error(err);
+                    return res.status(500).json({ error: 'Database error during insert' });
+                }
+                res.status(201).json({ message: 'User stats added successfully', insertResults });
+            });
+        }
     });
 });
+
+
 
 // ========================= Auth ====================== \\
 
@@ -263,8 +322,65 @@ app.post('/api/adjust-diet', async (req, res) => {
             const dietResult = adjustDiet(height, gender, weight, age, weightChangeRate, activity, actualWeightChangeRate); // Call the diet calculation function
             return res.status(200).json(dietResult); // Respond with the diet result
         } catch (error) {
+            console.log(error);
             return res.status(500).json({ error: error.message }); // Handle calculation errors
         }
+    });
+});
+
+app.get('/api/dailyrecords/:userID', (req, res) => {
+    const userID = req.params.userID;
+
+    // Validate userID
+    if (!userID) {
+        return res.status(400).json({ error: 'userID is required' });
+    }
+
+    // Query to get daily records for the user
+    const query = `
+        SELECT date, caloriesEaten, mealName, weight, calorieGoal 
+        FROM DailyRecords 
+        WHERE userID = ? 
+        ORDER BY date DESC
+    `;
+
+    db.query(query, [userID], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        res.status(200).json(results);
+    });
+});
+
+app.post('/api/dailyrecords', (req, res) => {
+    console.log(req.body);
+    const { userID, date, caloriesEaten, mealName, weight, calorieGoal } = req.body;
+
+    // Validate required fields
+    if (!userID || !date || caloriesEaten === undefined || !mealName || !weight || !calorieGoal) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    // SQL query to insert or update daily records
+    const query = `
+        INSERT INTO DailyRecords (userID, date, caloriesEaten, mealName, weight, calorieGoal)
+        VALUES (?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            caloriesEaten = VALUES(caloriesEaten),
+            mealName = VALUES(mealName),
+            weight = VALUES(weight),
+            calorieGoal = VALUES(calorieGoal)
+    `;
+
+    db.query(query, [userID, date, caloriesEaten, mealName, weight, calorieGoal], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        res.status(201).json({ message: 'Daily record logged successfully', results });
     });
 });
 

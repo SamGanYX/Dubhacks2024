@@ -8,7 +8,7 @@ const CalorieForm = () => {
   const [age, setAge] = useState<number | "">("");
   const [height, setHeight] = useState<number | "">("");
   const [weight, setWeight] = useState<number | "">("");
-  const [goal, setGoal] = useState<string>("gain muscle");
+  const [goal, setGoal] = useState<string>("gain muscle easy");
   const [activity, setActivity] = useState<string>("1.2");
   const [gender, setGender] = useState<number | "">(1);
   const [error, setError] = useState("");

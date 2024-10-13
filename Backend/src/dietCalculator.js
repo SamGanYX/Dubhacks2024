@@ -41,3 +41,8 @@ function adjustDiet(height, gender, weight, age, weightChangeRate, activity, act
 
     return Math.round(calorieGoal);
 }
+module.exports = {
+    calculateDiet,
+    adjustDiet,
+    // ... other exports if needed
+};
