@@ -98,24 +98,33 @@ const ProgressChart = () => {
         } finally {
         }
     };
-
-
     useEffect(() => {
         fetch(`http://localhost:8081/api/dailyrecords/${userID}`)
             .then((res) => res.json())
-            .then((data) => {
+            .then(async (data) => {
                 setData(data);
                 setAverageWeightLoss(calculateWeightLossBetweenExtremes(data)); // Calculate average weight loss
                 setDuration(calculateTimeRange(data));
-                if(averageWeightLoss < 0) {
+                console.log(averageWeightLoss)
+                if (averageWeightLoss < 0) {
+                    console.log("hi")
                     setWeightMessage("Your Overall Weight Gain:");
-
+                    console.log(weightMessage)
                 } else {
                     setWeightMessage("Your Overall Weight Loss:");
+                    console.log("bye")
                 }
             })
             .catch((err) => console.log(err));
     }, [userID]);
+
+    useEffect(() => {
+        if (averageWeightLoss < 0) {
+            setWeightMessage("Your Overall Weight Gain:");
+        } else {
+            setWeightMessage("Your Overall Weight Loss:");
+        }
+    }, [averageWeightLoss]);
 
     useEffect(() => {
         const fetchData = async () => {
