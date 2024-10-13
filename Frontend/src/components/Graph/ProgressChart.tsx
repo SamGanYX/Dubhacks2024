@@ -75,6 +75,31 @@ const ProgressChart = () => {
         fetchAdjPlan();
     };
 
+    const handleUpdateClick = () => {
+        updateGoal();
+    }
+
+    const updateGoal = async () => {
+        try {
+            const response = await fetch('http://localhost:8081/api/updateGoal', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({goal: (adjustedCals), userID: userID}),
+            });
+
+            if (!response.ok) {
+                throw new Error('');
+            }
+        } catch (err) {
+            console.log(err);
+        } finally {
+        }
+    };
+
+
     const fetchAdjPlan = async () => {
         try {
             console.log("average " + -(averageWeightLoss/(duration/7)))
@@ -230,7 +255,7 @@ const ProgressChart = () => {
                 <p></p>
                 {adjustedCals != 0 && (
 
-                    <button onClick={handleEditClick} className={"btn-recalibrate"}>
+                    <button onClick={handleUpdateClick} className={"btn-recalibrate"}>
                         Save New Goal
                     </button>
                 )}

@@ -276,7 +276,19 @@ function verifyToken(req, res, next) {
         req.userId = decoded.id;
         next();
     });
-}
+};
+
+app.post('/api/updateGoal', (req, res)=> {
+
+    const { userID, goal } = req.body;
+    console.log(goal);
+    const sql = "UPDATE UserStats SET CaloriesGoal = ? WHERE UserID = ?";
+    db.query(sql, [goal, userID], (err, result) => {
+        if (err) return res.status(500).json({ error: 'Database error' });
+        return res.status(200).json({ message: 'Goal updated successfully' });
+    });
+
+});
 
 app.post('/api/calculate-diet', async (req, res) => {
     let { userID } = req.body; // Ensure userID is included in the request body
@@ -329,7 +341,7 @@ app.post('/api/calculate-diet-with-bmr', async (req, res) => {
     let { userID } = req.body; // Ensure userID is included in the request body
 
     // Query to fetch user stats based on userID
-    const sql = "SELECT height, gender, weight, age, activity, goal FROM UserStats WHERE userID = ?";
+    const sql = "SELECT height, gender, weight, age, activity, goal, CaloriesGoal FROM UserStats WHERE userID = ?";
 
     db.query(sql, [userID], (err, results) => {
         if (err) return res.status(500).json({ error: err.message }); // Handle SQL errors
@@ -337,7 +349,7 @@ app.post('/api/calculate-diet-with-bmr', async (req, res) => {
             return res.status(404).json({ message: 'User not found' }); // Handle case when user not found
         }
 
-        const { height, gender, weight, age, activity , goal} = results[0]; // Extract data from the first row
+        const { height, gender, weight, age, activity, goal, CaloriesGoal} = results[0]; // Extract data from the first row
         try {
             let weightChangeRate = 0;
             switch (goal) {
@@ -363,10 +375,11 @@ app.post('/api/calculate-diet-with-bmr', async (req, res) => {
                     weightChangeRate = 0;
                     break;
             }
-            const dietResult = calculateDiet(height, gender, weight, age, weightChangeRate, activity); // Call the diet calculation function
+            let dietResult = calculateDiet(height, gender, weight, age, weightChangeRate, activity); // Call the diet calculation function
             const bmr = calculateBMR(height, gender, weight, age, weightChangeRate, activity); // Call the diet calculation function
-
-            return res.status(200).json({dietResult : dietResult, bmr:bmr}); // Respond with the diet result
+            console.log("caloreisgoal"+CaloriesGoal)
+            //dietResult = CaloriesGoal
+            return res.status(200).json({dietResult : CaloriesGoal, bmr:bmr}); // Respond with the diet result
         } catch (error) {
             return res.status(500).json({ error: error.message }); // Handle calculation errors
         }

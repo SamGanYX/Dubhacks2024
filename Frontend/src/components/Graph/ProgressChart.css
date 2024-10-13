@@ -28,7 +28,7 @@
     display: block; /* Block-level button */
     width: 40%; /* Full width */
     padding: 12px; /* Add padding for a larger click area */
-    background-color: #007bff; /* Primary button color */
+    background-color: #1bbd88; /* Primary button color */
     color: white; /* Text color */
     border: none; /* Remove border */
     border-radius: 5px; /* Rounded corners */
@@ -39,6 +39,9 @@
     align-content: center;
     margin:auto;
 }
+.btn-recalibrate:hover {
+    background-color: #14805f; /* Darker shade on hover */
+}
 
 .wl-results {
     background-color: #fff; /* White background for results */
@@ -46,7 +49,7 @@
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for results */
     margin-bottom: 20px; /* Space below the results section */
-    color: #2b4c84; /* Green color for headings */
+    color: #127756; /* Green color for headings */
     margin: 10px 0; /* Space above and below headings */
     text-align: center;
 }

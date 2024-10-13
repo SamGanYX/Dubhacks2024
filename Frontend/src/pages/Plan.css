@@ -41,7 +41,7 @@
     display: block; /* Block-level button */
     width: 100%; /* Full width */
     padding: 12px; /* Add padding for a larger click area */
-    background-color: #007bff; /* Primary button color */
+    background-color: #1bbd88; /* Primary button color */
     color: white; /* Text color */
     border: none; /* Remove border */
     border-radius: 5px; /* Rounded corners */
@@ -51,7 +51,7 @@
 }
 
 .btn-edit-info:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #14805f; /* Darker shade on hover */
 }
 
 .loading {
