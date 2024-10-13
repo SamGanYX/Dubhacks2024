@@ -47,6 +47,8 @@ const ProgressChart = () => {
     const [adjustedCals, setAdjCals] = useState<number>(0)
     const { token } = useAuth();
     const [adjMessage] = useState<string>("Your New Suggested Calorie Intake: ");
+    const [averageCaloriePercentage, setAverageCaloriePercentage] = useState<number>(0); // Store avg calorie %
+
 
 
     const groupByDate = (records: DailyRecord[]) => {
@@ -158,7 +160,15 @@ const ProgressChart = () => {
                 const records = data;
 
                 const groupedRecords = groupByDate(records);
-
+                let avgPercent = 0;
+                let counter = 0;
+                for(const date in groupedRecords){
+                    avgPercent += (groupedRecords[date].caloriesEaten/groupedRecords[date].caloriesGoal)*100;
+                    counter++;
+                }
+                if(counter != 0) {
+                    setAverageCaloriePercentage(Math.round(Math.min(avgPercent/counter, 200-avgPercent/counter)));
+                }
                 const labels = Object.keys(groupedRecords);
                 const weightData = labels.map(date => groupedRecords[date].weight);
                 const calorieData = labels.map(date => groupedRecords[date].caloriesEaten);
@@ -245,6 +255,7 @@ const ProgressChart = () => {
                 )}
             </div>
             <div className="wl-results">{weightMessage} {Math.abs(averageWeightLoss)} kg in {duration} days!
+                <div >Your accuraccy towards your calorie goal was {averageCaloriePercentage}%</div>
                 <p></p>
                 <p>
                     <button onClick={handleEditClick} className={"btn-recalibrate"}>
