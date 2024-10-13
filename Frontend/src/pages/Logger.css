@@ -48,6 +48,7 @@
   }
   
   .calorie-goal h2 {
+    padding-top: 10px;
     margin: 10px 0; /* Adjust margin to your liking */
     font-size: 1.25rem; /* Adjust font size if needed */
     text-align: center; /* Center the text */
@@ -257,8 +258,69 @@
     justify-content: center; /* Center items vertically */
     height: 100%; /* Ensure the content fills the cell */
     padding: 5px 0; /* Add some padding for spacing */
-}
+  }
 
 .calendar-day-content span {
     margin: 5px 0; /* Adjust the space between the day number and calorie text */
 }
+
+.button-container {
+  display: flex;                  /* Use flexbox for layout */
+  justify-content: center;        /* Center items horizontally */
+  align-items: center;            /* Center items vertically if needed */
+  gap: 5px;                       /* Reduced space between buttons */
+  margin-top: 20px;              /* Space above the button container */
+  width: 100%;                    /* Ensure it takes full width of the modal */
+}
+
+.btn-add-meal,
+.btn-back {
+  margin: 0;                     /* Reset any default margin */
+  padding: 10px 15px;            /* Ensure buttons have enough padding */
+  font-size: 16px;               /* Adjust font size if necessary */
+}
+
+.btn-add-meal {
+  padding: 10px 20px;            /* Add padding for better click area */
+  background-color: #007bff;     /* Green background color */
+  color: white;                   /* White text color */
+  border: none;                   /* Remove border */
+  border-radius: 5px;            /* Rounded corners */
+  cursor: pointer;                /* Pointer cursor on hover */
+  font-size: 16px;                /* Increase font size */
+}
+
+.btn-add-meal:hover {
+  background-color: #0055b0;      /* Darker green on hover */
+}
+
+.btn-back {
+  background-color: #acacac;      /* Red background for the Back button */
+}
+
+.btn-back:hover {
+  background-color: #7c7c7c;      /* Darker red on hover */
+}
+
+.tile-no-calories {
+  background-color: #ffffff; /* White for no calories logged */
+}
+
+.tile-under-goal {
+  background-color: #ffcccc; /* Light red for under 50% of the goal */
+}
+
+.tile-under-100 {
+  background-color: #ffffcc; /* Light yellow for under the goal */
+}
+
+.tile-over-goal {
+  background-color: #ccffcc; /* Light green for meeting/exceeding the goal */
+}
+
+/* Optional: Add some padding to the tile to make the color more visible */
+.react-calendar__tile {
+  padding: 10px;
+  border-radius: 5px; /* Add slight rounding */
+}
+

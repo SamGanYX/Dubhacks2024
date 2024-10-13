@@ -1,0 +1,85 @@
+.chatbot-container {
+    display: flex;
+    height: 100vh; /* Adjust as necessary */
+  }
+  
+  .sidebar {
+    width: 200px;
+    background-color: #f4f4f4; /* Adjust sidebar background */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .chat-area {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff; /* Adjust chat area background */
+    padding: 10px;
+  }
+  
+  .messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+  }
+  
+  .message {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .profile-pic {
+    width: 40px; /* Adjust size */
+    height: 40px; /* Adjust size */
+    border-radius: 50%; /* Make circular */
+    margin-right: 10px; /* Spacing */
+  }
+  
+  .user-message {
+    justify-content: flex-end; /* Align user messages to the right */
+  }
+  
+  .user-text {
+    background-color: #e1ffc7; /* User message background */
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 60%; /* Adjust as necessary */
+  }
+  
+  .bot-message {
+    justify-content: flex-start; /* Align bot messages to the left */
+  }
+  
+  .bot-text {
+    background-color: #f1f1f1; /* Bot message background */
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 60%; /* Adjust as necessary */
+  }
+  
+  .input-area {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  input {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc; /* Input border */
+  }
+  
+  button {
+    margin-left: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #007bff; /* Button color */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  

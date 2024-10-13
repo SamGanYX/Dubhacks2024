@@ -1,5 +1,4 @@
-// Logger.tsx
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import Calendar from 'react-calendar'; // Import the Calendar
 import 'react-calendar/dist/Calendar.css'; // Import default styles for the Calendar
 import './Logger.css'; // Update to your preferred CSS file
@@ -20,14 +19,31 @@ const Logger: React.FC = () => {
   const [calorieGoal, setCalorieGoal] = useState<number>(2000); // Default calorie goal
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isMealLogged, setIsMealLogged] = useState<boolean>(false); // New state to track submission
 
   const formatDate = (date: Date): string => {
     return date.toISOString().split('T')[0]; // 'YYYY-MM-DD'
   };
+  
+  const getTileClassName = ({ date }: { date: Date }): string => {
+    const dateKey = formatDate(date);
+    const totalCalories = getTotalCalories(dateKey);
+  
+    if (totalCalories === 0) {
+      return 'tile-no-calories'; // Class for no calories logged
+    } else if (totalCalories < calorieGoal * 0.5) {
+      return 'tile-under-goal'; // Class for under 50% of the goal
+    } else if (totalCalories < calorieGoal) {
+      return 'tile-under-100'; // Class for under the goal
+    } else {
+      return 'tile-over-goal'; // Class for meeting/exceeding the goal
+    }
+  };  
 
   const handleCalendarChange = (date: Date) => {
     setSelectedDate(date); // Set selected date
     setIsModalOpen(true); // Open modal when a date is selected
+    setIsMealLogged(false); // Reset meal logged state
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -45,9 +61,10 @@ const Logger: React.FC = () => {
       ],
     }));
 
-    // Clear form fields
+    // Clear form fields but keep the modal open
     setMeal('');
     setCalories('');
+    setIsMealLogged(true); // Set meal logged state to true
   };
 
   const getTotalCalories = (dateKey: string): number => {
@@ -88,12 +105,13 @@ const Logger: React.FC = () => {
     <div className="logger">
       {/* Full-Screen Calendar Display */}
       <div className="calendar-container">
-        <Calendar
-          onChange={handleCalendarChange}
-          value={selectedDate}
-          tileContent={tileContent}
-          maxDate={new Date()} // Optional: prevent future dates
-        />
+      <Calendar
+        onChange={handleCalendarChange}
+        value={selectedDate}
+        tileContent={tileContent}
+        tileClassName={getTileClassName} // Set class name dynamically for each tile
+        maxDate={new Date()} // Optional: prevent future dates
+      />
       </div>
 
       {/* Popup Modal for Meal Input Form */}
@@ -135,8 +153,14 @@ const Logger: React.FC = () => {
                   placeholder="Enter calories"
                 />
               </div>
-              <button type="submit" className="btn-add-meal">Add Meal</button>
+              <div className="button-container">
+                <button type="submit" className="btn-add-meal">Add Meal</button>
+                <button type="button" className="btn-add-meal btn-back" onClick={closeModal}>
+                  Back
+                </button>
+              </div>
             </form>
+
 
             {/* Display Meals for Selected Date */}
             <div className="meal-list">
