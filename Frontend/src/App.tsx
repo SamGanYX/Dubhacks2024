@@ -10,7 +10,7 @@ import Plan from "./pages/Plan";
 import Login from "./pages/Login";
 import Logger from "./pages/Logger"
 import CategoryPage from "./pages/CategoryPage";
-import CalorieForm from "./components/CalorieForm/CalorieForm";
+import CalorieForm from "./pages/CalorieForm";
 import CreateAccount from "./pages/CreateAccount";
 import Navbar from "./components/NavBar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -23,7 +23,6 @@ const App = () => {
           <Route index element={<Home />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
-          <Route path="/contact" element={<Contact />}></Route>
           <Route path="/logger" element={<Logger />}></Route>
           <Route path="/users" element={<Users />}></Route>
           <Route path="/calculator" element={<CalorieForm />}></Route>
