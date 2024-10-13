@@ -1,0 +1,39 @@
+.about-container {
+    max-width: 800px; /* Limit the width */
+    margin: 100px auto; /* Center the container */
+    padding: 20px; /* Add padding */
+    background-color: #f9f9f9; /* Light background */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+h1, h2 {
+    color: #333; /* Darker text for headings */
+}
+
+p {
+    line-height: 1.6; /* Better readability */
+}
+
+.team-members {
+    display: flex; /* Flexbox for team members layout */
+    flex-wrap: wrap; /* Wrap to next line */
+    gap: 20px; /* Space between members */
+}
+
+.team-member {
+    flex: 1 1 calc(25% - 20px); /* Responsive layout for team members */
+    padding: 10px; /* Padding for individual member blocks */
+    background-color: #e0e0e0; /* Light gray background */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center text */
+}
+
+a {
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Remove underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
