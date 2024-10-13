@@ -26,11 +26,9 @@ const Navbar = () => {
   return (
     <>
       <nav className="navbar_nav">
-      {!isAuthenticated ?<Link to="/" className="title">
-        Eat<span className="green-text">volution</span>
-        </Link> : <Link to="/plan" className="title">
-        Eat<span className="green-text">volution</span>
-        </Link>}
+        <Link to="/" className="title">
+          Eat<span className="green-text">volution</span>
+        </Link>
         <div
           className="menu"
           onClick={() => {
@@ -56,6 +54,9 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              <li className="navbar-li">
+                <NavLink to="/plan">Plan</NavLink> {/* New Tab */}
+              </li>
               <li className="navbar-li">
                 <NavLink to="/logger">Food Logger</NavLink> {/* New Tab */}
               </li>
