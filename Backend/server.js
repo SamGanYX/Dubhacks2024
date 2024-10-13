@@ -156,7 +156,7 @@ app.post('/delete_users', (req, res) => {
 });
 
 app.post('/userstats', (req, res) => {
-    const { userID, age, height, weight, gender, goal, activity } = req.body;
+    const { userID, age, height, weight, gender, goal, activity, endurance, muscle, bmi, eating, daily, unknown } = req.body;
 
     // Ensure required fields are provided
     if (!userID || !height || !weight || !goal || !activity) {
@@ -196,15 +196,15 @@ app.post('/userstats', (req, res) => {
         if (results.length > 0) {
             const updateQuery = `
                 UPDATE UserStats 
-                SET age = ?, Gender = ?, Weight = ?, Height = ?, Goal = ?, Activity = ?, CaloriesGoal = ?
+                SET age = ?, Gender = ?, Weight = ?, Height = ?, Goal = ?, Activity = ?, CaloriesGoal = ?, Endurance = ?, Muscle = ?, Bmi = ?, Eating = ?, Daily = ?, Unknown = ?
                 WHERE UserID = ?
             `;
 
             
-            // console.log((height, gender, weight, age, weightChangeRate, parseFloat(activity)));
+            console.log(age, gender, weight, height, goal, parseFloat(activity), calGoal, endurance, muscle, bmi, eating, daily, unknown, userID);
             // console.log();
 
-            db.query(updateQuery, [age, gender, weight, height, goal, parseFloat(activity), calGoal, userID], (err, updateResults) => {
+            db.query(updateQuery, [age, gender, weight, height, goal, parseFloat(activity), calGoal, endurance, muscle, bmi, eating, daily, unknown, userID], (err, updateResults) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).json({ error: 'Database error during update' });
@@ -214,10 +214,10 @@ app.post('/userstats', (req, res) => {
         } else {
             // If no record exists, insert a new one
             const insertQuery = `
-                INSERT INTO UserStats (UserID, age, Gender, Weight, Height, Goal, Activity, CaloriesGoal)
+                INSERT INTO UserStats (UserID, age, Gender, Weight, Height, Goal, Activity, CaloriesGoal, endurance, muscle, bmi, eating, daily, unknown)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             `;
-            db.query(insertQuery, [userID, age, gender, weight, height, goal, parseFloat(activity), calGoal], (err, insertResults) => {
+            db.query(insertQuery, [userID, age, gender, weight, height, goal, parseFloat(activity), calGoal, endurance, muscle, bmi, eating, daily, unknown], (err, insertResults) => {
                 if (err) {
                     console.error(err);
                     return res.status(500).json({ error: 'Database error during insert' });

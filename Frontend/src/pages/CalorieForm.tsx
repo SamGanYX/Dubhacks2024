@@ -12,6 +12,12 @@ const CalorieForm = () => {
   const [goal, setGoal] = useState<string>("gain muscle easy");
   const [activity, setActivity] = useState<string>("1.2");
   const [gender, setGender] = useState<number | "">(1);
+  const [endurance, setEndurance] = useState<number>(0);
+  const [muscle, setMuscle] = useState<number>(0);
+  const [bmi, setBmi] = useState<number>(0);
+  const [eating, setEating] = useState<number>(0);
+  const [daily, setDaily] = useState<number>(0);
+  const [unknown, setUnknown] = useState<number>(0);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [selectedImages, setSelectedImages] = useState<number[]>([]); // Store multiple selected images
@@ -27,6 +33,28 @@ const CalorieForm = () => {
       }
     });
   };
+  const setTrue = (image_title : string) => {
+    switch (image_title) {
+      case "Endurance":
+        setEndurance(1-endurance);
+        break
+      case "Gain Muscle":
+        setMuscle(1-muscle);
+        break;
+      case "Stabilize BMI":
+        setBmi(1-bmi);
+        break;
+      case "Healthy Eating":
+        setEating(1-eating);
+        break;
+      case "Daily Activity":
+        setDaily(1-daily);
+        break;
+      case "Undecided":
+        setUnknown(1-unknown);
+        break;
+    }
+  }
   const images = [
     { src: './src/assets/endurance.png', alt: "Endurance", title: "Endurance" },
     { src: './src/assets/gainmuscle.png', alt: "Gain Muscle", title: "Gain Muscle" },
@@ -74,6 +102,12 @@ const CalorieForm = () => {
       gender,
       goal,
       activity,
+      endurance,
+      muscle,
+      bmi,
+      eating,
+      daily,
+      unknown
     };
 
     try {
@@ -221,7 +255,10 @@ const CalorieForm = () => {
                 src={image.src}
                 alt={image.alt}
                 className={`grid-image ${selectedImages.includes(index) ? "selected" : ""}`}
-                onClick={() => toggleImageSelection(index)}
+                onClick={() => {
+                  toggleImageSelection(index);
+                  setTrue(image.title);
+                }}
               />
               <div className="image-title">{image.title}</div> {/* Display title below the image */}
             </div>
