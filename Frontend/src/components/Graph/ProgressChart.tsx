@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import { ChartData, ChartOptions, Chart, registerables } from 'chart.js'; // Import and register required components
-import './ProgressChart.css'; // Import the CSS file
+import { ChartData, ChartOptions, Chart, registerables, LinearScale } from 'chart.js'; // Import LinearScale
+import './ProgressChart.css';
 
 // Register the required components
-Chart.register(...registerables);
+Chart.register(...registerables, LinearScale); // Register LinearScale
 
 interface DailyRecord {
     date: string;
@@ -18,6 +18,27 @@ const ProgressChart = () => {
     const [calorieGoal, setCalorieGoal] = useState<number>(0); // State for calorie goal
     const [data, setData] = useState<DailyRecord[]>([]);
     const userID = localStorage.getItem("userID");
+
+    const groupByDate = (records: DailyRecord[]) => {
+        const grouped: { [date: string]: { caloriesEaten: number, weight: number } } = {};
+
+        records.forEach(record => {
+            const splitDate = record.date.split("-");
+            const noYear =splitDate[1] + "-" + splitDate[2];
+            const date = noYear.split("T")[0];
+            if (!grouped[date]) {
+                grouped[date] = {
+                    caloriesEaten: record.caloriesEaten,
+                    weight: record.weight,
+                };
+            } else {
+                grouped[date].caloriesEaten += record.caloriesEaten;
+                grouped[date].weight = record.weight;
+            }
+        });
+
+        return grouped;
+    };
 
     useEffect(() => {
         fetch(`http://localhost:8081/api/dailyrecords/${userID}`)
@@ -33,12 +54,14 @@ const ProgressChart = () => {
             try {
                 const records = data;
 
-                const labels = records.map(record => record.date);
-                const weightData = records.map(record => record.weight);
-                const calorieData = records.map(record => record.caloriesEaten);
+                const groupedRecords = groupByDate(records);
 
-                const maxWeight = Math.max(...weightData); // Find the maximum weight
-                const weightAxisMax = maxWeight + 20; // Set max to 20 pounds more than the max weight
+                const labels = Object.keys(groupedRecords);
+                const weightData = labels.map(date => groupedRecords[date].weight);
+                const calorieData = labels.map(date => groupedRecords[date].caloriesEaten);
+
+                const maxWeight = Math.max(...weightData);
+                const weightAxisMax = maxWeight * 1.2;
 
                 setCalorieGoal(records[records.length - 1]?.calorieGoal || 0);
 
@@ -60,11 +83,11 @@ const ProgressChart = () => {
                             yAxisID: 'y-axis-calories',
                         },
                         {
-                            label: 'Calorie Goal', // New dataset for the calorie goal
-                            data: Array(records.length).fill(calorieGoal), // Flat line at the calorie goal
-                            borderColor: 'rgba(255, 215, 0, 1)', // Color for the calorie goal line
+                            label: 'Calorie Goal',
+                            data: Array(labels.length).fill(calorieGoal),
+                            borderColor: 'rgba(255, 215, 0, 1)',
                             backgroundColor: 'rgba(255, 215, 0, 0.2)',
-                            borderDash: [5, 5], // Dashed line style
+                            borderDash: [5, 5],
                             yAxisID: 'y-axis-calories',
                         },
                     ],
@@ -75,8 +98,8 @@ const ProgressChart = () => {
                         'y-axis-weight': {
                             type: 'linear',
                             position: 'left',
-                            beginAtZero: true, // Set minimum to 0
-                            max: weightAxisMax, // Dynamically set max based on data
+                            beginAtZero: true,
+                            max: weightAxisMax,
                         },
                         'y-axis-calories': {
                             type: 'linear',
@@ -98,7 +121,7 @@ const ProgressChart = () => {
             'y-axis-weight': {
                 type: 'linear',
                 position: 'left',
-                beginAtZero: true, // Default settings
+                beginAtZero: true,
             },
             'y-axis-calories': {
                 type: 'linear',
