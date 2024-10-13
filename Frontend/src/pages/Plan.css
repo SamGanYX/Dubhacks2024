@@ -6,6 +6,9 @@
     border-radius: 8px; /* Rounded corners */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
+.centered_bq {
+    text-align: center;
+}
 
 .plan-container h2 {
     text-align: center; /* Center the main heading */

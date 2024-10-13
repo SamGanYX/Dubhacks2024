@@ -11,7 +11,7 @@
 }
 
 /* Heading styling */
-h1 {
+.ingredients-page h1 {
     font-size: 2.5rem; /* Larger heading size */
     color: #2c3e50; /* Darker text color for contrast */
     margin-bottom: 30px; /* Margin below the heading */

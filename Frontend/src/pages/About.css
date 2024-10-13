@@ -9,7 +9,7 @@
 }
 
 /* Heading styling */
-h1, h2 {
+.about-container h1, h2 {
     color: #2c3e50; /* Darker, more refined text for headings */
     margin-bottom: 25px; /* Increased spacing below headings */
     letter-spacing: 1.5px; /* Increase letter spacing for a more polished look */

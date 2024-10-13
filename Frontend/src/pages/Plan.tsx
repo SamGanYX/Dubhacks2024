@@ -7,10 +7,32 @@ const Plan = () => {
     const { token } = useAuth();
     const [dietPlan, setDietPlan] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const [quote, setQuote] = useState('');
+    const [error, setError] = useState('');
     const [userData, setUserData] = useState<any>(null); // State to hold user data
     const userID = localStorage.getItem("userID");
 
-    // Fetch the diet plan from the backend
+    const fetchQuote = async () => {
+        setLoading(true);
+        setError('');
+
+        try {
+            const response = await fetch('http://localhost:8081/getquote');
+            const data = await response.json();
+
+            if (response.ok) {
+                setQuote(data.quote);
+            } else {
+                setError(data.error || 'Failed to fetch quote.');
+            }
+        } catch (err) {
+            setError('An error occurred while fetching the quote.');
+        }
+    };
+    useEffect(() => {
+        fetchQuote();
+    }, []);
+
     const fetchDietPlan = async () => {
         setLoading(true);
         try {
@@ -28,7 +50,6 @@ const Plan = () => {
             }
 
             const data = await response.json();
-            console.log("hi");
             setDietPlan(data);
         } catch (err) {
             console.log(err);
@@ -62,7 +83,6 @@ const Plan = () => {
     const handleEditClick = () => {
         window.location.href = '/calculator'; // Redirect to /calculator with a page refresh
     };
-
     return (
         <div className="plan-container">
             {userData && (
@@ -75,7 +95,6 @@ const Plan = () => {
             )}
             <button onClick={handleEditClick} className="btn-edit-info">Edit Personal Information</button>
             <h2>Your Diet Plan</h2>
-            {loading && <p>Loading...</p>}
             {dietPlan && (
                 <div className="diet-results">
                     <h3>Expected Metabolic Rate: {dietPlan.bmr} kcal</h3>
@@ -84,6 +103,8 @@ const Plan = () => {
                 </div>
             )}
             <ProgressChart />
+            {error && <p className="error">{error}</p>}
+            {quote && <blockquote className="centered_bq">{quote}</blockquote>}
         </div>
     );
 };
