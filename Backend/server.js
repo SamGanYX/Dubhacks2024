@@ -358,10 +358,10 @@ app.get('/api/dailyrecords/:userID', (req, res) => {
 
     // Query to get daily records for the user
     const query = `
-        SELECT date, caloriesEaten, mealName, weight, calorieGoal 
+        SELECT id, date, caloriesEaten, mealName, weight, calorieGoal 
         FROM DailyRecords 
         WHERE userID = ? 
-        ORDER BY date DESC
+        ORDER BY date ASC
     `;
 
     db.query(query, [userID], (err, results) => {
@@ -470,6 +470,21 @@ app.post('/api/dailyrecords', (req, res) => {
     });
 });
 
+app.delete('api/dailyrecord/delete',(req, res) => {
+    const {id} = req.body;
+
+    const deleteQuery = 'DELETE FROM UserStats WHERE id = ?'
+
+    db.query(deleteQuery, [id], (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        res.status(200).json(results);
+    });
+})
+
 app.get('/api/recipes/:userID', (req, res) => {
     const userID = req.params.userID;
     const page = parseInt(req.query.page) || 1; // Default to page 1 if not specified
@@ -531,4 +546,6 @@ app.get('/protected', verifyToken, (req, res) => {
 app.listen(8081, () => {
     console.log("Listening");
 })
+
+
 
