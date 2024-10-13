@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
-import axios from 'axios';
 import { ChartData, ChartOptions, Chart, registerables } from 'chart.js'; // Import and register required components
 import './ProgressChart.css'; // Import the CSS file
 
@@ -38,6 +37,9 @@ const ProgressChart = () => {
                 const weightData = records.map(record => record.weight);
                 const calorieData = records.map(record => record.caloriesEaten);
 
+                const maxWeight = Math.max(...weightData); // Find the maximum weight
+                const weightAxisMax = maxWeight + 20; // Set max to 20 pounds more than the max weight
+
                 setCalorieGoal(records[records.length - 1]?.calorieGoal || 0);
 
                 setChartData({
@@ -67,6 +69,22 @@ const ProgressChart = () => {
                         },
                     ],
                 });
+
+                setOptions({
+                    scales: {
+                        'y-axis-weight': {
+                            type: 'linear',
+                            position: 'left',
+                            beginAtZero: true, // Set minimum to 0
+                            max: weightAxisMax, // Dynamically set max based on data
+                        },
+                        'y-axis-calories': {
+                            type: 'linear',
+                            position: 'right',
+                            beginAtZero: true,
+                        },
+                    },
+                });
             } catch (error) {
                 console.error('Error fetching daily records:', error);
             }
@@ -75,12 +93,12 @@ const ProgressChart = () => {
         fetchData();
     }, [data, calorieGoal]);
 
-    const options: ChartOptions<'line'> = {
+    const [options, setOptions] = useState<ChartOptions<'line'>>({
         scales: {
             'y-axis-weight': {
                 type: 'linear',
                 position: 'left',
-                beginAtZero: false,
+                beginAtZero: true, // Default settings
             },
             'y-axis-calories': {
                 type: 'linear',
@@ -88,7 +106,7 @@ const ProgressChart = () => {
                 beginAtZero: true,
             },
         },
-    };
+    });
 
     return (
         <div className="chart-container">
