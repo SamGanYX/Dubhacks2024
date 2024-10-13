@@ -75,7 +75,7 @@ const ChatBot: React.FC = () => {
               }
             }}
           />
-          <button onClick={handleSend}>Send</button>
+          <button className="inputChat" onClick={handleSend}>Send</button>
         </div>
       </div>
     </div>
