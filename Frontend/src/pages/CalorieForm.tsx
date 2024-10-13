@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./CalorieForm.css";
+import heavyman from '../assets/heavyman.png'; // Adjust path based on your structure
+import lightman from '../assets/lightman.png';
 
 const CalorieForm = () => {
   // Form state for user inputs
@@ -75,7 +77,7 @@ const CalorieForm = () => {
 
   return (
     <div className="form-card col-md-12">
-      <h2>Calorie Form</h2>
+      <h2>Create Your Diet</h2>
       <form onSubmit={handleSubmit}>
         {/* Age input */}
         <div className="form-group-calorie-form">
@@ -117,6 +119,7 @@ const CalorieForm = () => {
               className="form-control"
               required
             />
+          <p></p>
             <input
               type="range"
               min="100"
@@ -133,31 +136,40 @@ const CalorieForm = () => {
           <label htmlFor="weight">Weight (kg):</label>
           <div className="slider-container">
             <input
-              type="number"
-              id="weight"
-              value={weight}
-              onChange={(e) => setWeight(Number(e.target.value))}
-              className="form-control"
-              required
+                type="number"
+                id="weight"
+                value={weight}
+                onChange={(e) => setWeight(Number(e.target.value))}
+                className="form-control"
+                required
             />
-            <input
+          </div>
+          <div>
+            <img src={lightman} alt="left"
+                 style={{width: '10px', marginRight: '10px', display: 'inline-block', verticalAlign: 'middle'}}/>
+            <img src={heavyman} alt="right"
+                 style={{width: '15px', marginRight: '10px', display: 'inline-block', verticalAlign: 'middle'}}/>
+          </div>
+
+
+          <div className="slider-container"><input
               type="range"
               min="30"
               max="250"
               value={weight}
               onChange={(e) => setWeight(Number(e.target.value))}
               className="slider"
-            />
-          </div>
+          /></div>
+
         </div>
 
         {/* Goal dropdown */}
         <div className="form-group-calorie-form">
           <label htmlFor="goal">Goal:</label>
           <select
-            id="goal"
-            value={goal}
-            onChange={(e) => setGoal(e.target.value)}
+              id="goal"
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
             className="form-control"
             required
           >
