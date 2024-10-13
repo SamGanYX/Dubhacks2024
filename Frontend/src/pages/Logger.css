@@ -11,8 +11,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     background-color: white; /* Semi-transparent background */
     display: flex;
     justify-content: center;
@@ -28,6 +28,7 @@
     max-width: 500px;
     width: 90%; /* Responsive width */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
     position: relative; /* Relative positioning for close button */
   }
   

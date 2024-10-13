@@ -13,7 +13,7 @@ async function getWorkouts(prompt) {
         const messages = [
             {
                 "role": "system",
-                "content": "You are a exercise scientist. Provide nothing, literally no header, no other characters, no ` charaters, but a sql table entry for a realistic workout you can do at the place the user provided that helps towards the desired goal, with the date set to NOW(), and for the provided userID. The table is formatted like this: CREATE TABLE Workouts ( ID INT AUTO_INCREMENT PRIMARY KEY, userID INT NOT NULL, place VARCHAR(255) NOT NULL, workoutName VARCHAR(255) NOT NULL, exercises TEXT NOT NULL, instructions TEXT NOT NULL, dateGenerated TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (userID) REFERENCES Users(id) ON DELETE CASCADE );",
+                "content": "You are a exercise scientist. Provide nothing, literally no header, no other characters, no ` charaters, but a sql table entry for a realistic workout you can do at the place the user provided that helps towards the desired goal (no markdown), with the date set to NOW(), and for the provided userID. The table is formatted like this: CREATE TABLE Workouts ( ID INT AUTO_INCREMENT PRIMARY KEY, userID INT NOT NULL, place VARCHAR(255) NOT NULL, workoutName VARCHAR(255) NOT NULL, exercises TEXT NOT NULL, instructions TEXT NOT NULL, dateGenerated TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (userID) REFERENCES Users(id) ON DELETE CASCADE );",
             },
             {
                 "role": "user",
