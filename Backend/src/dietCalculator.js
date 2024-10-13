@@ -12,10 +12,32 @@ function calculateDiet(height, gender, weight, age, weightChangeRate, activity) 
 
     // Set a realistic muscle gain weightChangeRate (e.g., 0.1 - 0.3 kg/week)
     // Typically, 0.1 kg/week = ~100 calorie surplus per day
-    const calorieAdjustment = (weightChangeRate / 7) * 700; // Adds calories based on weight change goal
+    const calorieAdjustment = (weightChangeRate / 7) * 7000; // Adds calories based on weight change goal
+    console.log(calorieAdjustment)
 
     // Calculate total calorie goal with activity multiplier and surplus
     const calorieGoal = (bmr * activity) + calorieAdjustment;
+
+    // Return the daily calorie goal and recommended protein intake
+    return Math.round(calorieGoal);
+}
+
+function calculateBMR(height, gender, weight, age, weightChangeRate, activity) {
+    const heightCm = height;
+    const weightKg = weight;
+
+    // Calculate BMR using Mifflin-St Jeor Equation
+    let bmr;
+    if (gender === 0) {  // Male
+        bmr = 10 * weightKg + 6.25 * heightCm - 5 * age + 5;
+    } else if (gender === 1) {  // Female
+        bmr = 10 * weightKg + 6.25 * heightCm - 5 * age - 161;
+    }
+
+
+
+    // Calculate total calorie goal with activity multiplier and surplus
+    const calorieGoal = (bmr * activity);
 
     // Return the daily calorie goal and recommended protein intake
     return Math.round(calorieGoal);
@@ -35,7 +57,7 @@ function adjustDiet(height, gender, weight, age, weightChangeRate, activity, act
     }
 
     // Typically, 0.1 kg/week = ~100 calorie surplus per day
-    let calorieAdjustment = (weightChangeRate / 7) * 700; // Adds calories based on weight change goal
+    let calorieAdjustment = (weightChangeRate / 7) * 7000; // Adds calories based on weight change goal
 
     // Adjust calorie intake if actual weight change rate is significantly lower than the target
     if (Math.abs(actualWeightChangeRate) < Math.abs(0.8 * weightChangeRate) && actualWeightChangeRate !== 0) {
@@ -54,6 +76,7 @@ function adjustDiet(height, gender, weight, age, weightChangeRate, activity, act
 module.exports = {
     calculateDiet,
     adjustDiet,
+    calculateBMR,
     // ... other exports if needed
 };
 
