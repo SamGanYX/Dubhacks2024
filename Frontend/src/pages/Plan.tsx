@@ -12,6 +12,7 @@ const Plan = () => {
     const [quote, setQuote] = useState('');
     const [error, setError] = useState('');
     const [userData, setUserData] = useState<any>(null); // State to hold user data
+    const [caloriesGoal, setCalGoal] = useState<number>();
     const userID = localStorage.getItem("userID");
     const { isAuthenticated, token } = useAuth();
     const navigate = useNavigate();
@@ -109,7 +110,10 @@ const Plan = () => {
                 <div className="diet-results">
                     <h3>Expected Metabolic Rate: {dietPlan.bmr} kcal</h3>
                     <h3>Target Daily Caloric Intake: {dietPlan.dietResult} kcal</h3>
-                    {dietPlan.warning && <p className="warning">{dietPlan.warning}</p>}
+                    <div>{dietPlan.caloriesGoal != dietPlan.dietResult && (
+                        <h3>Adjusted Target Goal: {dietPlan.caloriesGoal}</h3>)}
+                        </div>
+                        {dietPlan.warning && <p className="warning">{dietPlan.warning}</p>}
                 </div>
             )}
             <ProgressChart />

@@ -379,7 +379,7 @@ app.post('/api/calculate-diet-with-bmr', async (req, res) => {
             const bmr = calculateBMR(height, gender, weight, age, weightChangeRate, activity); // Call the diet calculation function
             console.log("caloreisgoal"+CaloriesGoal)
             //dietResult = CaloriesGoal
-            return res.status(200).json({dietResult : CaloriesGoal, bmr:bmr}); // Respond with the diet result
+            return res.status(200).json({dietResult : dietResult, caloriesGoal : CaloriesGoal, bmr:bmr}); // Respond with the diet result
         } catch (error) {
             return res.status(500).json({ error: error.message }); // Handle calculation errors
         }
