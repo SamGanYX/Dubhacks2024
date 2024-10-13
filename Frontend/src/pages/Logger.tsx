@@ -125,12 +125,18 @@ const Logger: React.FC = () => {
     if (totalCalories === 0) {
       return 'tile-no-calories'; // Class for no calories logged
     } else if (totalCalories < calorieGoal * 0.5) {
-      return 'tile-under-goal'; // Class for under 50% of the goal
-    } else if (totalCalories < calorieGoal) {
-      return 'tile-under-100'; // Class for under the goal
-    } else {
-      return 'tile-over-goal'; // Class for meeting/exceeding the goal
+      return 'tile-under-goal'; // Class for under 50% of the goal{
+    } else if (totalCalories < calorieGoal * 0.95) {
+      return 'tile-under-100';
     }
+    else if (totalCalories < calorieGoal *1.05) {
+      return 'tile-over-goal'; // Class for under the goal
+    } else if (totalCalories < 1.2 * calorieGoal) {
+      return 'tile-under-100';
+    } else {
+      return 'tile-under-goal'; // Class for over the goal
+    }
+
   };  
 
   const handleCalendarChange = (date: Date) => {
@@ -202,6 +208,9 @@ const Logger: React.FC = () => {
   const getProgressPercentage = (): number => {
     const dateKey = formatDate(selectedDate); // Get the key for the selected date
     const totalCalories = getTotalCalories(dateKey); // Get total calories for that date
+    if(totalCalories > calorieGoal) {
+      return Math.max(0, (calorieGoal/totalCalories) * 100);
+    }
     return Math.min((totalCalories / calorieGoal) * 100, 100); // Calculate percentage
   };
 

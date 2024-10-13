@@ -12,6 +12,7 @@ const CreateAccount = () => {
   const [Username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
+  const [Error, setError] = useState("");
   useEffect(() => {
     fetch("http://localhost:8081/users")
       .then((res) => res.json())
@@ -51,13 +52,18 @@ const CreateAccount = () => {
           body: JSON.stringify(userData),
         })
           .then((response) => {
+            if(response.status === 201) {
+              return response.json();
+            } else {
+              setError('Failed to create account, username taken');
+              throw new Error('Error creating account:' + response.statusText);
+            }
             return response.json();
           })
           .then((data) => {
             console.log(data);
             localStorage.setItem("token", data.token);
             localStorage.setItem("userID", data.userID);
-            localStorage.setItem("goal", data.userID);
             // location.reload();
             window.location.href = "/calculator";
           })
@@ -78,6 +84,7 @@ const CreateAccount = () => {
       </div>
       <div className="form-div">
         <h2>Create an Account</h2>
+        {Error && <p>{Error}</p>}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -90,7 +97,9 @@ const CreateAccount = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            type="text"
+            type="password" // Change type to "password"
+            name="Password"
+            id="Password"
             placeholder="Enter Password"
             onChange={(e) => setPassword(e.target.value)}
           />

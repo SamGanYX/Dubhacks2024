@@ -44,9 +44,6 @@ const ChatBot: React.FC = () => {
         { user: input, bot: 'Sorry, I could not fetch a response.' },
       ]);
     }
-
-    // Clear the input field
-    setInput('');
   };
 
   return (
@@ -71,11 +68,7 @@ const ChatBot: React.FC = () => {
               ) : (
                 <div className="user-text">{msg.user}</div>
               )}
-              <img
-                src={msg.bot ? "../src/assets/trainerpfp.jpg" : "path_to_your_user_profile_pic.jpg"}
-                alt={msg.bot ? "Bot Profile" : "User Profile"}
-                className="profile-pic"
-              />
+
             </div>
           ))}
         </div>
@@ -88,6 +81,7 @@ const ChatBot: React.FC = () => {
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 handleSend();
+                setInput('');
               }
             }}
           />

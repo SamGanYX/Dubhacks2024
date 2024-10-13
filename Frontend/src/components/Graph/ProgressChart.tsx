@@ -47,10 +47,12 @@ const ProgressChart = () => {
     const [adjustedCals, setAdjCals] = useState<number>(0)
     const { token } = useAuth();
     const [adjMessage] = useState<string>("Your New Suggested Calorie Intake: ");
+    const [averageCaloriePercentage, setAverageCaloriePercentage] = useState<number>(0); // Store avg calorie %
+
 
 
     const groupByDate = (records: DailyRecord[]) => {
-        const grouped: { [date: string]: { caloriesEaten: number, weight: number } } = {};
+        const grouped: { [date: string]: { caloriesEaten: number, weight: number, caloriesGoal: number } } = {};
 
         records.forEach(record => {
             const splitDate = record.date.split("-");
@@ -60,6 +62,7 @@ const ProgressChart = () => {
                 grouped[date] = {
                     caloriesEaten: record.caloriesEaten,
                     weight: record.weight,
+                    caloriesGoal: record.calorieGoal,
                 };
             } else {
                 grouped[date].caloriesEaten += record.caloriesEaten;
@@ -157,11 +160,19 @@ const ProgressChart = () => {
                 const records = data;
 
                 const groupedRecords = groupByDate(records);
-
+                let avgPercent = 0;
+                let counter = 0;
+                for(const date in groupedRecords){
+                    avgPercent += (groupedRecords[date].caloriesEaten/groupedRecords[date].caloriesGoal)*100;
+                    counter++;
+                }
+                if(counter != 0) {
+                    setAverageCaloriePercentage(Math.round(Math.min(avgPercent/counter, 200-avgPercent/counter)));
+                }
                 const labels = Object.keys(groupedRecords);
                 const weightData = labels.map(date => groupedRecords[date].weight);
                 const calorieData = labels.map(date => groupedRecords[date].caloriesEaten);
-
+                const calorieGoalData = labels.map(date => groupedRecords[date].caloriesGoal);
                 const maxWeight = Math.max(...weightData);
                 const weightAxisMax = maxWeight * 1.2;
 
@@ -186,7 +197,7 @@ const ProgressChart = () => {
                         },
                         {
                             label: 'Calorie Goal',
-                            data: Array(labels.length).fill(calorieGoal),
+                            data: (calorieGoalData),
                             borderColor: 'rgba(255, 215, 0, 1)',
                             backgroundColor: 'rgba(255, 215, 0, 0.2)',
                             borderDash: [5, 5],
@@ -244,6 +255,7 @@ const ProgressChart = () => {
                 )}
             </div>
             <div className="wl-results">{weightMessage} {Math.abs(averageWeightLoss)} kg in {duration} days!
+                <div >Your accuraccy towards your calorie goal was {averageCaloriePercentage}%</div>
                 <p></p>
                 <p>
                     <button onClick={handleEditClick} className={"btn-recalibrate"}>

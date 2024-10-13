@@ -55,9 +55,10 @@ const Recipes = () => {
             {recipes.length > 0 ? (
                 <ul className="recipes_ul">
                     {recipes.map((recipe) => (
-                        <li key={recipe.recipeID}>
-                            <h2>{recipe.recipeName}</h2>
-                            <p>Ingredients: {recipe.ingredients}</p>
+                        <li key={recipe.recipeID} className="rec-container">
+                            <h2 className="title-container" color="white">{recipe.recipeName}</h2>
+                            <p></p>
+                            <p >Ingredients: {recipe.ingredients}</p>
                             <p>Instructions: {recipe.instructions}</p>
                             <p>Calories: {recipe.calories}</p>
                             <p>Date Generated: {new Date(recipe.dateGenerated).toLocaleDateString()}</p>

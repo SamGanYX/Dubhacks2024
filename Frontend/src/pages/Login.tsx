@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
 import './CreateAccount.css';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   interface DataItem {
@@ -11,6 +12,8 @@ const Login = () => {
   const [LoggedIn, setLoggedIn] = useState(false);
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
+  const [Error, setError] = useState("");
+  const navigate = useNavigate();
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,7 +30,13 @@ const Login = () => {
       body: JSON.stringify(userData),
     })
       .then((response) => {
-        return response.json();
+        // console.log(response);
+        if(response.status === 200) {
+          return response.json();
+        } else {
+          setError('Failed to log in, username not found');
+          throw new Error('Error logging in:' + response.statusText);
+        }
       })
       .then((data) => {
         console.log(data);
@@ -35,6 +44,7 @@ const Login = () => {
         localStorage.setItem("userID", data.userID);
         // location.reload();
         window.location.href = "/home";
+        // navigate("/home/");
       })
       .catch((error) => {
         console.error("Error logging in:", error);
@@ -54,6 +64,7 @@ const Login = () => {
       </div>
       <div className="form-div">
         <h2>Login</h2>
+        {Error && <p>{Error}</p>}
         <form onSubmit={handleSubmit}>
           <input
             type="text"
