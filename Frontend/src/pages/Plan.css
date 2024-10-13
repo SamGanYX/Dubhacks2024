@@ -1,0 +1,57 @@
+.plan-container {
+    padding: 20px; /* Add some padding around the container */
+    max-width: 80vw; /* Set a max width for the container */
+    margin: 120px auto; /* Center the container */
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.plan-container h2 {
+    text-align: center; /* Center the main heading */
+    color: #333; /* Dark color for text */
+    font-size: 2rem; /* Increase font size */
+    margin: 20px; /* Space below the heading */
+}
+
+.diet-results {
+    background-color: #fff; /* White background for results */
+    padding: 15px; /* Add padding around results */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for results */
+    margin-bottom: 20px; /* Space below the results section */
+}
+
+.diet-results h3 {
+    color: #4caf50; /* Green color for headings */
+    margin: 10px 0; /* Space above and below headings */
+}
+
+.warning {
+    color: #ff5722; /* Orange color for warnings */
+    font-weight: bold; /* Make warning text bold */
+    margin-top: 10px; /* Space above the warning */
+}
+
+.btn-edit-info {
+    display: block; /* Block-level button */
+    width: 100%; /* Full width */
+    padding: 12px; /* Add padding for a larger click area */
+    background-color: #007bff; /* Primary button color */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1rem; /* Font size */
+    transition: background-color 0.3s; /* Smooth background color transition */
+}
+
+.btn-edit-info:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.loading {
+    text-align: center; /* Center loading text */
+    font-size: 1.2rem; /* Font size for loading text */
+    color: #666; /* Gray color for loading text */
+}
