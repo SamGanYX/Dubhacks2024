@@ -131,7 +131,7 @@ const ProgressChart = () => {
             .then((res) => res.json())
             .then(async (data) => {
                 setData(data);
-                setAverageWeightLoss(calculateWeightLossBetweenExtremes(data)); // Calculate average weight loss
+                setAverageWeightLoss(Math.round(calculateWeightLossBetweenExtremes(data)*10)/10); // Calculate average weight loss
                 setDuration(calculateTimeRange(data));
                 console.log(averageWeightLoss)
                 if (averageWeightLoss < 0) {
