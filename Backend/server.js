@@ -9,6 +9,7 @@ const multer = require('multer');
 const path = require('path');
 
 const { calculateDiet, adjustDiet } = require('./src/dietCalculator');
+const { getResponse } = require('./src/Perplexity');
 
 const db = mysql.createConnection({
     host:"127.0.0.1",

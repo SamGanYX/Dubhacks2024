@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import React, { useState } from 'react'; 
-=======
 // Logger.tsx
 import React, { useState, useEffect } from "react";
->>>>>>> dc4c718b1fb9ab03d5a9c0f969724cd1c0189b4c
 import Calendar from 'react-calendar'; // Import the Calendar
 import 'react-calendar/dist/Calendar.css'; // Import default styles for the Calendar
 import './Logger.css'; // Update to your preferred CSS file
@@ -35,9 +31,7 @@ const Logger: React.FC = () => {
   const [weight, setWeight] = useState<number>(165); // Default weight
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-<<<<<<< HEAD
   const [isMealLogged, setIsMealLogged] = useState<boolean>(false); // New state to track submission
-=======
   const [loading, setLoading] = useState(true);
   const userID = localStorage.getItem("userID");
   const { isAuthenticated } = useAuth();
@@ -118,7 +112,6 @@ const Logger: React.FC = () => {
     fetchUserStats(); // Fetch user stats on component mount
     fetchDailyRecords(); // Fetch daily records on component mount
   }, [userID]);
->>>>>>> dc4c718b1fb9ab03d5a9c0f969724cd1c0189b4c
 
   const formatDate = (date: Date): string => {
     return date.toISOString().split('T')[0]; // 'YYYY-MM-DD'
@@ -286,14 +279,6 @@ const Logger: React.FC = () => {
                   placeholder="Enter calories"
                 />
               </div>
-<<<<<<< HEAD
-              <div className="button-container">
-                <button type="submit" className="btn-add-meal">Add Meal</button>
-                <button type="button" className="btn-add-meal btn-back" onClick={closeModal}>
-                  Back
-                </button>
-              </div>
-=======
               <div className="form-group">
                 <label>Weight: </label>
                 <input
@@ -303,7 +288,12 @@ const Logger: React.FC = () => {
                 />
               </div>
               <button type="submit" className="btn-add-meal">Add Meal</button>
->>>>>>> dc4c718b1fb9ab03d5a9c0f969724cd1c0189b4c
+              <div className="button-container">
+                <button type="submit" className="btn-add-meal">Add Meal</button>
+                <button type="button" className="btn-add-meal btn-back" onClick={closeModal}>
+                  Back
+                </button>
+              </div>
             </form>
 
 

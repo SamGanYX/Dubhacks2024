@@ -20,24 +20,26 @@ const App = () => {
     <div>
       <BrowserRouter>
         <Navbar></Navbar>
-        <Routes>
-          <Route index element={<Home />}></Route>
-          <Route path="/home" element={<Home />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/contact" element={<Contact />}></Route>
-          <Route path="/logger" element={<Logger />}></Route>
-          <Route path="/users" element={<Users />}></Route>
-          <Route path="/calculator" element={<CalorieForm />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/plan" element={<Plan />}></Route>
-          <Route
-            path="/category/:categoryName"
-            element={<CategoryPage />}
-          ></Route>
-          <Route path="/create_account" element={<CreateAccount />}></Route>
-          <Route path="*" element={<NoPage />}></Route>
-          <Route path="/chat" element={<ChatBot />}></Route>
-        </Routes>
+        <div className="padded-div">
+          <Routes>
+            <Route index element={<Home />}></Route>
+            <Route path="/home" element={<Home />}></Route>
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/contact" element={<Contact />}></Route>
+            <Route path="/logger" element={<Logger />}></Route>
+            <Route path="/users" element={<Users />}></Route>
+            <Route path="/calculator" element={<CalorieForm />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/plan" element={<Plan />}></Route>
+            <Route
+              path="/category/:categoryName"
+              element={<CategoryPage />}
+            ></Route>
+            <Route path="/create_account" element={<CreateAccount />}></Route>
+            <Route path="*" element={<NoPage />}></Route>
+            <Route path="/chat" element={<ChatBot />}></Route>
+          </Routes>
+        </div>
       </BrowserRouter>
     </div>
   );
