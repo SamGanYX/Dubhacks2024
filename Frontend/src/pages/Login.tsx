@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../AuthContext";
 import './CreateAccount.css';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   interface DataItem {
@@ -12,6 +13,7 @@ const Login = () => {
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const [Error, setError] = useState("");
+  const navigate = useNavigate();
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,7 +43,8 @@ const Login = () => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("userID", data.userID);
         // location.reload();
-        // window.location.href = "/home";
+        window.location.href = "/home";
+        // navigate("/home/");
       })
       .catch((error) => {
         console.error("Error logging in:", error);
