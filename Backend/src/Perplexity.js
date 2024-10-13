@@ -13,20 +13,21 @@ async function getResponse(prompt) {
         const messages = [
             {
                 "role": "system",
-                "content": "You are a fitness expert. Provide helpful and detailed responses that maximally benefits the user.",
+                "content": "You are a fitness expert. Provide helpful and detailed responses that maximally benefits the user in raw text.",
             },
             {
                 "role": "user",
                 "content": prompt,
             },
         ];
-        
+
         const response = await client.chat.completions.create({
             model: "llama-3.1-sonar-small-128k-online", // Using the latest model
             messages: messages,
         });
         console.log(response); // This logs the entire response object
         console.log(response.choices[0].message.content); // This logs just the response text
+        return response.choices[0].message.content;
     } catch (error) {
         console.error("Error:", error);
     }

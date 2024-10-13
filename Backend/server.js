@@ -82,6 +82,21 @@ app.get('/userstats/:userID', (req, res) => {
     });
 });
 
+app.post('/api/query', async (req, res) => {
+    const { prompt } = req.body; // Assuming the input has a 'prompt' key
+    if (!prompt) {
+        return res.status(400).json({ error: 'Prompt is required' });
+    }
+
+    try {
+        const aiResponse = await getResponse(prompt); // Call the getResponse function
+        res.json({ answer: aiResponse }); // Send back the response
+    } catch (error) {
+        console.error("Error calling AI API:", error);
+        res.status(500).json({ error: 'Failed to get AI response' });
+    }
+});
+
 // =============== Adding to Table ================ \\
 
 
