@@ -67,7 +67,7 @@
     width: 100%;
     padding: 12px;
     margin: 10px 0;
-    background-color: #3a8dff;
+    background-color: #1bbd88; /* Primary button color */
     color: white;
     border: none;
     border-radius: 5px;
@@ -77,9 +77,9 @@
   }
   
   button[type="submit"]:hover {
-    background-color: #336dcc;
+    background-color: #14805f; /* Darker shade on hover */
   }
-  
+
   button.google-signin {
     background-color: white;
     color: #444;
