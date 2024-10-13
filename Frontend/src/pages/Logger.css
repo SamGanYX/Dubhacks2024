@@ -33,7 +33,6 @@
     position: relative; /* Relative positioning for close button */
   }
   
-  /* Close Button */
   .close-button {
     color: black;
     background: none;
@@ -43,6 +42,10 @@
     position: absolute;
     top: 10px;
     right: 10px;
+  }
+  
+  .close-button:hover {
+    color: #6a6a6a; /* Change to a lighter shade for less contrast */
   }
 
   .calorie-goal {
@@ -63,7 +66,7 @@
     background-color: #e0e0e0;
     border-radius: 10px;
     overflow: hidden;
-    margin: 10px 0; /* Space between progress bar and text */
+    margin: 10px 0; 
   }
   
   .progress-bar-container .progress-bar {
@@ -125,12 +128,10 @@
     cursor: pointer; /* Pointer cursor on hover */
     font-size: 1rem; /* Adjust font size */
   }
-  
-  
+
   .btn-add-meal:hover {
     background-color: #0056b3; /* Darker shade on hover */
   }
-  
   
   .btn-add-meal {
     padding: 10px;
@@ -165,14 +166,14 @@
     cursor: pointer; /* Pointer cursor on hover */
     margin: 0 10px; /* Space between buttons */
   }
+
+  .date-navigator button:hover {
+    color: #6a6a6a; 
+  }
   
   .date-navigator span {
     font-size: 1.5rem; /* Match font size of arrows */
     margin: 0 10px; /* Space around the date */
-  }
-  
-  .date-navigator button:hover {
-    color: #0056b3; /* Darker shade on hover */
   }
 
 /* Calendar Styling */
