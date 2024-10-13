@@ -4,6 +4,7 @@ import './Home.css';
 
 function App() {
   const navigate = useNavigate(); // Initialize useNavigate
+  const userID = localStorage.getItem("userID");
 
   return (
     <div className="app">
@@ -15,10 +16,10 @@ function App() {
         <h1>Welcome to Your Personal Fitness Assistant</h1>
       </div>
       </div>
-      <div className="button-section">
+      {(userID==null) && <div className="button-section">
         <button className="login-button" onClick={() => navigate('/login')}>Login</button>
         <button className="signup-button" onClick={() => navigate('/create_account')}>Sign-up</button>
-      </div>
+      </div>}
     </div>
   );
 }
