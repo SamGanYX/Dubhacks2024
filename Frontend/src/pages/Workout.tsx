@@ -56,6 +56,7 @@ const Workouts = () => {
                     {workouts.map((workout) => (
                         <li key={workout.ID} className="rec-container">
                             <h2 className="title-container">{workout.workoutName}</h2>
+                            <p></p>
                             <p>Place: {workout.place}</p>
                             <p>Exercises: {workout.exercises}</p>
                             <p>Instructions: {workout.instructions}</p>
