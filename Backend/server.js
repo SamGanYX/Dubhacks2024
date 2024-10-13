@@ -60,8 +60,8 @@ app.get('/', (req, res) => {
 
 
 app.get('/getquote', async (req, res) => {
-    // const quote = await getQuote();
-    const quote = "disabled";
+    const quote = await getQuote();
+    // const quote = "disabled";
     if (!quote) {
         return res.status(500).json({ error: 'Failed to generate quote.' });
     }

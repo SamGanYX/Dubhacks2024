@@ -1,3 +1,9 @@
+DROP TABLE Workouts;
+DROP TABLE Recipes;
+DROP TABLE DailyRecords;
+DROP TABLE UserStats;
+DROP TABLE Users;
+
 CREATE TABLE users ( ID INT NOT NULL AUTO_INCREMENT, Username VARCHAR(255) NOT NULL, Email VARCHAR(255) NOT NULL, Password VARCHAR(255) NOT NULL, PRIMARY KEY (ID) );
 
 CREATE TABLE UserStats (
@@ -53,9 +59,31 @@ CREATE TABLE Workouts (
     FOREIGN KEY (userID) REFERENCES Users(id) ON DELETE CASCADE
 );
 
+INSERT INTO Users (Username, Email, Password)
+VALUES
+("samganyx", "samganyx@gmail.com", "password"),
+("kimbijuju", "kimbijuju@gmail.com", "password"),
+("efeng2", "efeng2@gmail.com", "password2");
 
-DROP TABLE Workouts;
-DROP TABLE Recipes;
-DROP TABLE DailyRecords;
-DROP TABLE UserStats;
-DROP TABLE Users;
+INSERT INTO DailyRecords (userID, date, caloriesEaten, mealName, weight, calorieGoal)
+VALUES
+(1, '2024-10-11', 750, 'Pizza', 74.00, 2760),
+(1, '2024-10-11', 700, 'Banh Mi', 74.00, 2760),
+(1, '2024-10-11', 120, 'Hot Pot', 75.00, 2780),
+(1, '2024-10-12', 1600, 'Burger combo', 75.10, 2780),
+(1, '2024-10-12', 1600, 'Salad but with a ton of dressing', 75.30, 2780),
+(2, '2024-10-10', 800, 'Chicken Sandwich', 72.50, 2500),
+(2, '2024-10-10', 450, 'Fruit Salad', 72.50, 2500),
+(2, '2024-10-11', 900, 'Sushi Platter', 72.60, 2520),
+(2, '2024-10-11', 600, 'Smoothie Bowl', 72.60, 2520),
+(2, '2024-10-12', 1200, 'Steak and Fries', 72.80, 2540),
+(2, '2024-10-12', 400, 'Greek Yogurt', 72.80, 2540),
+(1, '2024-10-10', 300, 'Apple Pie', 74.00, 2760),
+(1, '2024-10-10', 500, 'Pasta with Marinara', 74.00, 2760),
+(1, '2024-10-09', 200, 'Granola Bar', 73.90, 2750),
+(1, '2024-10-09', 650, 'Chicken Caesar Salad', 73.90, 2750),
+(2, '2024-10-09', 850, 'BBQ Ribs', 72.40, 2480),
+(2, '2024-10-09', 550, 'French Fries', 72.40, 2480),
+(2, '2024-10-08', 700, 'Pancakes', 72.30, 2470),
+(2, '2024-10-08', 500, 'Omelette', 72.30, 2470),
+(1, '2024-10-08', 400, 'Cereal with Milk', 73.80, 2740);

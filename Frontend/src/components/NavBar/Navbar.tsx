@@ -67,6 +67,9 @@ const Navbar = () => {
                 <NavLink to="/recipes">Recipes</NavLink> {/* New Tab */}
               </li>
               <li className="navbar-li">
+                <NavLink to="/Workout">Workouts</NavLink> {/* New Tab */}
+              </li>
+              <li className="navbar-li">
                 <a onClick={logout} className="log_out">
                   Log out
                 </a>
