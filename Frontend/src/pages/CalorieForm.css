@@ -87,11 +87,22 @@
     width: 10px;
     margin-right: 10px;
 }
+.icon-left-light {
+  width: 12px;
+  height: 40px;
+  margin-right: 10px;
+}
 
 .icon-right {
     width: 15px;
     margin-left: 10px;
 }
+.icon-right-heavy {
+  width: 27px;
+  height: 40px;
+  margin-left: 10px;
+}
+
 
 .slider-value {
   margin-left: 10px; /* Space between slider and value */

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./CalorieForm.css";
-import heavyman from '../assets/heavyman.png'; // Adjust path based on your structure
-import lightman from '../assets/lightman.png';
+import heavyman_upscaled from '../assets/heavyman_upscaled.png'; // Adjust path based on your structure
 
 const CalorieForm = () => {
   // Form state for user inputs
@@ -16,7 +15,7 @@ const CalorieForm = () => {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  const { isAuthenticated, login, logout, token } = useAuth();
+  const { isAuthenticated, token } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const userID = localStorage.getItem("userID");
@@ -34,6 +33,7 @@ const CalorieForm = () => {
 
     if (!userID) {
       setError("User is not logged in");
+      console.log(error)
       return;
     }
 
@@ -59,8 +59,8 @@ const CalorieForm = () => {
       });
 
       if (response.ok) {
-        const data = await response.json();
         setSuccessMessage("Stats added successfully!");
+        console.log(successMessage)
         setGoal("");
         setAge("");
         setWeight("");
@@ -111,8 +111,8 @@ const CalorieForm = () => {
         <div className="form-group-calorie-form">
             <label htmlFor="height">Height (cm):</label>
             <div className="icon-container">
-                <img src={lightman} alt="left" className="icon-left" />
-                <img src={heavyman} alt="right" className="icon-right" />
+                <img src={heavyman_upscaled} alt="left" className="icon-left" />
+                <img src={heavyman_upscaled} alt="right" className="icon-right" width="20px" />
             </div>
             <div className="slider-container">
                 <input
@@ -130,8 +130,8 @@ const CalorieForm = () => {
         <div className="form-group-calorie-form">
             <label htmlFor="weight">Weight (kg):</label>
             <div className="icon-container">
-                <img src={lightman} alt="left" className="icon-left" />
-                <img src={heavyman} alt="right" className="icon-right" />
+                <img src={heavyman_upscaled} alt="left" className="icon-left-light" />
+                <img src={heavyman_upscaled} alt="right" className="icon-right-heavy" />
             </div>
             <div className="slider-container">
                 <input
