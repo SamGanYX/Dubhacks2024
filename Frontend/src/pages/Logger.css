@@ -1,9 +1,9 @@
 .logger {
-    padding-top: 100px;
+    padding-top: 90px;
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    height: 85vh; /* Full height of the viewport */
+    height: 100vh; /* Full height of the viewport */
     position: relative; /* For positioning modal */
     background-color: #f0f0f0; /* Light background for contrast */
   }
@@ -161,7 +161,7 @@
   .date-navigator button {
     background: none; /* Remove default button background */
     border: none; /* Remove border */
-    color: black; /* Primary button color */
+    color: black !important; /* Primary button color */
     font-size: 1.5rem; /* Larger font size for arrows */
     cursor: pointer; /* Pointer cursor on hover */
     margin: 0 10px; /* Space between buttons */
@@ -179,6 +179,7 @@
 /* Calendar Styling */
 /* General Calendar Styles */
 .react-calendar {
+    color: black;
     width: 100%;
     max-width: 800px; /* Adjust max width as needed */
     margin: 20px auto; /* Center the calendar */
