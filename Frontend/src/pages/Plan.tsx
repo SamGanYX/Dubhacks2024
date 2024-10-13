@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../AuthContext';
+import ProgressChart from '../components/Graph/ProgressChart';
 
 const Plan = () => {
     const { token } = useAuth();
@@ -61,6 +62,7 @@ const Plan = () => {
                 </label>
                 <button onClick={() => fetchDietPlan()}>Update Plan</button>
             </div>
+            <ProgressChart></ProgressChart>
         </div>
     );
 };
