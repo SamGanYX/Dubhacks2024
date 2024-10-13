@@ -375,7 +375,6 @@ app.post('/api/calculate-diet-with-bmr', async (req, res) => {
 
 app.post('/api/adjust-diet', async (req, res) => {
     let { actualWeightChangeRate, userID } = req.body; // Ensure userID is included in the request body
-
     // Query to fetch user stats based on userID
     const sql = "SELECT height, gender, weight, age, activity, goal FROM UserStats WHERE userID = ?";
 
@@ -385,26 +384,31 @@ app.post('/api/adjust-diet', async (req, res) => {
             return res.status(404).json({ message: 'User not found' }); // Handle case when user not found
         }
 
-        const { height, gender, weight, age, activity, goal} = results[0]; // Extract data from the first row
+            const { height, gender, weight, age, activity, goal} = results[0]; // Extract data from the first row
         try {
             let weightChangeRate = 0;
             switch (goal) {
                 case "gain muscle easy":
                     weightChangeRate = 0.1;
+                    break;
                 case "gain muscle hard":
                     weightChangeRate = 0.2;
+                    break;
                 case "lose fat easy":
                     weightChangeRate = -0.5;
+                    break;
                 case "lose fat hard":
                     weightChangeRate = -1.0;
+                    break;
                 case "gain weight easy":
                     weightChangeRate = 0.5;
+                    break;
                 case "gain weight hard":
                     weightChangeRate = 1;
+                    break;
                 case "maintain weight":
                     weightChangeRate = 0;
-                    targetWeight = weight;
-
+                    break;
             }
             const dietResult = adjustDiet(height, gender, weight, age, weightChangeRate, activity, actualWeightChangeRate); // Call the diet calculation function
             return res.status(200).json(dietResult); // Respond with the diet result
@@ -520,19 +524,19 @@ app.post('/api/dailyrecords', (req, res) => {
             }
 
             // Step 4: Update the user's weight and calorie goal in UserStats
-            db.query(queryUpdateUserStats, [weight, calorieGoal, userID], (err, updateResults) => {
-                if (err) {
-                    console.error(err);
-                    return res.status(500).json({ error: 'Database error while updating user stats' });
-                }
-
-                // Send success response after both queries succeed
-                res.status(201).json({
-                    message: 'Daily record, weight, and calorie goal updated successfully',
-                    dailyRecordResults: dailyResults,
-                    userStatsUpdateResults: updateResults
-                });
-            });
+            // db.query(queryUpdateUserStats, [weight, calorieGoal, userID], (err, updateResults) => {
+            //     if (err) {
+            //         console.error(err);
+            //         return res.status(500).json({ error: 'Database error while updating user stats' });
+            //     }
+            //
+            //     // Send success response after both queries succeed
+            //     res.status(201).json({
+            //         message: 'Daily record, weight, and calorie goal updated successfully',
+            //         dailyRecordResults: dailyResults,
+            //         userStatsUpdateResults: updateResults
+            //     });
+            // });
         });
     });
 });

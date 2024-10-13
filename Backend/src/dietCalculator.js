@@ -48,6 +48,9 @@ function adjustDiet(height, gender, weight, age, weightChangeRate, activity, act
     const heightCm = height;
     const weightKg = weight;
 
+    console.log(weightChangeRate)
+    console.log(actualWeightChangeRate)
+
     // Calculate BMR using Mifflin-St Jeor Equation
     let bmr;
     if (gender === 0) {  // Male
@@ -58,11 +61,15 @@ function adjustDiet(height, gender, weight, age, weightChangeRate, activity, act
 
     // Typically, 0.1 kg/week = ~100 calorie surplus per day
     let calorieAdjustment = (weightChangeRate / 7) * 7000; // Adds calories based on weight change goal
-
     // Adjust calorie intake if actual weight change rate is significantly lower than the target
-    if (Math.abs(actualWeightChangeRate) < Math.abs(0.8 * weightChangeRate) && actualWeightChangeRate !== 0) {
+    if ((Math.abs(actualWeightChangeRate) < Math.abs(0.8 * weightChangeRate)
+        || Math.abs(actualWeightChangeRate) > Math.abs(1.2 * weightChangeRate))
+        && actualWeightChangeRate !== 0) {
+
         // Adjust the calorieAdjustment based on the ratio of target to actual weight change rate
-        calorieAdjustment = calorieAdjustment * (weightChangeRate / actualWeightChangeRate);
+        calorieAdjustment = calorieAdjustment + (weightChangeRate - actualWeightChangeRate) * 100;
+        console.log("adj +" + ((weightChangeRate - actualWeightChangeRate) * 100))
+
     } else if (actualWeightChangeRate === 0) {
         // Handle case where actualWeightChangeRate is 0 to avoid division by zero
         calorieAdjustment += (weightChangeRate / 7) * 7700;

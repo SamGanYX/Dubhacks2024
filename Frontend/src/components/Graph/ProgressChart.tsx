@@ -71,19 +71,20 @@ const ProgressChart = () => {
     };
 
     const handleEditClick = () => {
+        console.log(-(averageWeightLoss/(duration/7)))
         fetchAdjPlan();
     };
 
     const fetchAdjPlan = async () => {
         try {
+            console.log("average " + -(averageWeightLoss/(duration/7)))
             const response = await fetch('http://localhost:8081/api/adjust-diet', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`,
-
                 },
-                body: JSON.stringify({averageWeightLoss: (averageWeightLoss/(duration/7)), userID: userID}),
+                body: JSON.stringify({actualWeightChangeRate: -(averageWeightLoss/(duration/7)), userID: userID}),
             });
 
             if (!response.ok) {
@@ -106,14 +107,12 @@ const ProgressChart = () => {
                 setData(data);
                 setAverageWeightLoss(calculateWeightLossBetweenExtremes(data)); // Calculate average weight loss
                 setDuration(calculateTimeRange(data));
-                if(averageWeightLoss < 1) {
+                if(averageWeightLoss < 0) {
                     setWeightMessage("Your Overall Weight Gain:");
 
                 } else {
                     setWeightMessage("Your Overall Weight Loss:");
-
                 }
-
             })
             .catch((err) => console.log(err));
     }, [userID]);
