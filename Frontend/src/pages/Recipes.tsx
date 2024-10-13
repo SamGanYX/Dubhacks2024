@@ -45,7 +45,7 @@ const Recipes = () => {
         <div className="recipes-container">
             <h1>Your Recipes</h1>
             {recipes.length > 0 ? (
-                <ul>
+                <ul className="recipes_ul">
                     {recipes.map((recipe) => (
                         <li key={recipe.recipeID}>
                             <h2>{recipe.recipeName}</h2>
@@ -69,7 +69,7 @@ const Recipes = () => {
                 )}
             </div>
             {/* Button to navigate to Ingredients Page */}
-            <button onClick={() => navigate('/ingredients/')} className="navigate-button">
+            <button onClick={() => navigate('/ingredients/')} className="navigationbutton">
                 Go to Ingredients
             </button>
         </div>

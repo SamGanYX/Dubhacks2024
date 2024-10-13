@@ -14,12 +14,34 @@ const CalorieForm = () => {
   const [gender, setGender] = useState<number | "">(1);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [selectedImages, setSelectedImages] = useState<number[]>([]); // Store multiple selected images
+
+  const toggleImageSelection = (index: number) => {
+    setSelectedImages((prevSelectedImages) => {
+      if (prevSelectedImages.includes(index)) {
+        // If image is already selected, remove it from the array
+        return prevSelectedImages.filter((i) => i !== index);
+      } else {
+        // Otherwise, add it to the array
+        return [...prevSelectedImages, index];
+      }
+    });
+  };
+  const images = [
+    { src: './src/assets/endurance.png', alt: "Endurance", title: "Endurance" },
+    { src: './src/assets/gainmuscle.png', alt: "Gain Muscle", title: "Gain Muscle" },
+    { src: './src/assets/stabilizebmi.png', alt: "Stabilize BMI", title: "Stabilize BMI" },
+    { src: './src/assets/healthyeating.png', alt: "Healthy Eating", title: "Healthy Eating" },
+    { src: './src/assets/dailyactivity.png', alt: "Daily Activity", title: "Daily Activity" },
+    { src: './src/assets/undecided.png', alt: "Undecided", title: "Undecided" },
+  ];
 
   const { isAuthenticated, token } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const userID = localStorage.getItem("userID");
 
+  
 
   useEffect(() => {
     setLoading(false);
@@ -182,6 +204,22 @@ const CalorieForm = () => {
             <option value="1.9">Very hard exercise/sports & a physical job</option>
           </select>
         </div>
+
+        {/* Toggleable images */}
+        <label htmlFor="activity">Interests:</label>
+        <div className="image-grid">
+  {images.map((image, index) => (
+    <div key={index} className="image-container">
+      <img
+        src={image.src}
+        alt={image.alt}
+        className={`grid-image ${selectedImages.includes(index) ? "selected" : ""}`}
+        onClick={() => toggleImageSelection(index)}
+      />
+      <div className="image-title">{image.title}</div> {/* Display title below the image */}
+    </div>
+  ))}
+</div>
 
         {/* Submit button */}
         <div className="form-group-calorie-form">
