@@ -40,29 +40,29 @@ const Navbar = () => {
           <span></span>
         </div>
         <ul className={menuOpen ? "open" : ""}>
-          <li>
+          <li className="navbar-li">
             <NavLink to="/about">About</NavLink>
           </li>
-          <li>
+          <li className="navbar-li">
             <NavLink to="/logger">Food Logger</NavLink> {/* New Tab */}
           </li>
-          <li>
+          <li className="navbar-li">
             <NavLink to="/chat">Chat Bot</NavLink> {/* New Tab */}
           </li>
-          <li>
+          <li className="navbar-li">
             <NavLink to="/recipes">Recipes</NavLink> {/* New Tab */}
           </li>
           {!isAuthenticated ? (
             <>
-              <li>
+              <li className="navbar-li">
                 <NavLink to="/login">Log in</NavLink>
               </li>
-              <li>
+              <li className="navbar-li">
                 <NavLink to="/create_account">Create Account</NavLink>
               </li>
             </>
           ) : (
-            <li>
+            <li className="navbar-li">
               <a onClick={logout} className="log_out">
                 Log out
               </a>
