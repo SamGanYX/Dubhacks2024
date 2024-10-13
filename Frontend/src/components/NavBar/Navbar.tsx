@@ -26,9 +26,11 @@ const Navbar = () => {
   return (
     <>
       <nav>
-        <Link to="/" className="title">
+      {!isAuthenticated ?<Link to="/" className="title">
           Home
-        </Link>
+        </Link> : <Link to="/plan" className="title">
+          Home
+        </Link>}
         <div
           className="menu"
           onClick={() => {
