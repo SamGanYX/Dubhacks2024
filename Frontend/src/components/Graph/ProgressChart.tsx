@@ -46,7 +46,7 @@ const ProgressChart = () => {
     const [duration, setDuration] = useState<number>(0);
     const [adjustedCals, setAdjCals] = useState<number>(0)
     const { token } = useAuth();
-    const [adjMessage, setAdjMessage] = useState<string>("Your New Suggested Calorie Intake: ");
+    const [adjMessage] = useState<string>("Your New Suggested Calorie Intake: ");
 
 
     const groupByDate = (records: DailyRecord[]) => {
