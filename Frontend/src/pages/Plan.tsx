@@ -110,7 +110,7 @@ const Plan = () => {
                 <div className="diet-results">
                     <h3>Expected Metabolic Rate: {dietPlan.bmr} kcal</h3>
                     <h3>Target Daily Caloric Intake: {dietPlan.dietResult} kcal</h3>
-                    <div>{dietPlan.caloriesGoal != dietPlan.dietResult && (
+                    <div>{dietPlan.caloriesGoal != dietPlan.dietResult &&dietPlan.caloriesGoal != dietPlan.bmr && (
                         <h3>Adjusted Target Goal: {dietPlan.caloriesGoal}</h3>)}
                         </div>
                         {dietPlan.warning && <p className="warning">{dietPlan.warning}</p>}
