@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../AuthContext';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import "./recipes.css";
+
 interface Recipe {
     recipeID: number;
     userID: number;
@@ -16,6 +18,7 @@ const Recipes = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0); // State to track total pages
     const userID = localStorage.getItem("userID");
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -65,6 +68,10 @@ const Recipes = () => {
                     <button onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
                 )}
             </div>
+            {/* Button to navigate to Ingredients Page */}
+            <button onClick={() => navigate('/ingredients/')} className="navigate-button">
+                Go to Ingredients
+            </button>
         </div>
     );
 };

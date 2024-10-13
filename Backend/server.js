@@ -10,6 +10,7 @@ const path = require('path');
 
 const { calculateDiet, adjustDiet } = require('./src/dietCalculator');
 const { getResponse } = require('./src/Perplexity');
+const { getRecipes } = require('./src/RecipeBot');
 
 const db = mysql.createConnection({
     host:"127.0.0.1",
@@ -498,6 +499,27 @@ app.get('/api/recipes/:userID', (req, res) => {
 
             res.status(200).json({ recipes: results, totalPages });
         });
+    });
+});
+
+app.post('/api/getRecipes', async (req, res) => {
+    const { query } = req.body;
+
+    // Call the getRecipes function to generate the SQL insert statement
+    const sqlStatement = await getRecipes(query);
+
+    if (!sqlStatement) {
+        return res.status(500).json({ error: 'Failed to generate recipe from OpenAI.' });
+    }
+
+    // Execute the SQL statement to insert the recipe into the database
+    db.query(sqlStatement, (err, results) => {
+        if (err) {
+            console.error('Database insert error:', err);
+            return res.status(500).json({ error: 'Database error while inserting recipe.' });
+        }
+
+        res.json({ message: 'Recipe inserted successfully.', results });
     });
 });
 
