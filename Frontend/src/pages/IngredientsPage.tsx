@@ -64,7 +64,7 @@ const IngredientsPage = () => {
                     required
                 />
                 <br />
-                <button type="submit">Get Recipes</button>
+                <button type="submit" className="ingredientbutton">Get Recipes</button>
             </form>
         </div>
     );

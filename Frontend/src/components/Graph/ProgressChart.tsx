@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { ChartData, ChartOptions, Chart, registerables, LinearScale } from 'chart.js'; // Import LinearScale
 import './ProgressChart.css';
+import {useAuth} from "../../AuthContext.tsx";
 
 // Register the required components
 Chart.register(...registerables, LinearScale); // Register LinearScale
@@ -13,11 +14,40 @@ interface DailyRecord {
     calorieGoal: number;
 }
 
+
+
+export const calculateWeightLossBetweenExtremes = (records: DailyRecord[]): number => {
+    if (records.length < 2) return 0; // Not enough data to calculate weight loss
+
+    const oldestWeight = records[0].weight; // Weight of the oldest record
+    const newestWeight = records[records.length - 1].weight; // Weight of the newest record
+    return oldestWeight - newestWeight; // Calculate weight loss
+};
+
+export const calculateTimeRange = (records: DailyRecord[]): number => {
+    if (records.length === 0) return 0;
+
+    const oldestDate = new Date(records[0].date);
+    const newestDate = new Date(records[records.length - 1].date);
+
+    const durationInDays = Math.abs((newestDate.getTime() - oldestDate.getTime()) / (1000 * 60 * 60 * 24)); // Difference in days
+
+    return durationInDays;
+}
+
+
 const ProgressChart = () => {
     const [chartData, setChartData] = useState<ChartData<'line'> | null>(null);
     const [calorieGoal, setCalorieGoal] = useState<number>(0); // State for calorie goal
     const [data, setData] = useState<DailyRecord[]>([]);
     const userID = localStorage.getItem("userID");
+    const [averageWeightLoss, setAverageWeightLoss] = useState<number>(0); // State for average weight loss
+    const [weightMessage, setWeightMessage] = useState<string>("");
+    const [duration, setDuration] = useState<number>(0);
+    const [adjustedCals, setAdjCals] = useState<number>(0)
+    const { token } = useAuth();
+    const [adjMessage, setAdjMessage] = useState<string>("Your New Suggested Calorie Intake: ");
+
 
     const groupByDate = (records: DailyRecord[]) => {
         const grouped: { [date: string]: { caloriesEaten: number, weight: number } } = {};
@@ -40,11 +70,50 @@ const ProgressChart = () => {
         return grouped;
     };
 
+    const handleEditClick = () => {
+        fetchAdjPlan();
+    };
+
+    const fetchAdjPlan = async () => {
+        try {
+            const response = await fetch('http://localhost:8081/api/adjust-diet', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+
+                },
+                body: JSON.stringify({averageWeightLoss: (averageWeightLoss/(duration/7)), userID: userID}),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch diet plan');
+            }
+
+            const data = await response.json();
+            setAdjCals(data);
+        } catch (err) {
+            console.log(err);
+        } finally {
+        }
+    };
+
+
     useEffect(() => {
         fetch(`http://localhost:8081/api/dailyrecords/${userID}`)
             .then((res) => res.json())
             .then((data) => {
                 setData(data);
+                setAverageWeightLoss(calculateWeightLossBetweenExtremes(data)); // Calculate average weight loss
+                setDuration(calculateTimeRange(data));
+                if(averageWeightLoss < 1) {
+                    setWeightMessage("Your Overall Weight Gain:");
+
+                } else {
+                    setWeightMessage("Your Overall Weight Loss:");
+
+                }
+
             })
             .catch((err) => console.log(err));
     }, [userID]);
@@ -132,13 +201,35 @@ const ProgressChart = () => {
     });
 
     return (
-        <div className="chart-container">
-            <h2 className="chart-title">Progress Over Time</h2>
-            {chartData ? (
-                <Line data={chartData} options={options} />
-            ) : (
-                <p className="loading-message">Loading chart...</p>
-            )}
+        <div>
+            <div className="chart-container">
+                <h2 className="chart-title">Progress Over Time</h2>
+                {chartData ? (
+                    <Line data={chartData} options={options}/>
+                ) : (
+                    <p className="loading-message">Loading chart...</p>
+                )}
+            </div>
+            <div className="wl-results">{weightMessage} {Math.abs(averageWeightLoss)} kg in {duration} days!
+                <p></p>
+                <p>
+                    <button onClick={handleEditClick} className={"btn-recalibrate"}>
+                        Recalibrate Diet
+                    </button>
+                </p>
+
+                <div>{adjustedCals != 0 && (adjMessage + adjustedCals)}</div>
+                <p></p>
+                {adjustedCals != 0 && (
+
+                    <button onClick={handleEditClick} className={"btn-recalibrate"}>
+                        Save New Goal
+                    </button>
+                )}
+                <p></p>
+
+            </div>
+
         </div>
     );
 };

@@ -69,8 +69,8 @@ const Recipes = () => {
                 )}
             </div>
             {/* Button to navigate to Ingredients Page */}
-            <button onClick={() => navigate('/ingredients/')} className="navigate-button">
-                Generate a recipe
+            <button onClick={() => navigate('/ingredients/')} className="navigationbutton">
+                Go to Ingredients
             </button>
         </div>
     );

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../AuthContext';
 import ProgressChart from '../components/Graph/ProgressChart';
 import './Plan.css';
+import './CalorieForm.css';
+
 
 const Plan = () => {
     const { token } = useAuth();
@@ -103,6 +105,7 @@ const Plan = () => {
                 </div>
             )}
             <ProgressChart />
+
             {error && <p className="error">{error}</p>}
             {quote && <blockquote className="centered_bq">{quote}</blockquote>}
         </div>
