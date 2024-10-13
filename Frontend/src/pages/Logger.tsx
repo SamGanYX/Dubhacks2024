@@ -16,6 +16,7 @@ interface CalorieEntries {
 }
 
 interface Record {
+  id : number;
   date: string;        // Date as a string, e.g., "2024-10-12T07:00:00.000Z"
   caloriesEaten: number; // Total calories consumed
   mealName: string
