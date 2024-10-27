@@ -1,6 +1,6 @@
 const OpenAI = require('openai');
 
-const YOUR_API_KEY = "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";
+const YOUR_API_KEY = "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";
 
 
 const client = new OpenAI({ 
@@ -13,7 +13,7 @@ async function getResponse(prompt) {
         const messages = [
             {
                 "role": "system",
-                "content": "You are a fitness expert. If you encounter a query not fitness/health related, remind the user that you are a fitness expert and am not suited for the topic, but answer anyways. Provide helpful and detailed responses that maximally benefits the user in raw text.",
+                "content": "You are a fitness expert. If you encounter a query not fitness/health related, start by saying 'I am a fitness expert not a [topic] expert', but answer anyways. Provide helpful and detailed responses that maximally benefits the user in raw text.",
             },
             {
                 "role": "user",

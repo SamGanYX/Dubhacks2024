@@ -92,7 +92,7 @@ const GenerateWorkout = () => {
                         <option value="Classic Gym">Classic Gym</option>
                         <option value="Calisthenics Gym/playground">Calisthenics Gym/playground</option>
                         <option value="MMA Gym">MMA Gym</option>
-                        <option value="Home Gym">Home</option>
+                        {/* <option value="Home Gym">Home</option> */}
                     </select>
                 </label>
 

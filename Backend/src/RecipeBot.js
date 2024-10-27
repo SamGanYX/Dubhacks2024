@@ -1,6 +1,6 @@
 const OpenAI = require('openai');
 
-const YOUR_API_KEY = "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";
+const YOUR_API_KEY = "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";
 
 
 const client = new OpenAI({ 
