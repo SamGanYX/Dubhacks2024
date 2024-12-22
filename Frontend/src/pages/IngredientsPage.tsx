@@ -31,7 +31,7 @@ const IngredientsPage = () => {
     // Fetch ingredients from the backend
     const fetchIngredients = async () => {
         try {
-            const response = await fetch(`http://localhost:8081/api/ingredients/${userID}`);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/ingredients/${userID}`);
             const data = await response.json();
             setIngredients(data);
         } catch (error) {
@@ -45,7 +45,7 @@ const IngredientsPage = () => {
         if (!ingredientName) return;
 
         try {
-            const response = await fetch('http://localhost:8081/api/ingredients', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/ingredients`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const IngredientsPage = () => {
     // Delete an ingredient
     const deleteIngredient = async (ingredientID: number) => {
         try {
-            const response = await fetch(`http://localhost:8081/api/ingredients/${ingredientID}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/ingredients/${ingredientID}`, {
                 method: 'DELETE',
             });
 
@@ -92,7 +92,7 @@ const IngredientsPage = () => {
         const formattedString = `UserID: ${userID}, Ingredients: ${ingredients.map(ingredient => ingredient.ingredientName).join(',')}, goal: ${goal}`;
         console.log(formattedString);
         try {
-            const response = await fetch(`http://localhost:8081/api/getRecipes`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getRecipes`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -126,7 +126,9 @@ const IngredientsPage = () => {
             <form onSubmit={handleSubmit}>
                 <textarea 
                     value={ingredients.map(ingredient => ingredient.ingredientName).join(',')}
-                    onChange={(e) => setIngredients(e.target.value)}
+                    onChange={(e) => setIngredients(
+                        e.target.value.split(',').map((name, index) => ({ id: index, ingredientName: name.trim() }))
+                    )}
                     placeholder="Enter ingredients separated by commas"
                     rows={4}
                     cols={50}

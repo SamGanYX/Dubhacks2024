@@ -19,7 +19,7 @@ const Workouts = () => {
     const [totalPages, setTotalPages] = useState(0); // State to track total pages
     const userID = localStorage.getItem("userID");
     const navigate = useNavigate(); // Initialize useNavigate
-    const { isAuthenticated, token } = useAuth();
+    const { isAuthenticated } = useAuth();
     const [loading, setLoading] = useState(true);
     useEffect(() => {
       setLoading(false);
@@ -31,7 +31,7 @@ const Workouts = () => {
     useEffect(() => {
         const fetchWorkouts = async () => {
             try {
-                const response = await fetch(`http://localhost:8081/api/workouts/${userID}?page=${currentPage}`);
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/workouts/${userID}?page=${currentPage}`);
                 const data = await response.json();
 
                 if (Array.isArray(data.workouts)) {

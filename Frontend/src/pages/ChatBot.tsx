@@ -27,7 +27,7 @@ const ChatBot: React.FC = () => {
 
     // Call your AI API here
     try {
-      const response = await axios.post('http://localhost:8081/api/query', {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/query`, {
         prompt: input,
       });
       const botResponse = response.data.answer; // Adjust this based on your API response structure

@@ -10,9 +10,9 @@ const Plan = () => {
     const [dietPlan, setDietPlan] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     // const [quote, setQuote] = useState('');
-    const [error, setError] = useState('');
+    // const [error, setError] = useState('');
     const [userData, setUserData] = useState<any>(null); // State to hold user data
-    const [caloriesGoal, setCalGoal] = useState<number>();
+    // const [caloriesGoal, setCalGoal] = useState<number>();
     const userID = localStorage.getItem("userID");
     const { isAuthenticated, token } = useAuth();
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Plan = () => {
     //     setError('');
 
     //     try {
-    //         const response = await fetch('http://localhost:8081/getquote');
+    //         const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/getquote`);
     //         const data = await response.json();
 
     //         if (response.ok) {
@@ -47,7 +47,7 @@ const Plan = () => {
     const fetchDietPlan = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:8081/api/calculate-diet-with-bmr', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/calculate-diet-with-bmr`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const Plan = () => {
     // Fetch user data (daily records, calorie goal, etc.)
     const fetchUserData = async () => {
         try {
-            const response = await fetch(`http://localhost:8081/api/dailyrecords/${userID}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/dailyrecords/${userID}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -89,6 +89,7 @@ const Plan = () => {
 
     useEffect(() => {
         fetchDietPlan();
+        fetchUserData();
     }, [token]);
 
     const handleEditClick = () => {
@@ -118,7 +119,7 @@ const Plan = () => {
             )}
             <ProgressChart />
 
-            {error && <p className="error">{error}</p>}
+            {/* {error && <p className="error">{error}</p>} */}
             {/* {quote && <blockquote className="centered_bq">{quote}</blockquote>} */}
         </div>
     );

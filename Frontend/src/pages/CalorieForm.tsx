@@ -111,7 +111,7 @@ const CalorieForm = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8081/userstats", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/userstats`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

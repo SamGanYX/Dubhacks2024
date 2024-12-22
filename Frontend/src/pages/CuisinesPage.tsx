@@ -25,7 +25,7 @@ const CuisinesPage = () => {
     // Fetch ingredients from the backend
     const fetchIngredients = async () => {
         try {
-            const response = await fetch(`http://localhost:8081/api/ingredients/${userID}`);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/ingredients/${userID}`);
             const data = await response.json();
             setIngredients(data);
         } catch (error) {
@@ -38,7 +38,7 @@ const CuisinesPage = () => {
         const formattedString = `UserID: ${userID}, Cuisine: ${cuisine}, Ingredients: ${ingredients.map(ingredient => ingredient.IngredientName).join(',')}`;
         console.log(formattedString);
         try {
-            const response = await fetch(`http://localhost:8081/api/getRecipesByCuisine`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getRecipesByCuisine`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

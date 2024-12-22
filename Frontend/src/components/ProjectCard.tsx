@@ -36,7 +36,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
       {uploadedImageURL ? (
         <img
-          src={`http://localhost:8081${uploadedImageURL}`}
+          src={`${import.meta.env.VITE_BACKEND_URL}/${uploadedImageURL}`}
           alt="Project"
           className="project-image"
         />

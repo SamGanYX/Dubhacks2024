@@ -14,7 +14,7 @@ const CreateAccount = () => {
   const [Password, setPassword] = useState("");
   const [Error, setError] = useState("");
   useEffect(() => {
-    fetch("http://localhost:8081/users")
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/users`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -31,7 +31,7 @@ const CreateAccount = () => {
       email: Email,
       password: Password,
     };
-    fetch("http://localhost:8081/users", {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ const CreateAccount = () => {
       })
       .then((data) => {
         console.log("User added successfully:", data);
-        fetch("http://localhost:8081/login", {
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

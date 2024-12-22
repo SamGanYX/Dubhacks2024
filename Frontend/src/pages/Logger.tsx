@@ -58,7 +58,7 @@ const Logger: React.FC = () => {
   const fetchUserStats = async () => {
     if (userID) {
       try {
-        const response = await fetch('http://localhost:8081/userstats/'+userID);
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/userstats/`+userID);
         if (!response.ok) {
           throw new Error('Failed to fetch user stats');
         }
@@ -81,9 +81,10 @@ const Logger: React.FC = () => {
 
   // Fetch daily records
   const fetchDailyRecords = async () => {
+    isMealLogged
     if (userID) {
         try {
-            const response = await fetch(`http://localhost:8081/api/dailyrecords/${userID}`);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/dailyrecords/${userID}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch daily records');
             }
@@ -166,7 +167,7 @@ const Logger: React.FC = () => {
         const dateKey = formatDate(selectedDate);
         const totalCalories = getTotalCalories(dateKey);
 
-        const response = await fetch('http://localhost:8081/api/dailyrecords', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/dailyrecords`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

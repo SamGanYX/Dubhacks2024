@@ -13,7 +13,7 @@ const IngredientsList: React.FC = () => {
     // Fetch ingredients from the backend
     const fetchIngredients = async () => {
         try {
-            const response = await fetch(`http://localhost:8081/api/ingredients/${userID}`);
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/ingredients/${userID}`);
             const data = await response.json();
             setIngredients(data);
         } catch (error) {
@@ -27,7 +27,7 @@ const IngredientsList: React.FC = () => {
         if (!ingredientName) return;
 
         try {
-            const response = await fetch('http://localhost:8081/api/ingredients', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/ingredients`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const IngredientsList: React.FC = () => {
     // Delete an ingredient
     const deleteIngredient = async (ingredientID: number) => {
         try {
-            const response = await fetch(`http://localhost:8081/api/ingredients/${ingredientID}`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/ingredients/${ingredientID}`, {
                 method: 'DELETE',
             });
 

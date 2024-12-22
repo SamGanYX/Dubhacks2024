@@ -22,7 +22,7 @@ const GenerateWorkout = () => {
         // Fetch user stats when the component mounts
         const fetchUserStats = async () => {
             try {
-                const response = await fetch(`http://localhost:8081/userstats/${userID}`, {
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/userstats/${userID}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const GenerateWorkout = () => {
         console.log(formattedString);
 
         try {
-            const response = await fetch(`http://localhost:8081/api/workouts`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/workouts`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -4,16 +4,16 @@ import './CreateAccount.css';
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  interface DataItem {
-    Username: string;
-    Email: string;
-    Password: string;
-  }
-  const [LoggedIn, setLoggedIn] = useState(false);
+  // interface DataItem {
+  //   Username: string;
+  //   Email: string;
+  //   Password: string;
+  // }
+  // const [LoggedIn, setLoggedIn] = useState(false);
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const [Error, setError] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -22,7 +22,7 @@ const Login = () => {
       username: Username,
       password: Password,
     };
-    fetch("http://localhost:8081/login", {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ const Login = () => {
       });
   };
 
-  const { isAuthenticated, login, logout, token } = useAuth();
+  const { isAuthenticated} = useAuth();
   if (isAuthenticated) {
     window.location.href = "/home";
   }

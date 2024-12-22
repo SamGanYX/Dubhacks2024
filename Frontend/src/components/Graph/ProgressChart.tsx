@@ -84,7 +84,7 @@ const ProgressChart = () => {
 
     const updateGoal = async () => {
         try {
-            const response = await fetch('http://localhost:8081/api/updateGoal', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/updateGoal`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const ProgressChart = () => {
     const fetchAdjPlan = async () => {
         try {
             console.log("average " + -(averageWeightLoss/(duration/7)))
-            const response = await fetch('http://localhost:8081/api/adjust-diet', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/adjust-diet`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -127,7 +127,7 @@ const ProgressChart = () => {
         }
     };
     useEffect(() => {
-        fetch(`http://localhost:8081/api/dailyrecords/${userID}`)
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/api/dailyrecords/${userID}`)
             .then((res) => res.json())
             .then(async (data) => {
                 setData(data);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../AuthContext';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import "./recipes.css";
+import "./Recipes.css";
 
 interface Recipe {
     recipeID: number;
@@ -19,7 +19,7 @@ const Recipes = () => {
     const [totalPages, setTotalPages] = useState(0); // State to track total pages
     const userID = localStorage.getItem("userID");
     const navigate = useNavigate(); // Initialize useNavigate
-    const { isAuthenticated, token } = useAuth();
+    const { isAuthenticated } = useAuth();
     const [loading, setLoading] = useState(true);
     useEffect(() => {
       setLoading(false);
@@ -31,7 +31,7 @@ const Recipes = () => {
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
-                const response = await fetch(`http://localhost:8081/api/recipes/${userID}?page=${currentPage}`);
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/recipes/${userID}?page=${currentPage}`);
                 const data = await response.json();
 
                 // Ensure data.recipes is an array and handle total pages
