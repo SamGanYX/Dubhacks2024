@@ -25,7 +25,7 @@ services:
       - ./Backend:/app
       - /app/node_modules
     environment:
-      - DB_HOST=db
+      - DB_HOST=db?ssl-mode=DISABLED
       - DB_USER=teenFitX
       - DB_PASSWORD=password
       - DB_NAME=teenFitX
