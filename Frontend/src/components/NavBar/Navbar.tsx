@@ -27,7 +27,7 @@ const Navbar = () => {
     <>
       <nav className="navbar_nav">
         <Link to="/" className="title">
-          Eat<span className="green-text">volution</span>
+          Teen<span className="green-text">FitX</span>
         </Link>
         <div
           className="menu"
@@ -40,9 +40,9 @@ const Navbar = () => {
           <span></span>
         </div>
         <ul className={menuOpen ? "open" : ""}>
-          <li className="navbar-li">
+          {/* <li className="navbar-li">
             <NavLink to="/about">About</NavLink>
-          </li>
+          </li> */}
           {!isAuthenticated ? (
             <>
               <li className="navbar-li">
@@ -68,6 +68,9 @@ const Navbar = () => {
               </li>
               <li className="navbar-li">
                 <NavLink to="/Workout">Workouts</NavLink> {/* New Tab */}
+              </li>
+              <li className="navbar-li">
+                <NavLink to="/ingredientsList">Ingredients</NavLink> {/* New Tab */}
               </li>
               <li className="navbar-li">
                 <a onClick={logout} className="log_out">

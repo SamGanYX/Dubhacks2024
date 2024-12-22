@@ -1,135 +1,172 @@
 DROP TABLE Workouts;
+
 DROP TABLE Recipes;
+
 DROP TABLE DailyRecords;
+
+DROP TABLE Userstats;
+
 DROP TABLE UserStats;
+
 DROP TABLE Users;
 
-CREATE TABLE users ( ID INT NOT NULL AUTO_INCREMENT, Username VARCHAR(255) NOT NULL, Email VARCHAR(255) NOT NULL, Password VARCHAR(255) NOT NULL, PRIMARY KEY (ID) );
+CREATE TABLE
+    Users (
+        ID INT NOT NULL AUTO_INCREMENT,
+        Username VARCHAR(255) NOT NULL,
+        Email VARCHAR(255) NOT NULL,
+        Password VARCHAR(255) NOT NULL,
+        PRIMARY KEY (ID)
+    );
 
-CREATE TABLE UserStats (
-    ID INT AUTO_INCREMENT PRIMARY KEY,
-    UserID INT,
-    Age INT,
-    Gender INT,
-    Weight FLOAT,
-    height FLOAT,
-    activity FLOAT,
-    Goal VARCHAR(255),
-    ENDURANCE INT DEFAULT 0,
-    MUSCLE INT DEFAULT 0,
-    BMI INT DEFAULT 0,
-    EATING INT DEFAULT 0,
-    DAILY INT DEFAULT 0,
-    UNKNOWN INT DEFAULT 0,
-    CaloriesGoal INT,
-    Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (UserID) REFERENCES Users(ID) ON DELETE CASCADE
-);
+CREATE TABLE
+    UserStats (
+        ID INT AUTO_INCREMENT PRIMARY KEY,
+        UserID INT,
+        Age INT,
+        Gender INT,
+        Weight FLOAT,
+        height FLOAT,
+        activity FLOAT,
+        Goal VARCHAR(255),
+        ENDURANCE INT DEFAULT 0,
+        MUSCLE INT DEFAULT 0,
+        BMI INT DEFAULT 0,
+        EATING INT DEFAULT 0,
+        DAILY INT DEFAULT 0,
+        UNKNOWN INT DEFAULT 0,
+        CaloriesGoal INT,
+        Date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (UserID) REFERENCES Users (ID) ON DELETE CASCADE
+    );
 
-CREATE TABLE DailyRecords (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    userID INT,
-    date DATE NOT NULL,
-    caloriesEaten INT,
-    mealName VARCHAR(255),
-    weight DECIMAL(5, 2),
-    calorieGoal INT,
-    FOREIGN KEY (userID) REFERENCES users(id)
-);
+CREATE TABLE
+    DailyRecords (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        userID INT,
+        date DATE NOT NULL,
+        caloriesEaten INT,
+        mealName VARCHAR(255),
+        weight DECIMAL(5, 2),
+        calorieGoal INT,
+        protein DECIMAL(5, 2),
+        carbs DECIMAL(5, 2),
+        fats DECIMAL(5, 2),
+        FOREIGN KEY (userID) REFERENCES Users (id)
+    );
 
-CREATE TABLE Recipes (
-    recipeID INT AUTO_INCREMENT PRIMARY KEY,
-    userID INT NOT NULL,
-    calories INT NOT NULL,
-    recipeName VARCHAR(255) NOT NULL,
-    ingredients TEXT NOT NULL,
-    instructions TEXT NOT NULL,
-    dateGenerated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userID) REFERENCES Users(id) ON DELETE CASCADE
-);
+CREATE TABLE
+    Recipes (
+        recipeID INT AUTO_INCREMENT PRIMARY KEY,
+        userID INT NOT NULL,
+        calories INT NOT NULL,
+        recipeName VARCHAR(255) NOT NULL,
+        ingredients TEXT NOT NULL,
+        instructions TEXT NOT NULL,
+        dateGenerated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (userID) REFERENCES Users (id) ON DELETE CASCADE
+    );
 
-CREATE TABLE Workouts (
-    ID INT AUTO_INCREMENT PRIMARY KEY,
-    userID INT NOT NULL,
-    place VARCHAR(255) NOT NULL,
-    workoutName VARCHAR(255) NOT NULL,
-    exercises TEXT NOT NULL,
-    instructions TEXT NOT NULL,
-    dateGenerated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (userID) REFERENCES Users(id) ON DELETE CASCADE
-);
+CREATE TABLE
+    Workouts (
+        ID INT AUTO_INCREMENT PRIMARY KEY,
+        userID INT NOT NULL,
+        place VARCHAR(255) NOT NULL,
+        workoutName VARCHAR(255) NOT NULL,
+        exercises TEXT NOT NULL,
+        instructions TEXT NOT NULL,
+        dateGenerated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (userID) REFERENCES Users (id) ON DELETE CASCADE
+    );
 
-INSERT INTO Users (Username, Email, Password)
+CREATE TABLE
+    Ingredients (
+        ID INT AUTO_INCREMENT PRIMARY KEY,
+        UserID INT NOT NULL,
+        IngredientName VARCHAR(255) NOT NULL,
+        FOREIGN KEY (UserID) REFERENCES Users (ID) ON DELETE CASCADE
+    );
+
+INSERT INTO
+    Users (Username, Email, Password)
 VALUES
-("kimbijuju", "kimbijuju@gmail.com", "password"),
-("efeng2", "efeng2@gmail.com", "password2");
+    ("kimbijuju", "kimbijuju@gmail.com", "password"),
+    ("efeng2", "efeng2@gmail.com", "password2");
 
-INSERT INTO DailyRecords (userID, date, caloriesEaten, mealName, weight, calorieGoal)
+INSERT INTO
+    DailyRecords (
+        userID,
+        date,
+        caloriesEaten,
+        mealName,
+        weight,
+        calorieGoal
+    )
 VALUES
-(3, '2024-08-01', 2995, 'Meal 1', 75.00, 2790),
-(3, '2024-08-02', 2508, 'Meal 2', 75.04, 2790),
-(3, '2024-08-03', 2505, 'Meal 3', 75.08, 2790),
-(3, '2024-08-04', 2822, 'Meal 4', 75.12, 2790),
-(3, '2024-08-05', 2711, 'Meal 5', 75.16, 2790),
-(3, '2024-08-06', 2827, 'Meal 6', 75.20, 2790),
-(3, '2024-08-07', 2492, 'Meal 7', 75.24, 2790),
-(3, '2024-08-08', 3037, 'Meal 8', 75.28, 2790),
-(3, '2024-08-09', 2765, 'Meal 9', 75.32, 2790),
-(3, '2024-08-10', 2615, 'Meal 10', 75.36, 2790),
-(3, '2024-08-11', 2559, 'Meal 11', 75.41, 2790),
-(3, '2024-08-12', 2943, 'Meal 12', 75.45, 2790),
-(3, '2024-08-13', 2565, 'Meal 13', 75.49, 2790),
-(3, '2024-08-14', 3074, 'Meal 14', 75.53, 2790),
-(3, '2024-08-15', 2652, 'Meal 15', 75.57, 2790),
-(3, '2024-08-16', 2963, 'Meal 16', 75.61, 2790),
-(3, '2024-08-17', 2872, 'Meal 17', 75.65, 2790),
-(3, '2024-08-18', 2620, 'Meal 18', 75.69, 2790),
-(3, '2024-08-19', 2779, 'Meal 19', 75.73, 2790),
-(3, '2024-08-20', 3018, 'Meal 20', 75.77, 2790),
-(3, '2024-08-21', 3030, 'Meal 21', 75.81, 2790),
-(3, '2024-08-22', 2739, 'Meal 22', 75.85, 2790),
-(3, '2024-08-23', 2740, 'Meal 23', 75.89, 2790),
-(3, '2024-08-24', 2817, 'Meal 24', 75.93, 2790),
-(3, '2024-08-25', 2995, 'Meal 25', 75.97, 2790),
-(3, '2024-08-26', 2583, 'Meal 26', 76.01, 2790),
-(3, '2024-08-27', 3072, 'Meal 27', 76.05, 2790),
-(3, '2024-08-28', 2632, 'Meal 28', 76.09, 2790),
-(3, '2024-08-29', 2993, 'Meal 29', 76.14, 2790),
-(3, '2024-08-30', 2705, 'Meal 30', 76.18, 2790),
-(3, '2024-08-31', 2716, 'Meal 31', 76.22, 2790),
-(3, '2024-09-01', 2570, 'Meal 32', 76.26, 2790),
-(3, '2024-09-02', 2970, 'Meal 33', 76.30, 2790),
-(3, '2024-09-03', 2578, 'Meal 34', 76.34, 2790),
-(3, '2024-09-04', 2574, 'Meal 35', 76.38, 2790),
-(3, '2024-09-05', 2982, 'Meal 36', 76.42, 2790),
-(3, '2024-09-06', 2646, 'Meal 37', 76.46, 2790),
-(3, '2024-09-07', 3074, 'Meal 38', 76.50, 2790),
-(3, '2024-09-08', 2598, 'Meal 39', 76.54, 2790),
-(3, '2024-09-09', 3014, 'Meal 40', 76.58, 2790),
-(3, '2024-09-10', 2723, 'Meal 41', 76.62, 2790),
-(3, '2024-09-11', 2529, 'Meal 42', 76.66, 2790),
-(3, '2024-09-12', 2955, 'Meal 43', 76.70, 2790),
-(3, '2024-09-13', 3023, 'Meal 44', 76.74, 2790),
-(3, '2024-09-14', 2920, 'Meal 45', 76.78, 2790),
-(3, '2024-09-15', 2958, 'Meal 46', 76.82, 2790),
-(3, '2024-09-16', 3054, 'Meal 47', 76.86, 2790),
-(3, '2024-09-17', 2917, 'Meal 48', 76.91, 2790),
-(3, '2024-09-18', 2748, 'Meal 49', 76.95, 2790),
-(3, '2024-09-19', 2604, 'Meal 50', 76.99, 2790),
-(3, '2024-09-20', 2541, 'Meal 51', 77.03, 2790),
-(3, '2024-09-21', 2718, 'Meal 52', 77.07, 2790),
-(3, '2024-09-22', 2722, 'Meal 53', 77.11, 2790),
-(3, '2024-09-23', 2817, 'Meal 54', 77.15, 2790),
-(3, '2024-09-24', 2606, 'Meal 55', 77.19, 2790),
-(3, '2024-09-25', 2973, 'Meal 56', 77.23, 2790),
-(3, '2024-09-26', 2952, 'Meal 57', 77.27, 2790),
-(3, '2024-09-27', 2847, 'Meal 58', 77.31, 2790),
-(3, '2024-09-28', 2655, 'Meal 59', 77.35, 2790),
-(3, '2024-09-29', 2550, 'Meal 60', 77.39, 2790),
-(3, '2024-09-30', 2859, 'Meal 61', 77.43, 2790),
-(3, '2024-10-01', 2945, 'Meal 62', 77.47, 2790),
-(3, '2024-10-02', 2921, 'Meal 63', 77.51, 2790),
-(3, '2024-10-03', 2900, 'Meal 64', 77.55, 2790),
-(3, '2024-10-04', 2585, 'Meal 65', 77.59, 2790),
-(3, '2024-10-05', 2495, 'Meal 66', 77.64, 2790),
-(3, '2024-10-06', 2706, 'Meal 67', 77.68, 2790);
+    (3, '2024-08-01', 2995, 'Meal 1', 75.00, 2790),
+    (3, '2024-08-02', 2508, 'Meal 2', 75.04, 2790),
+    (3, '2024-08-03', 2505, 'Meal 3', 75.08, 2790),
+    (3, '2024-08-04', 2822, 'Meal 4', 75.12, 2790),
+    (3, '2024-08-05', 2711, 'Meal 5', 75.16, 2790),
+    (3, '2024-08-06', 2827, 'Meal 6', 75.20, 2790),
+    (3, '2024-08-07', 2492, 'Meal 7', 75.24, 2790),
+    (3, '2024-08-08', 3037, 'Meal 8', 75.28, 2790),
+    (3, '2024-08-09', 2765, 'Meal 9', 75.32, 2790),
+    (3, '2024-08-10', 2615, 'Meal 10', 75.36, 2790),
+    (3, '2024-08-11', 2559, 'Meal 11', 75.41, 2790),
+    (3, '2024-08-12', 2943, 'Meal 12', 75.45, 2790),
+    (3, '2024-08-13', 2565, 'Meal 13', 75.49, 2790),
+    (3, '2024-08-14', 3074, 'Meal 14', 75.53, 2790),
+    (3, '2024-08-15', 2652, 'Meal 15', 75.57, 2790),
+    (3, '2024-08-16', 2963, 'Meal 16', 75.61, 2790),
+    (3, '2024-08-17', 2872, 'Meal 17', 75.65, 2790),
+    (3, '2024-08-18', 2620, 'Meal 18', 75.69, 2790),
+    (3, '2024-08-19', 2779, 'Meal 19', 75.73, 2790),
+    (3, '2024-08-20', 3018, 'Meal 20', 75.77, 2790),
+    (3, '2024-08-21', 3030, 'Meal 21', 75.81, 2790),
+    (3, '2024-08-22', 2739, 'Meal 22', 75.85, 2790),
+    (3, '2024-08-23', 2740, 'Meal 23', 75.89, 2790),
+    (3, '2024-08-24', 2817, 'Meal 24', 75.93, 2790),
+    (3, '2024-08-25', 2995, 'Meal 25', 75.97, 2790),
+    (3, '2024-08-26', 2583, 'Meal 26', 76.01, 2790),
+    (3, '2024-08-27', 3072, 'Meal 27', 76.05, 2790),
+    (3, '2024-08-28', 2632, 'Meal 28', 76.09, 2790),
+    (3, '2024-08-29', 2993, 'Meal 29', 76.14, 2790),
+    (3, '2024-08-30', 2705, 'Meal 30', 76.18, 2790),
+    (3, '2024-08-31', 2716, 'Meal 31', 76.22, 2790),
+    (3, '2024-09-01', 2570, 'Meal 32', 76.26, 2790),
+    (3, '2024-09-02', 2970, 'Meal 33', 76.30, 2790),
+    (3, '2024-09-03', 2578, 'Meal 34', 76.34, 2790),
+    (3, '2024-09-04', 2574, 'Meal 35', 76.38, 2790),
+    (3, '2024-09-05', 2982, 'Meal 36', 76.42, 2790),
+    (3, '2024-09-06', 2646, 'Meal 37', 76.46, 2790),
+    (3, '2024-09-07', 3074, 'Meal 38', 76.50, 2790),
+    (3, '2024-09-08', 2598, 'Meal 39', 76.54, 2790),
+    (3, '2024-09-09', 3014, 'Meal 40', 76.58, 2790),
+    (3, '2024-09-10', 2723, 'Meal 41', 76.62, 2790),
+    (3, '2024-09-11', 2529, 'Meal 42', 76.66, 2790),
+    (3, '2024-09-12', 2955, 'Meal 43', 76.70, 2790),
+    (3, '2024-09-13', 3023, 'Meal 44', 76.74, 2790),
+    (3, '2024-09-14', 2920, 'Meal 45', 76.78, 2790),
+    (3, '2024-09-15', 2958, 'Meal 46', 76.82, 2790),
+    (3, '2024-09-16', 3054, 'Meal 47', 76.86, 2790),
+    (3, '2024-09-17', 2917, 'Meal 48', 76.91, 2790),
+    (3, '2024-09-18', 2748, 'Meal 49', 76.95, 2790),
+    (3, '2024-09-19', 2604, 'Meal 50', 76.99, 2790),
+    (3, '2024-09-20', 2541, 'Meal 51', 77.03, 2790),
+    (3, '2024-09-21', 2718, 'Meal 52', 77.07, 2790),
+    (3, '2024-09-22', 2722, 'Meal 53', 77.11, 2790),
+    (3, '2024-09-23', 2817, 'Meal 54', 77.15, 2790),
+    (3, '2024-09-24', 2606, 'Meal 55', 77.19, 2790),
+    (3, '2024-09-25', 2973, 'Meal 56', 77.23, 2790),
+    (3, '2024-09-26', 2952, 'Meal 57', 77.27, 2790),
+    (3, '2024-09-27', 2847, 'Meal 58', 77.31, 2790),
+    (3, '2024-09-28', 2655, 'Meal 59', 77.35, 2790),
+    (3, '2024-09-29', 2550, 'Meal 60', 77.39, 2790),
+    (3, '2024-09-30', 2859, 'Meal 61', 77.43, 2790),
+    (3, '2024-10-01', 2945, 'Meal 62', 77.47, 2790),
+    (3, '2024-10-02', 2921, 'Meal 63', 77.51, 2790),
+    (3, '2024-10-03', 2900, 'Meal 64', 77.55, 2790),
+    (3, '2024-10-04', 2585, 'Meal 65', 77.59, 2790),
+    (3, '2024-10-05', 2495, 'Meal 66', 77.64, 2790),
+    (3, '2024-10-06', 2706, 'Meal 67', 77.68, 2790);

@@ -11,7 +11,7 @@ function App() {
     <div className="app">
       <div className="title-section">
         <h1 className="eatvolution-title">
-          Eat<span className="green-text">volution</span>
+          Teen<span className="green-text">FitX</span>
         </h1>
         <div className="welcome-section">
         <h1>Welcome to Your Personal Fitness Assistant</h1>

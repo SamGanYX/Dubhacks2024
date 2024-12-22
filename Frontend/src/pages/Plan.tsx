@@ -9,7 +9,7 @@ import './CalorieForm.css';
 const Plan = () => {
     const [dietPlan, setDietPlan] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [quote, setQuote] = useState('');
+    // const [quote, setQuote] = useState('');
     const [error, setError] = useState('');
     const [userData, setUserData] = useState<any>(null); // State to hold user data
     const [caloriesGoal, setCalGoal] = useState<number>();
@@ -23,26 +23,26 @@ const Plan = () => {
       }
     }, [isAuthenticated, navigate, loading]);
 
-    const fetchQuote = async () => {
-        setLoading(true);
-        setError('');
+    // const fetchQuote = async () => {
+    //     setLoading(true);
+    //     setError('');
 
-        try {
-            const response = await fetch('http://localhost:8081/getquote');
-            const data = await response.json();
+    //     try {
+    //         const response = await fetch('http://localhost:8081/getquote');
+    //         const data = await response.json();
 
-            if (response.ok) {
-                setQuote(data.quote);
-            } else {
-                setError(data.error || 'Failed to fetch quote.');
-            }
-        } catch (err) {
-            setError('An error occurred while fetching the quote.');
-        }
-    };
-    useEffect(() => {
-        fetchQuote();
-    }, []);
+    //         if (response.ok) {
+    //             setQuote(data.quote);
+    //         } else {
+    //             setError(data.error || 'Failed to fetch quote.');
+    //         }
+    //     } catch (err) {
+    //         setError('An error occurred while fetching the quote.');
+    //     }
+    // };
+    // useEffect(() => {
+    //     fetchQuote();
+    // }, []);
 
     const fetchDietPlan = async () => {
         setLoading(true);
@@ -119,7 +119,7 @@ const Plan = () => {
             <ProgressChart />
 
             {error && <p className="error">{error}</p>}
-            {quote && <blockquote className="centered_bq">{quote}</blockquote>}
+            {/* {quote && <blockquote className="centered_bq">{quote}</blockquote>} */}
         </div>
     );
 };

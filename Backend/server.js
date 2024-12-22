@@ -3,7 +3,10 @@ const mysql = require('mysql2');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:5173', 'http://frontend:5173'],
+    credentials: true
+}));
 app.use(express.json());
 const multer = require('multer');
 const path = require('path');
@@ -12,13 +15,14 @@ const { calculateDiet, adjustDiet, calculateBMR } = require('./src/dietCalculato
 const { getResponse } = require('./src/Perplexity');
 const { getRecipes } = require('./src/RecipeBot');
 const { getWorkouts } = require('./src/WorkoutBot');
+const { getCuisine } = require('./src/CuisineBot');
 const { getQuote } = require('./src/MotivationalBot');
 
 const db = mysql.createConnection({
-    host:"127.0.0.1",
-    user: 'root',
-    password: 'password',
-    database:"ReactApp"
+    host: 'db',
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 db.connect((err) => {
@@ -70,25 +74,25 @@ app.get('/getquote', async (req, res) => {
     res.json({ message: 'Quote generated successfully.', quote });
 });
 
-app.get('/users', (req, res) => {
-    const sql = "SELECT * FROM users;"
+app.get('/Users', (req, res) => {
+    const sql = "SELECT * FROM Users;"
     db.query(sql, (err, data) => {
         if(err) return res.json(err);
         return res.json(data);
     })
 });
 
-app.get('/userstats', (req, res) => {
-    const sql = "SELECT * FROM userstats;"
+app.get('/UserStats', (req, res) => {
+    const sql = "SELECT * FROM UserStats;"
     db.query(sql, (err, data) => {
         if(err) return res.json(err);
         return res.json(data);
     })
 });
 
-app.get('/userstats/:userID', (req, res) => {
+app.get('/UserStats/:userID', (req, res) => {
     const userID = req.params.userID; // Get userID from URL params
-    const sql = "SELECT * FROM userstats WHERE userID = ?"; // Query for specific user
+    const sql = "SELECT * FROM UserStats WHERE userID = ?"; // Query for specific user
 
     db.query(sql, [userID], (err, data) => {
         if (err) return res.status(500).json(err); // Handle SQL errors
@@ -115,15 +119,15 @@ app.post('/api/query', async (req, res) => {
 // =============== Adding to Table ================ \\
 
 
-app.post('/users', (req, res) => {
+app.post('/Users', (req, res) => {
     const { username, email, password } = req.body;
-    const sql1 = "SELECT * FROM users WHERE Username = ?";
+    const sql1 = "SELECT * FROM Users WHERE Username = ?";
     db.query(sql1, [username], (err, result) => {
         if(result.length !== 0) {
             console.log(result);
             return res.status(500).json("User already exists");
         } else {
-            const sql = "INSERT INTO users (Username, Email, Password) VALUES (?, ?, ?);";
+            const sql = "INSERT INTO Users (Username, Email, Password) VALUES (?, ?, ?);";
             db.query(sql, [username, email, password], (err, data) => {
                 console.log(err);
                 if (err) return res.status(500).json(err);
@@ -136,7 +140,7 @@ app.post('/users', (req, res) => {
 app.post('/update_users', (req, res) => {
     const { username, email, password, id } = req.body;
     
-    const sql = "UPDATE users SET Username = ?, Email = ?, Password = ? WHERE id = ?;";
+    const sql = "UPDATE Users SET Username = ?, Email = ?, Password = ? WHERE id = ?;";
     db.query(sql, [username, email, password, id], (err, data) => {
         console.log(err);
         if (err) return res.status(500).json(err);
@@ -151,7 +155,7 @@ app.post('/update_users', (req, res) => {
 app.post('/delete_users', (req, res) => {
     const { id } = req.body;
     
-    const sql = "DELETE FROM users WHERE id = ?;";
+    const sql = "DELETE FROM Users WHERE id = ?;";
     db.query(sql, [id], (err, data) => {
         console.log(err);
         if (err) return res.status(500).json(err);
@@ -163,7 +167,7 @@ app.post('/delete_users', (req, res) => {
     });
 });
 
-app.post('/userstats', (req, res) => {
+app.post('/UserStats', (req, res) => {
     const { userID, age, height, weight, gender, goal, activity, endurance, muscle, bmi, eating, daily, unknown } = req.body;
 
     // Ensure required fields are provided
@@ -247,7 +251,7 @@ const secretKey = "your_jwt_secret_key"; // You should keep this in an environme
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
     
-    const sql = "SELECT * FROM users WHERE Username = ?";
+    const sql = "SELECT * FROM Users WHERE Username = ?";
     db.query(sql, [username], (err, result) => {
         if (err) return res.status(500).json({ error: 'Database error' });
         if (result.length === 0) return res.status(401).json({ message: 'Invalid credentials' });
@@ -467,8 +471,7 @@ app.get('/api/dailyrecords/:userID', (req, res) => {
 });
 
 app.post('/api/dailyrecords', (req, res) => {
-    console.log(req.body);
-    const { userID, date, caloriesEaten, mealName, weight } = req.body;
+    const { userID, date, caloriesEaten, mealName, weight, protein, carbs, fats } = req.body;
 
     // Validate required fields
     if (!userID || !date || caloriesEaten === undefined || !mealName || !weight) {
@@ -484,13 +487,16 @@ app.post('/api/dailyrecords', (req, res) => {
 
     // SQL query to insert or update daily records
     const queryDailyRecords = `
-        INSERT INTO DailyRecords (userID, date, caloriesEaten, mealName, weight, calorieGoal)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO DailyRecords (userID, date, caloriesEaten, mealName, weight, calorieGoal, protein, carbs, fats)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON DUPLICATE KEY UPDATE
             caloriesEaten = VALUES(caloriesEaten),
             mealName = VALUES(mealName),
             weight = VALUES(weight),
-            calorieGoal = VALUES(calorieGoal)
+            calorieGoal = VALUES(calorieGoal),
+            protein = VALUES(protein),
+            carbs = VALUES(carbs),
+            fats = VALUES(fats)
     `;
 
     // SQL query to update weight and calorie goal in UserStats
@@ -538,7 +544,7 @@ app.post('/api/dailyrecords', (req, res) => {
         console.log(calorieGoal);
 
         // Step 3: Insert/update the daily record with the new calorie goal
-        db.query(queryDailyRecords, [userID, date, caloriesEaten, mealName, weight, calorieGoal], (err, dailyResults) => {
+        db.query(queryDailyRecords, [userID, date, caloriesEaten, mealName, weight, calorieGoal, protein, carbs, fats], (err, dailyResults) => {
             if (err) {
                 console.error(err);
                 return res.status(500).json({ error: 'Database error while logging daily record' });
@@ -630,6 +636,29 @@ app.post('/api/getRecipes', async (req, res) => {
     });
 });
 
+
+
+app.post('/api/getRecipesByCuisine', async (req, res) => {
+    const { query } = req.body;
+
+    // Call the getRecipes function to generate the SQL insert statement
+    const sqlStatement = await getCuisine(query);
+
+    if (!sqlStatement) {
+        return res.status(500).json({ error: 'Failed to generate recipe from Perplexity.' });
+    }
+
+    // Execute the SQL statement to insert the recipe into the database
+    db.query(sqlStatement, (err, results) => {
+        if (err) {
+            console.error('Database insert error:', err);
+            return res.status(500).json({ error: 'Database error while inserting recipe.' });
+        }
+
+        res.json({ message: 'Recipe inserted successfully.', results });
+    });
+});
+
 app.get('/api/workouts/:userID', async (req, res) => {
     const { userID } = req.params;
     const { page = 1 } = req.query; // Pagination, default to page 1
@@ -677,6 +706,64 @@ app.post('/api/workouts', async (req, res) => {
         }
 
         res.json({ message: 'Workout inserted successfully.', results });
+    });
+});
+
+// Endpoint to get all ingredients for a user
+app.get('/api/ingredients/:userID', (req, res) => {
+    const userID = req.params.userID;
+
+    const sql = "SELECT * FROM Ingredients WHERE UserID = ?";
+    db.query(sql, [userID], (err, results) => {
+        if (err) {
+            console.error('Database error while fetching ingredients:', err);
+            return res.status(500).json({ error: 'Database error while fetching ingredients' });
+        }
+
+        res.status(200).json(results);
+    });
+});
+
+// Endpoint to add an ingredient
+app.post('/api/ingredients', (req, res) => {
+    const { userID, ingredientName } = req.body;
+
+    // Validate required fields
+    if (!userID || !ingredientName) {
+        return res.status(400).json({ error: 'userID and ingredientName are required' });
+    }
+
+    // SQL query to insert the ingredient
+    const sql = "INSERT INTO Ingredients (UserID, IngredientName) VALUES (?, ?)";
+
+    db.query(sql, [userID, ingredientName], (err, results) => {
+        if (err) {
+            console.error('Database error while adding ingredient:', err);
+            return res.status(500).json({ error: 'Database error while adding ingredient' });
+        }
+
+        res.status(201).json({ message: 'Ingredient added successfully', ingredientID: results.insertId });
+    });
+});
+
+// Endpoint to delete an ingredient
+app.delete('/api/ingredients/:ingredientID', (req, res) => {
+    const ingredientID = req.params.ingredientID;
+
+    // SQL query to delete the ingredient
+    const sql = "DELETE FROM Ingredients WHERE ID = ?";
+
+    db.query(sql, [ingredientID], (err, results) => {
+        if (err) {
+            console.error('Database error while deleting ingredient:', err);
+            return res.status(500).json({ error: 'Database error while deleting ingredient' });
+        }
+
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ message: 'Ingredient not found' });
+        }
+
+        res.status(200).json({ message: 'Ingredient deleted successfully' });
     });
 });
 

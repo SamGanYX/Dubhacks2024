@@ -59,7 +59,7 @@ const Login = () => {
     <div className="container">
       <div className="left-section">
         <h1>
-          Eat<span>volution</span>
+          Teen<span>FitX</span>
         </h1>
       </div>
       <div className="form-div">

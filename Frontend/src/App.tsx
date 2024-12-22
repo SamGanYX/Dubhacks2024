@@ -9,6 +9,7 @@ import Plan from "./pages/Plan";
 import Login from "./pages/Login";
 import Logger from "./pages/Logger"
 import CalorieForm from "./pages/CalorieForm";
+import CuisinesPage from "./pages/CuisinesPage";
 import CreateAccount from "./pages/CreateAccount";
 import Navbar from "./components/NavBar/Navbar";
 import ChatBot from "./pages/ChatBot";
@@ -16,6 +17,7 @@ import Recipes from "./pages/Recipes";
 import IngredientsPage from "./pages/IngredientsPage";
 import Workouts from "./pages/Workout";
 import GenerateWorkout from "./pages/GenerateWorkout";
+import IngredientsList from "./pages/IngredientsList";
 const App = () => {
   return (
     <div>
@@ -33,6 +35,8 @@ const App = () => {
             <Route path="/plan" element={<Plan />}></Route>
             <Route path="/recipes" element={<Recipes />}></Route>
             <Route path="/ingredients" element={<IngredientsPage />}></Route>
+            <Route path="/cuisines" element={<CuisinesPage />}></Route>
+            <Route path="/ingredientsList" element={<IngredientsList />}></Route>
             <Route path="/workout" element={<Workouts />}></Route>
             <Route path="/generateWorkout" element={<GenerateWorkout />}></Route>
             <Route path="/create_account" element={<CreateAccount />}></Route>

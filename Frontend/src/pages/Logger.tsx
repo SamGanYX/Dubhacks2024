@@ -9,6 +9,9 @@ import { useAuth } from "../AuthContext";
 interface MealEntry {
   meal: string;
   calories: number;
+  protein?: number;  // Optional protein value
+  carbs?: number;    // Optional carbs value
+  fats?: number;     // Optional fats value
 }
 
 interface CalorieEntries {
@@ -22,6 +25,9 @@ interface Record {
   mealName: string
   weight: number;      // User's weight at the time (can be string if fetched from the database as string)
   calorieGoal: number; // Daily calorie goal
+  protein: number | null;
+  carbs: number | null;
+  fats: number | null;
 }
 
 const Logger: React.FC = () => {
@@ -37,6 +43,9 @@ const Logger: React.FC = () => {
   const userID = localStorage.getItem("userID");
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const [protein, setProtein] = useState<string>('');
+  const [carbs, setCarbs] = useState<string>('');
+  const [fats, setFats] = useState<string>('');
 
   useEffect(() => {
     setLoading(false);
@@ -96,7 +105,13 @@ const Logger: React.FC = () => {
 
                     // Only add if it doesn't exist
                     if (!exists) {
-                        newEntries[dateKey].push({ meal: record.mealName, calories: record.caloriesEaten });
+                        newEntries[dateKey].push({
+                            meal: record.mealName,
+                            calories: record.caloriesEaten,
+                            protein: record.protein || undefined,
+                            carbs: record.carbs || undefined,
+                            fats: record.fats || undefined
+                        });
                     }
                 });
 
@@ -158,11 +173,14 @@ const Logger: React.FC = () => {
           },
           body: JSON.stringify({
             userID,
-            date: dateKey,
-            caloriesEaten: parseInt(calories), // Add the new meal calories
+            date: formatDate(selectedDate),
+            caloriesEaten: parseInt(calories),
             mealName: meal,
-            weight: weight, // Use the fetched weight
-            calorieGoal, // You may want to adjust how you set the calorie goal
+            weight: weight,
+            protein: protein ? parseFloat(protein) : null,
+            carbs: carbs ? parseFloat(carbs) : null,
+            fats: fats ? parseFloat(fats) : null,
+            calorieGoal,
           }),
         });
         if (!response.ok) {
@@ -190,14 +208,23 @@ const Logger: React.FC = () => {
       ...prevEntries,
       [dateKey]: [
         ...(prevEntries[dateKey] || []),
-        { meal, calories: parseInt(calories) },
+        { 
+          meal, 
+          calories: parseInt(calories),
+          protein: protein ? parseFloat(protein) : undefined,
+          carbs: carbs ? parseFloat(carbs) : undefined,
+          fats: fats ? parseFloat(fats) : undefined,
+        },
       ],
     }));
 
     // Clear form fields but keep the modal open
     setMeal('');
     setCalories('');
-    setIsMealLogged(true); // Set meal logged state to true
+    setProtein('');
+    setCarbs('');
+    setFats('');
+    setIsMealLogged(true);
   };
 
   const getTotalCalories = (dateKey: string): number => {
@@ -290,6 +317,36 @@ const Logger: React.FC = () => {
                 />
               </div>
               <div className="form-group-logger">
+                <label>Protein (g): </label>
+                <input
+                  type="number"
+                  value={protein}
+                  onChange={(e) => setProtein(e.target.value)}
+                  placeholder="Enter protein"
+                  step="0.1"
+                />
+              </div>
+              <div className="form-group-logger">
+                <label>Carbs (g): </label>
+                <input
+                  type="number"
+                  value={carbs}
+                  onChange={(e) => setCarbs(e.target.value)}
+                  placeholder="Enter carbs"
+                  step="0.1"
+                />
+              </div>
+              <div className="form-group-logger">
+                <label>Fats (g): </label>
+                <input
+                  type="number"
+                  value={fats}
+                  onChange={(e) => setFats(e.target.value)}
+                  placeholder="Enter fats"
+                  step="0.1"
+                />
+              </div>
+              <div className="form-group-logger">
                 <label>Weight: </label>
                 <input
                   type="number"
@@ -309,6 +366,9 @@ const Logger: React.FC = () => {
                   calorieEntries[formatDate(selectedDate)].map((entry, index) => (
                     <li key={index}>
                       {entry.meal} - {entry.calories} kcal
+                      {entry.protein && ` | P: ${entry.protein}g`}
+                      {entry.carbs && ` | C: ${entry.carbs}g`}
+                      {entry.fats && ` | F: ${entry.fats}g`}
                     </li>
                   ))}
               </ul>

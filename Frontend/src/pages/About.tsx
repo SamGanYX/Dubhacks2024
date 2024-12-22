@@ -19,7 +19,7 @@ const About = () => {
                     <h3>Bijou Kim</h3>
                 </div>
             </div>
-            <h1>About Eatvolution</h1>
+            <h1>About TeenFitX</h1>
             <p>
                 Our Fitness Nutrition App was inspired by the growing awareness of the crucial role nutrition plays in achieving fitness goals. 
                 Many people struggle to navigate the overwhelming options for dietary information, so we set out to create an intuitive platform 

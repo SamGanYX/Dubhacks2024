@@ -78,7 +78,7 @@ const CreateAccount = () => {
     <div className="container">
       <div className="left-section">
         <h1>
-          Eat<span className="green-text">volution</span>
+          Teen<span className="green-text">FitX</span>
         </h1>
       </div>
       <div className="form-div">
