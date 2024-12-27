@@ -1,4 +1,4 @@
-FROM mysql:8.0
+FROM mysql:8.0-debian
 
 # Install Vim (and update package manager)
 RUN apt-get update && apt-get install -y vim
