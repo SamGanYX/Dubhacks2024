@@ -95,6 +95,11 @@ VALUES
     ("samganyx", "samganyx@gmail.com", "password");
 
 INSERT INTO
+    Users (Username, Email, Password)
+VALUES
+    ("samganyx", "samganyx@gmail.com", "password");
+
+INSERT INTO
     DailyRecords (
         userID,
         date,
