@@ -1,3 +1,4 @@
-.csr
-.pem
-.cert
+*.csr
+*.pem
+*.cert
+*.srl
