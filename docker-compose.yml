@@ -37,7 +37,7 @@ services:
     build: 
       context: ./db
       dockerfile: Dockerfile
-    command: --ssl-mode=DISABLED
+    command: --default-authentication-plugin=caching_sha2_password
     ports:
       - "3306:3306"
     environment:
