@@ -23,7 +23,10 @@ const db = mysql.createConnection({
     host: 'db',
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+    ssl: {
+        rejectUnauthorized: false // Disables SSL certificate validation
+      }
     // database: process.env.DB_NAME,
     // ssl: {
     //     ca: fs.readFileSync('./ca-cert.pem'),
